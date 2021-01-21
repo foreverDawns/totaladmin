@@ -15,11 +15,11 @@ export default {
       menuData: [
         { id: '1', icon:'homeIcon', authName: '首页', path: '/' },
         { id: '10', icon:'homeIcon', authName: '商家管理', path: '/merchant' },
+        { id: '9', icon:'homeIcon', authName: '参数管理', path: '/parameterManage', children: [{ id: '9-1', authName: 'index', path: '/index22' }] },
         { id: '2', icon:'commodityIcon', authName: '商品管理', path: '/commoditys', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
         { id: '3', icon:'homeIcon', authName: '订单管理', path: '/orders', children: [{ id: '3-1', authName: 'index', path: '/index22' }] },
         { id: '4', icon:'homeIcon', authName: '评价管理', path: '/evaluation', children: [{ id: '7-1', authName: 'index', path: '/index22' }] },
         { id: '5', icon:'homeIcon', authName: '售后管理', path: '/afterSale', children: [{ id: '8-1', authName: 'index', path: '/index22' }] },
-        { id: '9', icon:'homeIcon', authName: '参数管理', path: '/parameterManage', children: [{ id: '9-1', authName: 'index', path: '/index22' }] },
         { id: '6', icon:'homeIcon', authName: '财务管理', path: '/home3', children: [{ id: '4-1', authName: 'index', path: '/index33' }] },
         { id: '7', icon:'homeIcon', authName: '数据分析', path: '/home4', children: [{ id: '5-1', authName: 'index', path: '/index44' }] },
         { id: '8', icon:'homeIcon', authName: '系统设置', path: '/home5', children: [{ id: '6-1', authName: 'index', path: '/index55' }] },

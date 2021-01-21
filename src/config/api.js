@@ -142,7 +142,7 @@ export const afterSaleManagement = params => {
 }
 
 // 获取商品参数列表
-export const queryAllBySupplierId = params => {
+export const queryAllBySupplierId1 = params => {
   try {
     return axios.post('/sellerGoodsParm/queryAllBySupplierId',params).then(res => res.data) 
   } catch (error) {
@@ -151,7 +151,7 @@ export const queryAllBySupplierId = params => {
 }
 
 // 添加商品参数列表
-export const addBySupplierId = params => {
+export const addBySupplierId1 = params => {
   try {
     return axios.post('/sellerGoodsParm/addBySupplierId',params).then(res => res.data) 
   } catch (error) {
@@ -160,7 +160,7 @@ export const addBySupplierId = params => {
 }
 
 // 更新商品参数列表
-export const updateBySupplierId = params => {
+export const updateBySupplierId1 = params => {
   try {
     return axios.post('/sellerGoodsParm/updateBySupplierId',params).then(res => res.data) 
   } catch (error) {
@@ -169,7 +169,7 @@ export const updateBySupplierId = params => {
 }
 
 // 删除商品参数列表
-export const deleteBySupplierId = params => {
+export const deleteBySupplierId1 = params => {
   try {
     return axios.post('/sellerGoodsParm/deleteBySupplierId',params).then(res => res.data) 
   } catch (error) {
@@ -336,6 +336,44 @@ export const commentAudit = params => {
     return Promise.reject(error)
   }
 }
+
+// 获取商品规格列表
+export const specList = params => {
+  try {
+    return axios.post('/goodsSpec/specList',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 获取商品规格详情
+export const specDetail = params => {
+  try {
+    return axios.post('/goodsSpec/specDetail',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 商品更新规格
+export const updateSpec = params => {
+  try {
+    return axios.post('/goodsSpec/updateSpec',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+
+// 添加商品规格列表
+export const addBySupplierId = params => {
+  try {
+    return axios.post('/sellerGoodsParm/addBySupplierId',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 
 
 // 文件上传

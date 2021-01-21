@@ -88,7 +88,7 @@ export default new VueRouter({
           name: 'parameterManage',
           path: '/parameterManage',
           component: ParameterManage,
-          meta: { title: "商品参数管理" }
+          meta: { title: "规格管理" }
         },
         {
           name: 'afterSale',

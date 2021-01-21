@@ -17,6 +17,9 @@ export default {
       fileList: [],
       fileListTwo: [],
       detailData: {},
+      dynamicTags: ['标签一', '标签二', '标签三'],
+      inputVisible: false,
+      inputValue: ''
 
     }
   },
@@ -43,6 +46,35 @@ export default {
     handleClose() {
       this.$emit('onAddCon');
     },
+
+    handleCloseTwo(tag) {
+      this.detailData.specValues.splice(this.detailData.specValues.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      const addData = {
+        specValue: inputValue,
+        valueId: ''
+      }
+      if (inputValue) {
+        this.detailData.specValues.push(addData);
+      }
+      this.inputVisible = false;
+      this.inputValue = '';
+    },
+
+
+
+
+
 
     // 删除图片 one
     handleRemove(file, fileList) {
@@ -146,6 +178,9 @@ export default {
       }
 
       this.detailData = Object.assign({}, res)
+      if (!this.detailData.specValues) {
+        this.detailData.specValues = []
+      }
       console.log(this.detailData)
 
     },

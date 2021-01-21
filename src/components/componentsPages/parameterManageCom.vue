@@ -5,24 +5,29 @@
       <div class="">
         <div class="m-b-15 goods-class-box">
 
-            <div class="">
-              <span class="d-in-b width-120 fs-14 m-b-30"><span class="red">*</span>参数标题</span>
-              <el-input class="width-500" type="text" placeholder="请输入" v-model="detailData.parmTitle" maxlength="24"
+          <div class="">
+            <span class="d-in-b width-120 fs-14 m-b-30"><span class="red">*</span>属性分类</span>
+            <el-input class="width-500" type="text" placeholder="请输入" v-model="detailData.specName" maxlength="24"
+              show-word-limit clearable>
+            </el-input>
+          </div>
+          <div class="">
+            <span class="d-in-b width-120 fs-14 m-b-30"><span class="red">*</span>参数值</span>
+            <!-- <el-input class="width-500" type="textarea" rows="5" placeholder="请输入" v-model="detailData.specValues"
                 show-word-limit clearable>
-              </el-input>
-            </div>
-            <div class="">
-              <span class="d-in-b width-120 fs-14 m-b-30"><span class="red">*</span>参数值</span>
-              <el-input class="width-500" type="textarea" rows="5" placeholder="请输入" v-model="detailData.parmContent"
-                show-word-limit clearable>
-              </el-input>
-              <div class="">
-                <span class="d-in-b width-120 fs-14 m-b-30"></span>
-                <span class="red">注：</span> 参数以 , 逗号分割
-              </div>
-            </div>
+              </el-input> -->
+            <el-tag :key="index" v-for="(item, index) in detailData.specValues" closable :disable-transitions="false"
+              @close="handleCloseTwo(item)">
+              {{item.specValue}}
+            </el-tag>
+            <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small"
+              @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
+            </el-input>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 属性值</el-button>
 
-            <!-- <div class="m-b-15 my-flex m-t-20">
+          </div>
+
+          <!-- <div class="m-b-15 my-flex m-t-20">
               <span class="d-in-b width-120"><span class="red">*</span>上传图片：</span>
               <span class="red fs-12">请先上传正面图片，再上传背面图片!</span>
             </div>
@@ -88,5 +93,21 @@
     width: 178px;
     height: 178px;
     display: block;
+  }
+
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
   }
 </style>

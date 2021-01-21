@@ -43,12 +43,11 @@
                   <el-button type="primary" @click="onOperation(item.id, 2)" round>同意</el-button>
                 </div>
                 <div v-if="item.status == 2">
-                  <el-button type="primary" @click="onOperation(item.id, 2)" disabled round>同意</el-button>
+                  <el-button type="primary" @click="onOperation(item.id, 2)" disabled round>已同意</el-button>
                 </div>
                 <div v-if="item.status == 3">
-                  <el-button type="danger" @click="onOperation(item.id, 3)" disabled round>拒绝</el-button>
+                  <el-button type="danger" @click="onOperation(item.id, 3)" disabled round>已拒绝</el-button>
                 </div>
-               
               </td>
             </tr>
           </tbody>

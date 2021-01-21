@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { queryAllBySupplierId, addBySupplierId, updateBySupplierId, deleteBySupplierId } from "@/config/api.js"
+import { specList, addBySupplierId, specDetail, updateSpec, deleteBySupplierId } from "@/config/api.js"
 import ParameterManageCom from '../components/componentsPages/parameterManageCom.vue'
 export default {
   name: 'parameterManage',
@@ -18,15 +18,15 @@ export default {
   methods: {
     pageChange(pageIndex) {
       this.pageIndex = pageIndex;
-      this.queryAllBySupplierId();
+      this.specList();
     },
 
     pageSizeChange(pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
-      this.queryAllBySupplierId();
+      this.specList();
     },
-  
+
     // 是否启用
     whetherToEnable($event, id) {
       // let uiData = this.boxList.filter(item => item.id === id)[0]
@@ -40,7 +40,7 @@ export default {
         }).then(() => {
           this.onWhetherToEnable(id, $event)
         }).catch(() => {
-          this.queryAllBySupplierId()
+          this.specList()
           this.$message({
             type: 'info',
             message: '已取消删除'
@@ -59,13 +59,13 @@ export default {
     //   updateBySupplierIdStatus({ "id": id, 'status': status }).then(res => {
     //     endLoading()
     //     if (res.state === 0) {
-    //       this.queryAllBySupplierId()
+    //       this.specList()
     //       this.$message({
     //         type: 'success',
     //         message: '更新成功！'
     //       })
     //     } else {
-    //       this.queryAllBySupplierId()
+    //       this.specList()
     //       this.$message({
     //         type: 'error',
     //         message: '请求失败，请刷新重试！'
@@ -73,7 +73,7 @@ export default {
     //     }
     //   }).catch(() => {
     //     endLoading()
-    //     this.queryAllBySupplierId()
+    //     this.specList()
     //     this.$message({
     //       type: 'error',
     //       message: '请求失败，请刷新重试！'
@@ -91,10 +91,37 @@ export default {
       this.aRModuleDialogVisible = !this.aRModuleDialogVisible
     },
     // 添加Ar内容
-    editARCon(data) {
-      this.aRDetailJson = Object.assign({}, data || {})
-      this.onAddCon()
+    editARCon(id) {
+      if (id) {
+        // 获取详情
+        this.specDetail({ 'id': id })
+      } else {
+        this.aRDetailJson = Object.assign({},{})
+        this.onAddCon()
+      }
+    },
 
+    // 获取商品规格详情
+    specDetail(reqJson) {
+      reqJson.supplierId = this.supplierId
+      specDetail(reqJson).then(res => {
+        endLoading()
+        if (res.state === 0) {
+          this.aRDetailJson = Object.assign({}, res.data)
+          this.onAddCon()
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.message
+          });
+        }
+      }).catch(() => {
+        endLoading()
+        this.$message({
+          type: 'error',
+          message: '获取商品规格详情失败!'
+        });
+      })
     },
 
     // 删除内容
@@ -117,44 +144,75 @@ export default {
     // addARConFunc
     addARConFunc(data) {
       console.log(data)
-      if (!data.parmTitle) {
+      if (!data.specName) {
         this.$message({
           type: 'warning',
-          message: '请输入参数标题！'
+          message: '请输入属性分类！'
         })
         return
       }
-      if (!data.parmContent) {
+      if (!data.specValues.length) {
         this.$message({
           type: 'warning',
-          message: '请输入参数值！'
+          message: '参数值不能为空！'
         })
         return
       }
-      if (data.parmContent) {
-        // data.parmContent = data.parmContent.replace('，', ',')
-        data.parmContent = data.parmContent.replace(new RegExp('，','g'), ',')
+      // if (data.parmContent) {
+      //   // data.parmContent = data.parmContent.replace('，', ',')
+      //   data.parmContent = data.parmContent.replace(new RegExp('，', 'g'), ',')
+      // }
+      let reqData = {
+        "specId": "string",
+        "specName": "string",
+        "specValueList": []
       }
-      startLoading()
-      if (data.id) {
-        this.updateBySupplierId(data)
+
+      let newArr = []
+      data.specValues.map(item => {
+        newArr.push({
+          specValueName: item.specValue,
+          specValueId: item.valueId
+        })
+      })
+      reqData.specId = data.id
+      reqData.specName = data.specName
+      reqData.specValueList = newArr
+      if (reqData.specId) {
+        console.log(reqData)
+        this.updateSpec(reqData)
       } else {
-        this.addBySupplierId(data)
+        this.addBySupplierId(reqData)
       }
     },
+
+    //替换数组中的 key 
+    changeKey (arr, key) {
+      let newArr = [];
+      arr.forEach(item => {
+        let newObj = {};
+        for (var i = 0; i < key.length; i++) {
+          newObj[key[i]] = item[Object.keys(item)[i]]
+        }
+        newArr.push(newObj);
+      })
+      console.log(newArr)
+      return newArr;
+    },
+
     // 获取商品参数内容列表
-    queryAllBySupplierId() {
+    specList() {
       startLoading()
       const reqData = {
         pageSize: this.pageSize,
         pageNum: this.pageIndex,
         'supplierId': this.supplierId,
       }
-      queryAllBySupplierId(reqData).then(res => {
+      specList(reqData).then(res => {
         endLoading()
         if (res.state === 0) {
-          this.listDataArr = res.data.list
-          this.listTotal = res.data.total
+          this.listDataArr = res.data.data
+          this.listTotal = res.data.count
           if (this.listDataArr.length < 0) {
             this.$message({
               type: 'warning',
@@ -176,13 +234,14 @@ export default {
       })
     },
 
-    // 添加商品参数内容详情
+    // 添加商品规格内容详情
     addBySupplierId(reqJson) {
       reqJson.supplierId = this.supplierId
+      startLoading()
       addBySupplierId(reqJson).then(res => {
         endLoading()
         if (res.state === 0) {
-          this.queryAllBySupplierId()
+          this.specList()
           this.onAddCon()
           this.$message({
             type: 'success',
@@ -203,11 +262,12 @@ export default {
       })
     },
     // 修改商品参数内容详情
-    updateBySupplierId(reqJson) {
-      updateBySupplierId(reqJson).then(res => {
+    updateSpec(reqJson) {
+      startLoading()
+      updateSpec(reqJson).then(res => {
         endLoading()
         if (res.state === 0) {
-          this.queryAllBySupplierId()
+          this.specList()
           this.onAddCon()
           this.$message({
             type: 'success',
@@ -233,7 +293,7 @@ export default {
       deleteBySupplierId(reqJson).then(res => {
         endLoading()
         if (res.state === 0) {
-          this.queryAllBySupplierId()
+          this.specList()
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -256,7 +316,7 @@ export default {
   },
 
   created() {
-    this.queryAllBySupplierId()
+    this.specList()
   },
   mounted() {
     console.log('souvenirs')
