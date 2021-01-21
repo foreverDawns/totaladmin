@@ -194,7 +194,7 @@ export default {
         })
       })
     },
-    // 删除的列表
+    // 冻结/解冻请求
     sellerState(data) {
       sellerState(data).then(res => {
         console.log(res)
@@ -219,11 +219,11 @@ export default {
         })
       })
     },
-    // 跳转页面
-    goToNext(id, pageType) {
-      console.log(id, pageType)
-      this.$router.push({name: 'test', params: {id: id, pageType: pageType}})
-    }
+    // // 跳转页面
+    // goToNext(id, pageType) {
+    //   console.log(id, pageType)
+    //   this.$router.push({name: 'test', params: {id: id, pageType: pageType}})
+    // }
 
   },
 

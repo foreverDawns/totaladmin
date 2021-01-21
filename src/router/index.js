@@ -28,6 +28,7 @@ import AfterSaleDetails from '../pages/afterSaleDetails.vue'
 import ParameterManage from '../pages/parameterManage.vue'
 // 商家管理
 import Merchant from '../pages/merchant.vue'
+import MerchantDetails from '../pages/merchantDetails.vue'
 
 //申明使用插件
 Vue.use(VueRouter)
@@ -98,11 +99,8 @@ export default new VueRouter({
             { name: 'afterSaleDetails', path: '/afterSaleDetails/:id', component: AfterSaleDetails },
           ]
         },
-        {
-          name: 'merchant',
-          path: '/merchant',
-          component: Merchant,
-        },
+        { name: 'merchant', path: '/merchant', component: Merchant, meta: { title: "商家管理" } },
+        { name: 'merchantDetails', path: '/merchant/:id/:type', component: MerchantDetails, meta: { title: "商家详情" } },
 
       ],
     },

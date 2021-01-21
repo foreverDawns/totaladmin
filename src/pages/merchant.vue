@@ -28,31 +28,51 @@
             <div class="order-img"><img :src="item.description" /></div>
           </td>
           <td class="">
-            <div class=""  v-for="(item, index) in item.userPassWord.split(',')" :key="index">{{item}}</div>
+            <div class="" v-for="(item, index) in item.userPassWord.split(',')" :key="index">{{item}}</div>
           </td>
           <td class="">{{item.phoneNumber}}</td>
-          <td class=""><span class="a-link">去查看 >></span></td>
-          <td class=""><span class="a-link">去查看 >></span></td>
-          <td class=""><span class="a-link">去查看 >></span></td>
+          <td class="">
+            <!-- <router-link :to="{name: 'merchantDetails', params:{id: item.supplierId, type: '1'}}"> -->
+              <span class="a-link">
+                去查看 >>
+              </span>
+            <!-- </router-link> -->
+          </td>
+
+          <td class="">
+            <router-link :to="{name: 'merchantDetails', params:{id: item.supplierId, type: '2'}}">
+              <span class="a-link">
+                去查看 >>
+              </span>
+            </router-link>
+          </td>
+          <td class="">
+            <router-link :to="{name: 'merchantDetails', params:{id: item.supplierId, type: '3'}}">
+              <span class="a-link">
+                去查看 >>
+              </span>
+            </router-link>
+          </td>
           <td class="">{{dateFormat(item.modifiedTime)}}</td>
           <td>
-            <el-button type="danger" round @click="deleteHHCon(item.supplierId, item.supplierStatus)">{{ item.supplierStatus === 0 ? '解冻':'冻结' }}</el-button>
-            <el-button type="primary" round @click="editHHCon(item.supplierId)">详情</el-button>
+            <el-button type="danger" round class="m-r-10" @click="deleteHHCon(item.supplierId, item.supplierStatus)">
+              {{ item.supplierStatus === 0 ? '解冻':'冻结' }}</el-button>
+            <router-link :to="{name: 'merchantDetails', params:{id: item.supplierId, type: '1'}}">
+              <el-button type="primary" round >详情</el-button>
+            </router-link>
           </td>
         </tr>
       </tbody>
     </table>
     <div class="clear"></div>
-     <!-- 分页 -->
-     <div class="fenye" v-if="queryListArr.length > 0">
+    <!-- 分页 -->
+    <div class="fenye" v-if="queryListArr.length > 0">
       <el-pagination @size-change="pageSizeChange" @current-change="pageChange" :current-page="pageIndex"
         :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalNum">
       </el-pagination>
     </div>
     <!-- 添加加内容组件 -->
-    <MerchantCom 
-      :addYRConDialogVisible="addYRConDialogVisible" 
-      @onAddCon="onAddCon" :addYRConFunc="addYRConFunc" 
+    <MerchantCom :addYRConDialogVisible="addYRConDialogVisible" @onAddCon="onAddCon" :addYRConFunc="addYRConFunc"
       :editCurrentCon="editCurrentCon">
     </MerchantCom>
   </div>
@@ -61,7 +81,8 @@
 <script src="../action/merchantAction.js"></script>
 
 <style lang="scss" scoped>
-  .mingRen-con > p img, .mingRen-con> p video{
+  .mingRen-con>p img,
+  .mingRen-con>p video {
     display: inline-block;
     width: 40px;
     height: 40px;

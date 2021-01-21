@@ -301,6 +301,42 @@ export const sellerState = params => {
   }
 }
 
+// 获取商家订单列表
+export const sellerOrderList = params => {
+  try {
+    return axios.post('/sellerOrder/sellerOrderList',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 获取商家评价列表
+export const commentsList = params => {
+  try {
+    return axios.post('/Comments/commentsList',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 获取商家申述列表
+export const auditCommentsList = params => {
+  try {
+    return axios.post('/Comments/auditcommentsList',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 同意/拒绝商家申述列表
+export const commentAudit = params => {
+  try {
+    return axios.post('/Comments/commentAudit',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 
 // 文件上传
 export const fileUpdate =axios.defaults.baseURL + 'upload'
