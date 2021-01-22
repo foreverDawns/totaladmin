@@ -364,11 +364,28 @@ export const updateSpec = params => {
   }
 }
 
-
 // 添加商品规格列表
-export const addBySupplierId = params => {
+export const addSpecAndValue = params => {
   try {
-    return axios.post('/sellerGoodsParm/addBySupplierId',params).then(res => res.data) 
+    return axios.post('/goodsSpec/addSpecAndValue',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 删除规格属性下面的属性value值
+export const deleteSpecValue = params => {
+  try {
+    return axios.post('/goodsSpec/deleteSpecValue',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 删除规格
+export const deleteSpec = params => {
+  try {
+    return axios.post('/goodsSpec/deleteSpec',params).then(res => res.data) 
   } catch (error) {
     return Promise.reject(error)
   }

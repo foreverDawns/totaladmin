@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { specList, addBySupplierId, specDetail, updateSpec, deleteBySupplierId } from "@/config/api.js"
+import { specList, addSpecAndValue, specDetail, updateSpec, deleteSpec, deleteSpecValue } from "@/config/api.js"
 import ParameterManageCom from '../components/componentsPages/parameterManageCom.vue'
 export default {
   name: 'parameterManage',
@@ -96,7 +96,7 @@ export default {
         // 获取详情
         this.specDetail({ 'id': id })
       } else {
-        this.aRDetailJson = Object.assign({},{})
+        this.aRDetailJson = Object.assign({}, {})
         this.onAddCon()
       }
     },
@@ -132,7 +132,7 @@ export default {
         type: 'warning'
       }).then(() => {
         startLoading()
-        this.deleteBySupplierId({ id: id })
+        this.deleteSpec({ id: id })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -142,8 +142,10 @@ export default {
     },
 
     // addARConFunc
-    addARConFunc(data) {
+    addARConFunc(data, arr) {
       console.log(data)
+      console.log(arr)
+
       if (!data.specName) {
         this.$message({
           type: 'warning',
@@ -180,14 +182,18 @@ export default {
       reqData.specValueList = newArr
       if (reqData.specId) {
         console.log(reqData)
-        this.updateSpec(reqData)
+        if (arr.length >0) {
+          this.deleteSpecValue(arr, reqData)
+        } else {
+          this.updateSpec(reqData)
+        }
       } else {
-        this.addBySupplierId(reqData)
+        this.addSpecAndValue(reqData)
       }
     },
 
     //替换数组中的 key 
-    changeKey (arr, key) {
+    changeKey(arr, key) {
       let newArr = [];
       arr.forEach(item => {
         let newObj = {};
@@ -235,10 +241,17 @@ export default {
     },
 
     // 添加商品规格内容详情
-    addBySupplierId(reqJson) {
-      reqJson.supplierId = this.supplierId
+    addSpecAndValue(reqJson) {
+      console.log(reqJson)
+      const reqData = {
+        specName: reqJson.specName,
+        specValueName: []
+      }
+      reqJson.specValueList.map(item => {
+        reqData.specValueName.push(item.specValueName)
+      })
       startLoading()
-      addBySupplierId(reqJson).then(res => {
+      addSpecAndValue(reqData).then(res => {
         endLoading()
         if (res.state === 0) {
           this.specList()
@@ -258,6 +271,27 @@ export default {
         this.$message({
           type: 'error',
           message: '保存失败!'
+        });
+      })
+    },
+    // 删除商品参数值
+    deleteSpecValue(arr, reqData) {
+      startLoading()
+      deleteSpecValue({ id: arr }).then(res => {
+        if (res.state === 0) {
+        this.updateSpec(reqData)
+        } else {
+          endLoading()
+          this.$message({
+            type: 'error',
+            message: '删除分类值失败!'
+          });
+        }
+      }).catch(() => {
+        endLoading()
+        this.$message({
+          type: 'error',
+          message: '删除分类值失败!'
         });
       })
     },
@@ -289,8 +323,8 @@ export default {
     },
 
     // 删除商品参数内容详情
-    deleteBySupplierId(reqJson) {
-      deleteBySupplierId(reqJson).then(res => {
+    deleteSpec(reqJson) {
+      deleteSpec(reqJson).then(res => {
         endLoading()
         if (res.state === 0) {
           this.specList()

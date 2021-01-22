@@ -7,7 +7,7 @@
           <th width="5%">序号</th>
           <th width="10%">参数标题</th>
           <th width="30%">参数值</th>
-          <th width="10%" class="blue fw-700" @click="editARCon()">+ 添加内容</th>
+          <th width="10%" class="blue fw-700" @click="editARCon()">+ 添加规格</th>
         </tr>
       </thead>
       <tbody class="table-tbody">

@@ -19,7 +19,8 @@ export default {
       detailData: {},
       dynamicTags: ['标签一', '标签二', '标签三'],
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
+      deleteValueArr: [],//删除的参数值 id
 
     }
   },
@@ -48,6 +49,10 @@ export default {
     },
 
     handleCloseTwo(tag) {
+      console.log(tag)
+      if (tag.valueId) {
+        this.deleteValueArr.push(tag.valueId)
+      }
       this.detailData.specValues.splice(this.detailData.specValues.indexOf(tag), 1);
     },
 
@@ -153,7 +158,7 @@ export default {
     },
   },
   created() {
-
+    this.deleteValueArr = []
   },
   mounted() {
     // addQuillTitle()

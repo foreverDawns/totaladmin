@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :close-on-click-modal="false" center title="商品管理-参数管理-添加/编辑" :visible.sync="aRModuleDialogVisible"
+    <el-dialog :close-on-click-modal="false" center title="商城管理-商品规格-添加/编辑" :visible.sync="aRModuleDialogVisible"
       width="60%" :before-close="handleClose">
       <div class="">
         <div class="m-b-15 goods-class-box">
@@ -59,7 +59,7 @@
       </div>
       <div slot="footer" class="dialog-footer" style="text-align: right;">
         <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="addARConFunc(detailData)">确 定</el-button>
+        <el-button type="primary" @click="addARConFunc(detailData, deleteValueArr)">确 定</el-button>
       </div>
     </el-dialog>
   </div>
