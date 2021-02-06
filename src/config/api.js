@@ -391,6 +391,40 @@ export const deleteSpec = params => {
   }
 }
 
+// 获取商品分类列表
+export const categoryList = params => {
+  try {
+    return axios.post('/category/categoryList',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+// 修改商品分类列表
+export const categoryUpdate = params => {
+  try {
+    return axios.post('/category/update',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+// 添加商品分类列表
+export const categoryAdd = params => {
+  try {
+    return axios.post('/category/add',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+// 删除商品分类列表
+export const categoryDel = params => {
+  try {
+    return axios.post('/category/del',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+
 
 
 // 文件上传

@@ -31,7 +31,7 @@ export default {
   },
 
   methods: {
-    // 获取的列表
+    // 同意或者拒绝
     commentAudit(id, status) {
       startLoading()
       const reqData = {

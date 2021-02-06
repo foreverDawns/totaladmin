@@ -26,9 +26,11 @@ import AfterSaleShell from '../pages/afterSaleShell.vue'
 import AfterSaleManage from '../pages/afterSaleManage.vue'
 import AfterSaleDetails from '../pages/afterSaleDetails.vue'
 import ParameterManage from '../pages/parameterManage.vue'
+import GoodsClassManage from '../pages/goodsClassManage.vue'
 // 商家管理
 import Merchant from '../pages/merchant.vue'
 import MerchantDetails from '../pages/merchantDetails.vue'
+import TotalEvaluationManage from '../pages/totalEvaluationManage.vue'
 
 //申明使用插件
 Vue.use(VueRouter)
@@ -89,6 +91,18 @@ export default new VueRouter({
           path: '/parameterManage',
           component: ParameterManage,
           meta: { title: "规格管理" }
+        },
+        {
+          name: 'goodsClassManage',
+          path: '/goodsClassManage',
+          component: GoodsClassManage,
+          meta: { title: "商品分类" }
+        },
+        {
+          name: 'totalEvaluationManage',
+          path: '/totalEvaluationManage',
+          component: TotalEvaluationManage,
+          meta: { title: "商品分类" }
         },
         {
           name: 'afterSale',

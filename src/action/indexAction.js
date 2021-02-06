@@ -17,6 +17,8 @@ export default {
         { id: '10', icon:'homeIcon', authName: '商家管理', path: '/merchant' },
         { id: '9', icon:'homeIcon', authName: '参数管理', path: '/parameterManage', children: [{ id: '9-1', authName: 'index', path: '/index22' }] },
         { id: '2', icon:'commodityIcon', authName: '商品管理', path: '/commoditys', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
+        { id: '11', icon:'commodityIcon', authName: '商品分类', path: '/goodsClassManage', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
+        { id: '12', icon:'commodityIcon', authName: '总评价管理', path: '/totalEvaluationManage', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
         { id: '3', icon:'homeIcon', authName: '订单管理', path: '/orders', children: [{ id: '3-1', authName: 'index', path: '/index22' }] },
         { id: '4', icon:'homeIcon', authName: '评价管理', path: '/evaluation', children: [{ id: '7-1', authName: 'index', path: '/index22' }] },
         { id: '5', icon:'homeIcon', authName: '售后管理', path: '/afterSale', children: [{ id: '8-1', authName: 'index', path: '/index22' }] },
