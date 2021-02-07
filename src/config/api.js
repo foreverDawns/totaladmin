@@ -425,9 +425,9 @@ export const categoryDel = params => {
 }
 
 // 获取优惠券列表
-export const auditCouponList = params => {
+export const couponList = params => {
   try {
-    return axios.post('/sellerCoupon/auditCoupon',params).then(res => res.data) 
+    return axios.post('/sellerCoupon/couponList',params).then(res => res.data) 
   } catch (error) {
     return Promise.reject(error)
   }

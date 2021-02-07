@@ -1,4 +1,4 @@
-import { sellerList, sellerAdd, sellerDetail, sellerState } from "@/config/api.js"
+import { sellerCompanyList, sellerAdd, sellerDetail, sellerState } from "@/config/api.js"
 import MerchantCom from '../components/componentsPages/merchantCom.vue'
 import { startLoading, endLoading } from '../common/util'
 export default {
@@ -32,13 +32,13 @@ export default {
     // 分页
     pageChange(pageIndex) {
       this.pageIndex = pageIndex;
-      this.sellerList();
+      this.sellerCompanyList();
     },
     // 分页
     pageSizeChange(pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
-      this.sellerList();
+      this.sellerCompanyList();
     },
     // 添加黄河专题内容
     editHHCon(id) {
@@ -118,13 +118,13 @@ export default {
     },
 
     // 获取的列表
-    sellerList() {
+    sellerCompanyList() {
       startLoading()
       const reqData = {
         pageSize: this.pageSize,
         pageNum: this.pageIndex,
       }
-      sellerList(reqData).then(res => {
+      sellerCompanyList(reqData).then(res => {
         console.log(res)
         endLoading()
         if (res.state === 0) {
@@ -174,7 +174,7 @@ export default {
         console.log(res)
         endLoading()
         if (res.state === 0) {
-          this.sellerList()
+          this.sellerCompanyList()
           this.onAddCon()
           this.$message({
             type: 'success',
@@ -200,7 +200,7 @@ export default {
         console.log(res)
         endLoading()
         if (res.state === 0) {
-          this.sellerList()
+          this.sellerCompanyList()
           this.$message({
             type: 'success',
             message: `${this.content}成功`
@@ -233,7 +233,7 @@ export default {
   mounted() {
     console.log('merchant')
     console.log(this.$route.params.id)
-    this.sellerList()
+    this.sellerCompanyList()
   },
   components: {
     MerchantCom,

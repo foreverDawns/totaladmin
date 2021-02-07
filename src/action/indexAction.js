@@ -14,7 +14,7 @@ export default {
       tableData: Array(20).fill(item),
       menuData: [
         { id: '1', icon:'homeIcon', authName: '首页', path: '/' },
-        { id: '10', icon:'homeIcon', authName: '商家管理', path: '/merchant' },
+        { id: '10', icon:'homeIcon', authName: '公司/店铺列表', path: '/merchant' },
         { id: '9', icon:'homeIcon', authName: '参数管理', path: '/parameterManage', children: [{ id: '9-1', authName: 'index', path: '/index22' }] },
         { id: '2', icon:'commodityIcon', authName: '商品管理', path: '/commoditys', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
         { id: '11', icon:'commodityIcon', authName: '商品分类', path: '/goodsClassManage', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
