@@ -31,6 +31,8 @@ import GoodsClassManage from '../pages/goodsClassManage.vue'
 import Merchant from '../pages/merchant.vue'
 import MerchantDetails from '../pages/merchantDetails.vue'
 import TotalEvaluationManage from '../pages/totalEvaluationManage.vue'
+import CouponManage from '../pages/couponManage.vue'
+import Company from '../pages/company.vue'
 
 //申明使用插件
 Vue.use(VueRouter)
@@ -105,6 +107,12 @@ export default new VueRouter({
           meta: { title: "商品分类" }
         },
         {
+          name: 'couponManage',
+          path: '/couponManage',
+          component: CouponManage,
+          meta: { title: "优惠券" }
+        },
+        {
           name: 'afterSale',
           path: '/afterSale',
           component: AfterSaleShell,
@@ -115,6 +123,7 @@ export default new VueRouter({
         },
         { name: 'merchant', path: '/merchant', component: Merchant, meta: { title: "商家管理" } },
         { name: 'merchantDetails', path: '/merchant/:id/:type', component: MerchantDetails, meta: { title: "商家详情" } },
+        { name: 'company', path: '/company', component: Company, meta: { title: "置换公司管理" } },
 
       ],
     },

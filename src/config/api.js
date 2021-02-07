@@ -265,10 +265,10 @@ export const qiDaysIncome = params => {
 
 
 // 商家管理
-// 获取商家列表
-export const sellerList = params => {
+// 获取公司列表
+export const sellerCompanyList = params => {
   try {
-    return axios.post('/seller/sellerList',params).then(res => res.data) 
+    return axios.post('/seller/sellerCompanyList',params).then(res => res.data) 
   } catch (error) {
     return Promise.reject(error)
   }
@@ -419,6 +419,15 @@ export const categoryAdd = params => {
 export const categoryDel = params => {
   try {
     return axios.post('/category/del',params).then(res => res.data) 
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+// 获取优惠券列表
+export const auditCouponList = params => {
+  try {
+    return axios.post('/sellerCoupon/auditCoupon',params).then(res => res.data) 
   } catch (error) {
     return Promise.reject(error)
   }

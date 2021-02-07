@@ -86,6 +86,7 @@ export default {
             type: 'warning',
             message: '请输入拒绝原因！'
           })
+          return
         }
         console.log('拒绝')
         this.commentAudit(data.id, 3, content )
@@ -102,6 +103,7 @@ export default {
       const reqData = {
         evaluationId: id,
         status: status,
+        rollbackContent: content
       }
       commentAudit(reqData).then(res => {
         endLoading()

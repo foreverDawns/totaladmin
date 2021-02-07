@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :close-on-click-modal="false" center title="商城管理-商品规格-添加/编辑" :visible.sync="aRModuleDialogVisible"
+    <el-dialog :close-on-click-modal="false" center title="优惠券-详情" :visible.sync="aRModuleDialogVisible"
       width="60%" :before-close="handleClose">
       <div class="">
         <div class="m-b-15 goods-class-box">
@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<script src="../componentsAction/parameterManageComAction.js"></script>
+<script src="../componentsAction/couponManageComAction.js"></script>
 
 <style lang="scss" scoped>
   .avatar-uploader .el-upload {

@@ -19,6 +19,8 @@ export default {
         { id: '2', icon:'commodityIcon', authName: '商品管理', path: '/commoditys', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
         { id: '11', icon:'commodityIcon', authName: '商品分类', path: '/goodsClassManage', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
         { id: '12', icon:'commodityIcon', authName: '总评价管理', path: '/totalEvaluationManage', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
+        { id: '13', icon:'commodityIcon', authName: '优惠券', path: '/couponManage', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
+        // { id: '14', icon:'commodityIcon', authName: '置换公司管理', path: '/company', children: [{ id: '2-1', authName: 'index', path: '/index11' }] },
         { id: '3', icon:'homeIcon', authName: '订单管理', path: '/orders', children: [{ id: '3-1', authName: 'index', path: '/index22' }] },
         { id: '4', icon:'homeIcon', authName: '评价管理', path: '/evaluation', children: [{ id: '7-1', authName: 'index', path: '/index22' }] },
         { id: '5', icon:'homeIcon', authName: '售后管理', path: '/afterSale', children: [{ id: '8-1', authName: 'index', path: '/index22' }] },

@@ -2,7 +2,7 @@
   <div class="order-manage-box bg-white border-ra-15 min-height-100 m-20">
     <div class="my-flex p-15">
       <div class="bg-blue p-15 border-ra-6 m-r-10 width-200">
-        <div class="m-b-10 fs-13 blue">商品名称</div>
+        <div class="m-b-10 fs-13 blue">商家名称</div>
         <el-input type="text" placeholder="请输入" v-model="sellerId" show-word-limit clearable>
         </el-input>
       </div>
