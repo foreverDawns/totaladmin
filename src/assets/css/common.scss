@@ -43,39 +43,31 @@ body {
 }
 
 .bg-blue {
-  background: #dde1f2;
+  background: #dde1f2;;
 }
 
 .bg-blue1 {
-  background: #B2D2F7 !important;
+  background: #B2D2F7;;
 }
 
-.bg-blue2 {
-  background: #6ba4f8 !important;
+.bg-red {
+  background: #fa6130;
 }
 
-.color-blue {
-  color: #6ba4f8;
+.bg-green {
+  background: #5AD48A;
 }
 
-.color-red {
-  color: #fa6130;
+.bg-yellow {
+  background: #FFBA42;
 }
 
-.color-green {
-  color: #5AD48A;
-}
-
-.color-yellow {
-  color: #FFBA42;
+.bg-568 {
+  background: #f5f6f8;
 }
 
 .m-20 {
   margin: 20px;
-}
-
-.m-t--5 {
-  margin-top: -5px;
 }
 
 .m-t-5 {
@@ -136,10 +128,6 @@ body {
 
 .m-r-50 {
   margin-right: 50px;
-}
-
-.m-b-5 {
-  margin-bottom: 5px;
 }
 
 .m-b-10 {
@@ -294,13 +282,6 @@ body {
   padding-right: 60px;
 }
 
-.p-l-5 {
-  padding-left: 5px;
-}
-.p-l-10 {
-  padding-left: 10px;
-}
-
 .p-l-20 {
   padding-left: 20px;
 }
@@ -327,10 +308,6 @@ body {
 
 .d-in-b {
   display: inline-block;
-}
-
-.width-40 {
-  width: 40px;
 }
 
 .width-52 {
@@ -522,18 +499,6 @@ body {
   justify-content: center;
 }
 
-.flex-wrap{
-  flex-flow: wrap;
-}
-
-.flex-inherit{
-  flex-flow: inherit;
-}
-
-.text-align-l {
-  text-align: left;
-}
-
 .text-align-r {
   text-align: right;
 }
@@ -550,10 +515,6 @@ body {
   background: #fff;
 }
 
-.border-blue {
-  border: 1px solid #6ba4f8;
-}
-
 .border-ra-6 {
   border-radius: 6px;
 }
@@ -567,16 +528,6 @@ body {
 
 .min-height-100 {
   min-height: 100%;
-}
-
-.wh-20 {
-  width: 20px;
-  height: 20px;
-}
-
-.wh-30 {
-  width: 30px;
-  height: 30px;
 }
 
 .wh-40 {
@@ -596,6 +547,14 @@ body {
 
 .margin-auto {
   margin: 0 auto;
+}
+
+.line-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .line-2 {
@@ -648,6 +607,10 @@ body {
 
 .border-none {
   border: none !important;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
 }
 
 /* 分页器居中 */
@@ -936,32 +899,12 @@ body {
   margin-right: 5px !important;
 }
 
-.rotate-45 {
-  transform: rotate(45deg);
-}
-
-.rotate-90 {
-  transform: rotate(90deg);
-}
-
 .rotate-180 {
   transform: rotate(180deg);
 }
 
-.pointer {
-  cursor: pointer;
+.a-link {
+  color: blue;
+  border-bottom: 1px solid blue
 }
 
-.relative {
-  position: relative;
-}
-
-.absolute {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 888;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-}

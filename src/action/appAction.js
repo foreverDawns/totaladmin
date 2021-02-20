@@ -3,7 +3,8 @@ export default {
   components: {
     // HelloWorld
   },
-  methods: {
-    
-  },
+
+  mounted() {
+
+  }
 }
