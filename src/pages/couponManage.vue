@@ -30,6 +30,7 @@
                 <th width="15%">有效期</th>
                 <th width="15%">已使用</th>
                 <th width="20%">操作</th>
+                
               </tr>
             </thead>
             <tbody class="table-tbody">
