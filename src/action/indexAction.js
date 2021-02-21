@@ -31,7 +31,7 @@ export default {
       currentTime: new Date().toLocaleString( )
     }
   },
-
+  
   mounted() {
     const that = this
     setInterval(function () {
