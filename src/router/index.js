@@ -104,7 +104,7 @@ export default new VueRouter({
           name: 'totalEvaluationManage',
           path: '/totalEvaluationManage',
           component: TotalEvaluationManage,
-          meta: { title: "商品分类" }
+          meta: { title: "总评价管理" }
         },
         {
           name: 'couponManage',
