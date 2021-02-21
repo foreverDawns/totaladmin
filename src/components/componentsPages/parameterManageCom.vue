@@ -26,6 +26,35 @@
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 属性值</el-button>
 
           </div>
+
+          <!-- <div class="m-b-15 my-flex m-t-20">
+              <span class="d-in-b width-120"><span class="red">*</span>上传图片：</span>
+              <span class="red fs-12">请先上传正面图片，再上传背面图片!</span>
+            </div>
+            <div class="m-b-15 my-flex m-t-20">
+              <span class="d-in-b width-120"></span>
+              <el-upload multiple :action="fileUpdate" :limit="limit" list-type="picture-card"
+                :file-list="fileList" :on-remove="handleRemove"
+                :on-exceed="handleExceed" :on-success='uploaderSuccess'>
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
+            </div>
+
+            <div class="m-b-15 my-flex m-t-20">
+              <span class="d-in-b width-120"><span class="red">*</span>固定图片：</span>
+              <el-upload multiple :action="fileUpdate" :limit="limitTwo" list-type="picture-card"
+                :file-list="fileListTwo" :on-remove="handleRemoveTwo"
+                :on-exceed="handleExceedTwo" :on-success='uploaderSuccessTwo'>
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
+            </div> -->
+
         </div>
       </div>
       <div slot="footer" class="dialog-footer" style="text-align: right;">
