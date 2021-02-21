@@ -59,6 +59,7 @@ export default {
     getCurrentTime() {
       this.currentTime = new Date().toLocaleString( )
     }
+    
 
   },
 
