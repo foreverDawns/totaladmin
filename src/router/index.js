@@ -26,14 +26,23 @@ import AfterSaleShell from '../pages/afterSaleShell.vue'
 import AfterSaleManage from '../pages/afterSaleManage.vue'
 import AfterSaleDetails from '../pages/afterSaleDetails.vue'
 import ParameterManage from '../pages/parameterManage.vue'
-import GoodsClassManage from '../pages/goodsClassManage.vue'
 // 商家管理
 import Merchant from '../pages/merchant.vue'
 import MerchantDetails from '../pages/merchantDetails.vue'
-import TotalEvaluationManage from '../pages/totalEvaluationManage.vue'
-import CouponManage from '../pages/couponManage.vue'
-import Company from '../pages/company.vue'
+// 积分管理
+import invitePoints from '../pages/invitePoints.vue'
+import signPoints from '../pages/signPoints.vue'
+import secondaryDistribution from '../pages/secondaryDistribution.vue'
+import integralConsumption from '../pages/integralConsumption.vue'
+import obtainedbyscanning from '../pages/obtainedbyscanning.vue'
+import userlevel from '../pages/userlevel.vue'
+import pointsdisplay from '../pages/pointsdisplay.vue'
+import newusersget from '../pages/newusersget.vue'
 
+// 置换
+import replacementList from '../pages/replacementList.vue'
+import parameterManagement from '../pages/parameterManagement.vue'
+import companyManagement from '../pages/companyManagement.vue' 
 //申明使用插件
 Vue.use(VueRouter)
 
@@ -95,22 +104,69 @@ export default new VueRouter({
           meta: { title: "规格管理" }
         },
         {
-          name: 'goodsClassManage',
-          path: '/goodsClassManage',
-          component: GoodsClassManage,
-          meta: { title: "商品分类" }
+          name: 'signPoints',
+          path: '/signPoints',
+          component: signPoints,
+          meta: { title: "签到积分" }
+        }, {
+          name: 'secondaryDistribution',
+          path: '/secondaryDistribution',
+          component: secondaryDistribution,
+          meta: { title: "二级分销" }
         },
         {
-          name: 'totalEvaluationManage',
-          path: '/totalEvaluationManage',
-          component: TotalEvaluationManage,
-          meta: { title: "总评价管理" }
+          name: 'obtainedbyscanning',
+          path: '/obtainedbyscanning',
+          component: obtainedbyscanning,
+          meta: { title: "扫描获得" }
         },
         {
-          name: 'couponManage',
-          path: '/couponManage',
-          component: CouponManage,
-          meta: { title: "优惠券" }
+          name: 'pointsdisplay',
+          path: '/pointsdisplay',
+          component: pointsdisplay,
+          meta: { title: "积分展示" }
+        },
+        {
+          name: 'integralConsumption',
+          path: '/integralConsumption',
+          component: integralConsumption,
+          meta: { title: "积分消费" }
+        },
+        {
+          name: 'invitePoints',
+          path: '/invitePoints',
+          component: invitePoints,
+          meta: { title: "积分邀请" }
+        },
+        {
+          name: 'userlevel',
+          path: '/userlevel',
+          component: userlevel,
+          meta: { title: "用户等级" }
+        },
+        {
+          name: 'newusersget',
+          path: '/newusersget',
+          component: newusersget,
+          meta: { title: "新用户获得" }
+        },
+        {
+          name: 'replacementList',
+          path: '/replacementList',
+          component: replacementList,
+          meta: { title: "置换商品" }
+        },
+        {
+          name: 'companyManagement',
+          path: '/companyManagement',
+          component: companyManagement,
+          meta: { title: "置换公司管理" }
+        },
+        {
+          name: 'parameterManagement',
+          path: '/parameterManagement',
+          component: parameterManagement,
+          meta: { title: "置换参数管理" }
         },
         {
           name: 'afterSale',
@@ -123,7 +179,6 @@ export default new VueRouter({
         },
         { name: 'merchant', path: '/merchant', component: Merchant, meta: { title: "商家管理" } },
         { name: 'merchantDetails', path: '/merchant/:id/:type', component: MerchantDetails, meta: { title: "商家详情" } },
-        { name: 'company', path: '/company', component: Company, meta: { title: "置换公司管理" } },
 
       ],
     },
