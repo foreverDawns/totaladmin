@@ -26,9 +26,14 @@ import AfterSaleShell from '../pages/afterSaleShell.vue'
 import AfterSaleManage from '../pages/afterSaleManage.vue'
 import AfterSaleDetails from '../pages/afterSaleDetails.vue'
 import ParameterManage from '../pages/parameterManage.vue'
+import GoodsClassManage from '../pages/goodsClassManage.vue'
+
 // 商家管理
 import Merchant from '../pages/merchant.vue'
 import MerchantDetails from '../pages/merchantDetails.vue'
+import TotalEvaluationManage from '../pages/totalEvaluationManage.vue'
+import CouponManage from '../pages/couponManage.vue'
+import Company from '../pages/company.vue'
 // 积分管理
 import invitePoints from '../pages/invitePoints.vue'
 import signPoints from '../pages/signPoints.vue'
@@ -102,6 +107,24 @@ export default new VueRouter({
           path: '/parameterManage',
           component: ParameterManage,
           meta: { title: "规格管理" }
+        },
+        {
+          name: 'goodsClassManage',
+          path: '/goodsClassManage',
+          component: GoodsClassManage,
+          meta: { title: "商品分类" }
+        },
+        {
+          name: 'totalEvaluationManage',
+          path: '/totalEvaluationManage',
+          component: TotalEvaluationManage,
+          meta: { title: "总评价管理" }
+        },
+        {
+          name: 'couponManage',
+          path: '/couponManage',
+          component: CouponManage,
+          meta: { title: "优惠券" }
         },
         {
           name: 'signPoints',
@@ -179,7 +202,7 @@ export default new VueRouter({
         },
         { name: 'merchant', path: '/merchant', component: Merchant, meta: { title: "商家管理" } },
         { name: 'merchantDetails', path: '/merchant/:id/:type', component: MerchantDetails, meta: { title: "商家详情" } },
-
+        { name: 'company', path: '/company', component: Company, meta: { title: "置换公司管理" } },
       ],
     },
     { name: 'Login', path: '/login', component: () => import('@/pages/login'), meta: { title: "登录" } },

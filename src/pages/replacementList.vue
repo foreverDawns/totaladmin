@@ -213,6 +213,12 @@ export default {
           num: 0,
           replaceProducts: [],
         },
+        {
+          sulipperId: 2,
+          replaceSupplierName: "2",
+          num: 0,
+          replaceProducts: [],
+        },
       ],
     };
   },

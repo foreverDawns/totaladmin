@@ -1,6 +1,6 @@
 <template>
   <div class="pages-box bg-white border-ra-15 min-height-100 p-30 m-20">
-    <div class="title-box fs-16 fw-700 mb-20">积分管理-邀请盲盒池</div>
+    <div class="title-box fs-16 fw-700 mb-20">积分管理-邀请盲盒池-积分邀请</div>
     <div class="my-flex">
       <div class="bg-blue p-15 border-ra-6 m-r-10 width-200 mb-20">
         <div class="m-b-10 fs-13 blue">默认区间值</div>

@@ -62,7 +62,9 @@
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      orderSn: '1000000'
+    };
   },
 };
 </script>
