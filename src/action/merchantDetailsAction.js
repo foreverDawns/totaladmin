@@ -7,6 +7,7 @@ export default {
     data() {
         return {
             addYRConDialogVisible: false,
+            detailsData: '',
             goodsList: '', // 产品列表
             editCurrentConData: '', // 详情
             ordersData: '', // 订单
@@ -348,7 +349,7 @@ export default {
 
         // 添加内容
         editHHCon(id) {
-            this.detailsData = {}
+            // this.editCurrentConData = {}
             console.log(id)
             this.onAddCon()
         },
