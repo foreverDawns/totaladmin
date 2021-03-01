@@ -55,6 +55,7 @@
                 <td class="">{{ item.categoryName }}</td>
                 <td class="">{{ item.num }}</td>
                 <td class="">{{ item.saleNum }}</td>
+                
                 <!-- <td class="p-t-10 p-b-10">
                   <el-button
                     :type="item.isMarketable == 0 ? 'warning' : 'danger' "
