@@ -20,7 +20,6 @@ export default {
         // 添加黄河专题内容弹框切换
         onAddCon() {
             this.addYRConDialogVisible = !this.addYRConDialogVisible
-            console.log(this.addYRConDialogVisible)
         },
         // 时间格式化
         dateFormat(val, format) {
@@ -41,13 +40,15 @@ export default {
             this.pageSize = pageSize;
             this.sellerCompanyList();
         },
-        // 添加黄河专题内容
-        editHHCon(id) {
-            console.log(id)
+        // 添加公司
+        editHHCon(data) {
+            if (data) {
+                this.editCurrentCon = Object.assign({}, data)
+            }
             this.onAddCon()
         },
 
-        // 冻结/解冻商家
+        // 冻结/解冻店铺
         deleteHHCon(id, status) { //status: 0禁止，1启用
             console.log(id, status)
             if (status === 0) {
@@ -55,7 +56,7 @@ export default {
             } else {
                 this.content = '冻结'
             }
-            this.$confirm(`此操作将${this.content}当前商家, 是否继续?`, '提示', {
+            this.$confirm(`此操作将${this.content}当前店铺, 是否继续?`, '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
@@ -185,11 +186,14 @@ export default {
             this.queryListArr.map(item => {
                 console.log(item.id)
                 if (item.id == id) {
-                    item.select = !item.select
-                    if (item.select) {
+                    if (!item.select) {
                         this.sellerListByCompanyId(id)
                     }
-                    this.$forceUpdate()
+                    setTimeout(() => {
+                        item.select = !item.select
+                        this.$forceUpdate()
+                    }, 300)
+
                 }
             })
         },
