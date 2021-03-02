@@ -319,10 +319,19 @@ export const sellerAdd = params => {
     }
 }
 
-// 公司冻结和解冻
+// 店铺冻结和解冻
 export const sellerState = params => {
     try {
         return axios.post('/seller/sellerState', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 店铺更新
+export const sellerUpdate = params => {
+    try {
+        return axios.post('/seller/update', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -567,4 +576,4 @@ export const replaceParamTitlereplaceParamTitleList = params => {
 
 
 // 文件上传
-export const fileUpdate = axios.defaults.baseURL + 'upload'
+export const fileUpdate = axios.defaults.baseURL + '/upload'

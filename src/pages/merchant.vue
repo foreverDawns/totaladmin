@@ -4,29 +4,14 @@
 
     <div class="shop">
       <div class="shop-box height-60 line-h-60">
-        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%"
-          >序号</span
-        >
-        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%"
-          >公司名称</span
-        >
-        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%"
-          >联系方式</span
-        >
-        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%"
-          >公司账号</span
-        >
-        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 20%"
-          >营业执照</span
-        >
-        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 15%"
-          >创建时间</span
-        >
-        <span
-          class="d-in-b text-align-c blue fs-14 fw-700 height-40 line-h-40"
-          style="width: 25%"
-          @click="onAddCon()"
-        >
+        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%">序号</span>
+        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%">公司名称</span>
+        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%">联系方式</span>
+        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 10%">公司账号</span>
+        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 20%">营业执照</span>
+        <span class="d-in-b text-align-c fs-14 fw-700" style="width: 15%">创建时间</span>
+        <span class="d-in-b text-align-c blue fs-14 fw-700 height-40 line-h-40" style="width: 25%"
+          @click="editHHCon({})">
           + 添加公司
         </span>
       </div>
@@ -40,7 +25,7 @@
           <td class="text-align-c" style="width: 10%">{{ item.headPhone }}</td>
           <td class="text-align-c" style="width: 10%">{{ item.loginName }}</td>
           <td class="text-align-c order-gw my-flex" style="width: 20%">
-            <div class="order-img"><img :src="item.companyAptitude" /></div>
+            <div class="order-img"><img :src="item.companyAptitude.split(',')[0]" /></div>
           </td>
           <td class="text-align-c" style="width: 15%">
             {{ dateFormat(item.createTime) }}
@@ -58,7 +43,7 @@
             <el-button type="primary" size="mini" round @click="editHHCon(item)">详情</el-button>
             <el-button size="mini" round @click="onChangeModule(item.id)">{{
               item.select ? "收起" : "展开"
-            }}</el-button>
+              }}</el-button>
           </td>
         </div>
         <div class="shop-list m-l-20 m-r-20" v-if="item.select && item.shopList.length > 0">
@@ -78,40 +63,32 @@
               </tr>
             </thead>
             <tbody class="table-tbody">
-              <tr
-                v-for="(item, index) in item.shopList"
-                :key="index"
-                class="fs-12"
-              >
+              <tr v-for="(item, index) in item.shopList" :key="index" class="fs-12">
                 <td>{{ index + 1 }}</td>
                 <td class="">{{ item.supplierName }}</td>
                 <td class="">
                   <router-link :to="{name: 'merchantDetails', params:{id: item.id, type: '1'}}">
-                  <span class="a-link">
-                    去查看 >>
-                  </span>
+                    <span class="a-link">
+                      去查看 >>
+                    </span>
                   </router-link>
                 </td>
 
                 <td class="">
-                  <router-link
-                    :to="{
+                  <router-link :to="{
                       name: 'merchantDetails',
                       params: { id: item.id, type: '2' },
-                    }"
-                  >
+                    }">
                     <span class="a-link">
                       去查看 >>
                     </span>
                   </router-link>
                 </td>
                 <td class="">
-                  <router-link
-                    :to="{
+                  <router-link :to="{
                       name: 'merchantDetails',
                       params: { id: item.id, type: '3' },
-                    }"
-                  >
+                    }">
                     <span class="a-link">
                       去查看 >>
                     </span>
@@ -119,107 +96,91 @@
                 </td>
                 <td class="">{{ dateFormat(item.openingTime) }}</td>
                 <td class="p-t-10 p-b-10">
-                  <el-button
-                    :type="item.status === 0 ? 'warning' : 'danger' "
-                    round
-                    size="mini"
-                    class="m-r-10"
-                    @click="deleteHHCon(item.id, item.status)"
-                  >
-                    {{ item.status === 0 ? "解冻" : "冻结" }}</el-button
-                  >
-                  <router-link
-                    :to="{
-                      name: 'merchantDetails',
-                      params: { id: item.id, type: '1' },
-                    }"
-                  >
-                    <el-button type="primary" round size="mini">详情</el-button>
-                  </router-link>
+                  <el-button :type="item.status === 0 ? 'warning' : 'danger' " round size="mini" class="m-r-10"
+                    @click="deleteHHCon(item.id, item.status)">
+                    {{ item.status === 0 ? "解冻" : "冻结" }}</el-button>
+
+                  <el-button type="primary" round size="mini" @click="onChangeShopModule(item.id)">详情</el-button>
+
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="fs-12 fw-700 text-align-c height-40 line-h-40" v-if="item.select && item.shopList.length < 1">当前公司下面没有店铺！</div>
+        <div class="fs-12 fw-700 text-align-c height-40 line-h-40" v-if="item.select && item.shopList.length < 1">
+          当前公司下面没有店铺！</div>
       </div>
     </div>
 
     <div class="clear m-t-60"></div>
     <!-- 分页 -->
     <div class="fenye" v-if="queryListArr.length > 0">
-      <el-pagination
-        @size-change="pageSizeChange"
-        @current-change="pageChange"
-        :current-page="pageIndex"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalNum"
-      >
+      <el-pagination @size-change="pageSizeChange" @current-change="pageChange" :current-page="pageIndex"
+        :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalNum">
       </el-pagination>
     </div>
-    <!-- 添加加内容组件 -->
-    <MerchantCom
-      :addYRConDialogVisible="addYRConDialogVisible"
-      @onAddCon="onAddCon"
-      :addYRConFunc="addYRConFunc"
-      :editCurrentCon="editCurrentCon"
-    >
+    <!-- 添加查看公司组件 -->
+    <MerchantCom :addYRConDialogVisible="addYRConDialogVisible" @onAddCon="onAddCon" :addYRConFunc="addYRConFunc"
+      :editCurrentCon="editCurrentCon">
     </MerchantCom>
+    <!-- 查看店铺组件 -->
+    <ShopCom :shopFlag="shopFlag" @onToggleShopModule="onToggleShopModule" :editAndAddFunc="editAndAddFunc"
+      :editShopCon="editShopCon">
+    </ShopCom>
   </div>
 </template>
 
 <script src="../action/merchantAction.js"></script>
 
 <style lang="scss" scoped>
-    .mingRen-con>p img,
-    .mingRen-con>p video {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .shop-box {
-        background: #becbf7;
-        color: #fff;
-        border-radius: 15px 15px 0 0;
-    }
-    
-    .order-img {
-        width: 60px;
-        height: 60px;
-        border: 1px solid #cccccc;
-        margin: 0 auto;
-    }
-    
-    .shop {
-        border-bottom: 1px solid #f5f5f5;
-    }
-    
-    .bor {
-        background: #fff;
-        border-top: 1px solid #f5f5f5;
-        border-left: 1px solid #f5f5f5;
-        border-right: 1px solid #f5f5f5;
-        /* box-shadow: 0 0 5px 2px #ccc; */
-    }
-    
-    .shop-list {
-        box-shadow: 0 0 5px 2px #ccc;
-    }
-    
-    .bor:nth-child(2n) {
-        background: #f9f9f9;
-    }
-    
-    .orderC-tb {
-        border-radius: 0;
-    }
-    
-    .orderC-th {
-        background: #d4dbf3;
-        color: #fff;
-        border-radius: 0px;
-        height: 60px;
-    }
+  .mingRen-con>p img,
+  .mingRen-con>p video {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .shop-box {
+    background: #becbf7;
+    color: #fff;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .order-img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #cccccc;
+    margin: 0 auto;
+  }
+
+  .shop {
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .bor {
+    background: #fff;
+    border-top: 1px solid #f5f5f5;
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+    /* box-shadow: 0 0 5px 2px #ccc; */
+  }
+
+  .shop-list {
+    box-shadow: 0 0 5px 2px #ccc;
+  }
+
+  .bor:nth-child(2n) {
+    background: #f9f9f9;
+  }
+
+  .orderC-tb {
+    border-radius: 0;
+  }
+
+  .orderC-th {
+    background: #d4dbf3;
+    color: #fff;
+    border-radius: 0px;
+    height: 60px;
+  }
 </style>

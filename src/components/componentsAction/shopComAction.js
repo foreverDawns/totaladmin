@@ -7,26 +7,26 @@
 import { fileUpdate } from "@/config/api.js"
 
 export default {
-    name: 'merchantCom',
+    name: 'shopCom',
     data() {
         return {
             editCurrentConData: {},
             fileListTwo: [],
             fileUpdate: fileUpdate,
             limit: 1,
-            limitTwo: 3
+            limitTwo: 3,
         }
     },
     // 接收父页面的值
     props: {
-        addYRConDialogVisible: {
+        shopFlag: {
             type: Boolean,
             default: false
         },
-        addYRConFunc: {
+        editAndAddFunc: {
             type: Function
         },
-        editCurrentCon: {
+        editShopCon: {
             type: Object,
             default: {}
         },
@@ -35,7 +35,11 @@ export default {
     methods: {
         // 取消提示
         handleClose() {
-            this.$emit('onAddCon');
+            this.$emit('onToggleShopModule');
+        },
+         // 时间格式化
+         dateFormat(val, format) {
+            return this.$moment(val).format(format || 'YYYY-MM-DD HH:mm:ss')
         },
         //上传图片
         // 删除图片 one
@@ -81,23 +85,23 @@ export default {
         },
     },
     created() {
-        console.log(this.$props.editCurrentCon, '12345789')
+        console.log(this.$props.editShopCon, '12345789')
     },
     mounted() {
         // console.log(this.editCurrentConData, '88888888')
     },
     watch: {
-        editCurrentCon(res) {
+        editShopCon(res) {
             console.log(res, '接收到的值')
 
             if (res) {
-                this.editCurrentConData = res
-                this.fileListTwo = []
-                if (res.companyAptitude) {
-                    res.companyAptitude.split(',').map(item => {
-                        item && this.fileListTwo.push({ 'url': item })
-                    })
-                }
+                this.editCurrentConData = res.sellerInfo
+                // this.fileListTwo = []
+                // if (res.companyAptitude) {
+                //     res.companyAptitude.split(',').map(item => {
+                //         item && this.fileListTwo.push({ 'url': item })
+                //     })
+                // }
             }
         }
     },
