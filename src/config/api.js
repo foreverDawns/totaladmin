@@ -283,7 +283,25 @@ export const sellerListByCompanyId = params => {
     }
 }
 
-// 获取公司、店铺详情
+// 获取店铺下的产品
+export const sellerGoodsList = params => {
+    try {
+        return axios.post('/sellerManagement/GoodsList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 上下架商品
+export const goodsUpDownt = params => {
+    try {
+        return axios.post('/sellerManagement/upDown', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 获取公司、店铺商品
 export const sellerDetail = params => {
     try {
         return axios.post('/seller/sellerDetail', params).then(res => res.data)
@@ -292,7 +310,7 @@ export const sellerDetail = params => {
     }
 }
 
-// 添加商家
+// 添加公司
 export const sellerAdd = params => {
     try {
         return axios.post('/seller/add', params).then(res => res.data)
@@ -301,7 +319,7 @@ export const sellerAdd = params => {
     }
 }
 
-// 商家冻结和解冻
+// 店铺冻结和解冻
 export const sellerState = params => {
     try {
         return axios.post('/seller/sellerState', params).then(res => res.data)
@@ -310,7 +328,16 @@ export const sellerState = params => {
     }
 }
 
-// 获取商家订单列表
+// 店铺更新
+export const sellerUpdate = params => {
+    try {
+        return axios.post('/seller/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 获取公司订单列表
 export const sellerOrderList = params => {
     try {
         return axios.post('/sellerOrder/sellerOrderList', params).then(res => res.data)
@@ -319,7 +346,7 @@ export const sellerOrderList = params => {
     }
 }
 
-// 获取商家评价列表
+// 获取公司评价列表
 export const commentsList = params => {
     try {
         return axios.post('/Comments/commentsList', params).then(res => res.data)
@@ -328,7 +355,7 @@ export const commentsList = params => {
     }
 }
 
-// 获取商家申述列表
+// 获取公司申述列表
 export const auditCommentsList = params => {
     try {
         return axios.post('/Comments/auditcommentsList', params).then(res => res.data)
@@ -567,4 +594,4 @@ export const newUserManagement= params => {
 
 
 // 文件上传
-export const fileUpdate = axios.defaults.baseURL + 'upload'
+export const fileUpdate = axios.defaults.baseURL + '/upload'
