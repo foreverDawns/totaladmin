@@ -70,8 +70,6 @@ export default {
         aRDetailJson(res) {
             console.log('编辑展示内容')
             console.log(res, "aRDetailJson")
-            this.fileList = []
-            this.fileListTwo = []
             this.ruleForm = Object.assign({}, res)
             // if (!this.detailData.specValues) {
             //     this.detailData.specValues = []

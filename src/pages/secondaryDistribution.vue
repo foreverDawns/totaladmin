@@ -7,25 +7,29 @@
         <el-input
           type="text"
           placeholder="1000"
-          v-model="orderSn"
+          v-model="oneorderSn"
           show-word-limit
           clearable
         >
         </el-input>
+        
+      </div>
+      <div style="margin-right:10%" class="my-flex flex-l-center">
+        <el-button type="primary"  @click="oneDistribution()">保存</el-button>
       </div>
       <div class="bg-blue p-15 border-ra-6 m-r-10 width-200 mb-20">
         <div class="m-b-10 fs-13 blue">默认二级分销配比</div>
         <el-input
           type="text"
           placeholder="1000"
-          v-model="orderSn"
+          v-model="twoorderSn"
           show-word-limit
           clearable
         >
         </el-input>
       </div>
       <div class="my-flex flex-l-center">
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary"  @click="twoDistribution()">保存</el-button>
       </div>
     </div>
 
@@ -44,7 +48,7 @@
           <th width="15%">一级分销百分比</th>
           <th width="15%">二级分销百分比</th>
           <th width="15%">状态</th>
-          <th width="10%" class="blue fw-700" @click="addPoints()">+ 新增配比</th>
+          <th width="10%" class="blue fw-700" @click="onChangeModule()">+ 新增配比</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
@@ -59,7 +63,7 @@
             <el-button type="info" round @click="deleteHHCon(item.specId)"
               >删除</el-button
             >
-            <el-button type="primary" round @click="editARCon(item.specId)"
+            <el-button type="primary" round @click="onChangeModule(item.specId)"
               >编辑</el-button
             >
           </td>
@@ -78,11 +82,12 @@
       >
       </el-pagination>
     </div>
-    <SecondaryDistributionCom ref="secondaryDistribution"></SecondaryDistributionCom>
+    <SecondaryDistributionCom ref="secondaryDistribution" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon" ></SecondaryDistributionCom>
   </div>
 </template>
 
 
 
 <script src="../action/secondaryDistributionAction.js"></script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+</style>
