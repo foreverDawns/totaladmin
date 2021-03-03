@@ -39,7 +39,7 @@
                 <th width="10%">签到天数</th>
                 <th width="15%">签到奖励</th>
 
-                <th width="10%" class="blue fw-700" @click="addPoints()">
+                <th width="10%" class="blue fw-700" @click="onChangeModule({})">
                   + 添加
                 </th>
               </tr>
@@ -52,15 +52,15 @@
               >
                 <td>{{ index + 1 }}</td>
                 <td class="p-t-10 p-b-10">{{ item.signNumber }}</td>
-                <td>{{ item.specValueName }}</td>
+                <td>{{ item.levelIntegral }}</td>
                 <td>
-                  <el-button type="info" round @click="deleteHHCon(item.specId)"
+                  <el-button type="info" round @click="deleteHHCon(item.id)"
                     >删除</el-button
                   >
                   <el-button
                     type="primary"
                     round
-                    @click="editARCon(item.specId)"
+                    @click="onChangeModule(item)"
                     >编辑</el-button
                   >
                 </td>
@@ -92,7 +92,7 @@
             <thead class="orderC-th">
               <tr style="height: 60px" class="fs-14 fw-700">
                 <th width="5%">序号</th>
-                <th width="10%">ar号</th>
+                <th width="10%">AR号</th>
                 <th width="15%">签到时间</th>
                 <th width="15%">连续签到天数</th>
                 <th width="15%">获得积分</th>
@@ -151,7 +151,8 @@
         </el-pagination>
       </div>
     </div>
-    <SignPointsCom ref="SignPointsCom"></SignPointsCom>
+    <SignPointsCom ref="SignPointsCom" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"
+      :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson" ></SignPointsCom>
   </div>
 </template>
 <script src="../action/signPointsAction.js"></script>

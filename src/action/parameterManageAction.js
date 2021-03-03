@@ -88,6 +88,7 @@ export default {
 
     // 添加Ar内容弹框切换
     onAddCon() {
+      console.log(this.aRModuleDialogVisible)
       this.aRModuleDialogVisible = !this.aRModuleDialogVisible
     },
     // 添加Ar内容
@@ -95,7 +96,9 @@ export default {
       if (id) {
         // 获取详情
         this.specDetail({ 'id': id })
+        console.log('获取详情成功')
       } else {
+        console.log('添加')
         this.aRDetailJson = Object.assign({}, {})
         this.onAddCon()
       }

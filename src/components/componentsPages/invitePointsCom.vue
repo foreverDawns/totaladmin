@@ -37,7 +37,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: right">
-        <el-button @click="aRModuleDialogVisible = false">取 消</el-button>
+        <el-button @click="handleClose">取 消</el-button>
         <el-button
           type="primary"
           @click="addARConFunc(detailData, deleteValueArr)"

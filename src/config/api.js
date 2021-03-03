@@ -547,6 +547,24 @@ export const replaceParamTitlereplaceParamTitleList = params => {
     }
 }
 
+// 签到积分
+// 积分管理删除
+export const delIntegralSetting= params => {
+    try {
+        return axios.post('/integral/delIntegralSetting', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 积分保存
+export const newUserManagement= params => {
+    try {
+        return axios.post('/integral/newUserManagement', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + 'upload'

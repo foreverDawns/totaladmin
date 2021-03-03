@@ -3,8 +3,9 @@
     <el-dialog
       :close-on-click-modal="false"
       center
-      title="积分管理-邀请盲盒池-添加"
+      title="积分管理-签到积分-添加"
       :visible.sync="aRModuleDialogVisible"
+      
       width="60%"
       :before-close="handleClose"
     >
@@ -22,10 +23,10 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: right">
-        <el-button @click="aRModuleDialogVisible = false">取 消</el-button>
+        <el-button @click=" handleClose()">取 消</el-button>
         <el-button
           type="primary"
-          @click="addARConFunc()"
+          @click="addARConFunc(ruleForm)"
           >确 定</el-button
         >
       </div>
