@@ -9,17 +9,17 @@ axios.defaults.baseURL = process.env.VUE_APP_URL
 axios.defaults.timeout = 25000;
 // post请求头
 axios.defaults.headers.post['Content-Type']
-    // axios拦截器
-axios.interceptors.request.use(function(config) {
+// axios拦截器
+axios.interceptors.request.use(function (config) {
     console.log(config)
-        // 将token给到一个前后台约定好的key中，作为请求发送
+    // 将token给到一个前后台约定好的key中，作为请求发送
     let token = localStorage.getItem('totaladmintoken')
     if (token) {
         // config.headers['Authorization'] = token
         config.headers['token'] = token
     }
     return config
-}, function(error) {
+}, function (error) {
     // Do something with request error
     return Promise.reject(error)
 })
@@ -117,13 +117,13 @@ export const goodsEvaluationList = params => {
 
 // 获取商品评价详情
 export const goodsEvaluationInfo = params => {
-        try {
-            return axios.post('/goodsEvaluation/queryById', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/goodsEvaluation/queryById', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 获取商品评价详情
+}
+// 获取商品评价详情
 export const evaluationSubmit = params => {
     try {
         return axios.post('/goodsEvaluation/submit', params).then(res => res.data)
@@ -244,13 +244,13 @@ export const totalAmount = params => {
 
 // 近7天零售量统计
 export const salesVolume = params => {
-        try {
-            return axios.post('/orderMaster/salesVolume', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/orderMaster/salesVolume', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 近7天收入统计、财务
+}
+// 近7天收入统计、财务
 export const qiDaysIncome = params => {
     try {
         return axios.post('/orderMaster/qiDaysIncome', params).then(res => res.data)
@@ -429,29 +429,29 @@ export const deleteSpec = params => {
 
 // 获取商品分类列表
 export const categoryList = params => {
-        try {
-            return axios.post('/category/categoryList', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/category/categoryList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 修改商品分类列表
+}
+// 修改商品分类列表
 export const categoryUpdate = params => {
-        try {
-            return axios.post('/category/update', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/category/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 添加商品分类列表
+}
+// 添加商品分类列表
 export const categoryAdd = params => {
-        try {
-            return axios.post('/category/add', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/category/add', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 删除商品分类列表
+}
+// 删除商品分类列表
 export const categoryDel = params => {
     try {
         return axios.post('/category/del', params).then(res => res.data)
@@ -472,13 +472,13 @@ export const couponList = params => {
 // 积分消费 列表
 
 export const integralMatchingList = params => {
-        try {
-            return axios.post('/integral/integralMatchingList', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/integral/integralMatchingList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 积分消费添加配比
+}
+// 积分消费添加配比
 
 export const integralintegralMatching = params => {
     try {
@@ -491,22 +491,22 @@ export const integralintegralMatching = params => {
 // 积分明细
 
 export const integralGainintegralSubsidiary = params => {
-        try {
-            return axios.post('/integralGain/integralSubsidiary', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/integralGain/integralSubsidiary', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 积分管理列表
+}
+// 积分管理列表
 
 export const integralintegralManagement = params => {
-        try {
-            return axios.post('/integral/integralManagement', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/integral/integralManagement', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 新用户，扫描，签到，一级分销，二级分销获得
+}
+// 新用户，扫描，签到，一级分销，二级分销获得
 
 export const integralnewUserManagement = params => {
     try {
@@ -531,21 +531,45 @@ export const integralsetOverdueNumber = params => {
 
 
 export const membersSetmembersSet = params => {
-        try {
-            return axios.post('/membersSet/membersSet', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+    try {
+        return axios.post('/membersSet/membersSet', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 置换商品详情
-export const replaceProductListReplaceProductDetail = params => {
-        try {
-            return axios.post('/replaceProductList/ReplaceProductDetail ', params).then(res => res.data)
-        } catch (error) {
-            return Promise.reject(error)
-        }
+}
+// 置换商品列表
+export const replaceProductList = params => {
+    try {
+        return axios.post('/replaceProductList/ReplaceProductList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
     }
-    // 置换公司管理列表
+}
+// 置换商品详情
+export const replaceProductDetail = params => {
+    try {
+        return axios.post('/replaceProductList/ReplaceProductDetail', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 置换商品状态更新
+export const updateStatus = params => {
+    try {
+        return axios.post('/replaceProductList/updateStatus', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 配置数量和价格
+export const replaceProductPriceNumList = params => {
+    try {
+        return axios.post('/replaceProductPriceNum/ReplaceProductPriceNumList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 置换公司管理列表
 export const replaceProductPriceNumReplaceProductPriceNumList = params => {
     try {
         return axios.post('/replaceProductPriceNum/ReplaceProductPriceNumList', params).then(res => res.data)

@@ -11,7 +11,7 @@
       </div>
 
       <!-- orders list -->
-      <div class="order-list-box m-b-30 m-l-5 m-r-5 my-flex" v-for="item in orderItem" :key="item.orderId">
+      <div class="order-list-box m-b-30 m-l-5 m-r-5 my-flex" v-for="(item, index) in orderItem" :key="index">
         <div class="flex-h-center order-list-checkbox" v-if="checkoutFlg">  
           <el-checkbox v-model="item.checkboxFlag" @change="onChangeCheckBoxVal(item.checkboxFlag, item.orderId)" class=""></el-checkbox>
         </div>
