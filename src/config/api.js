@@ -537,10 +537,54 @@ export const membersSetmembersSet = params => {
         return Promise.reject(error)
     }
 }
-// 置换商品详情
-export const replaceProductListReplaceProductDetail = params => {
+// 会员设置列表
+
+
+export const memberList = params => {
     try {
-        return axios.post('/replaceProductList/ReplaceProductDetail ', params).then(res => res.data)
+        return axios.post('/membersSet/membersSetList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 会员设置修改
+
+
+export const memberUpdate = params => {
+    try {
+        return axios.post('/membersSet/updateMembersSet', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 置换商品列表
+export const replaceProductList = params => {
+    try {
+        return axios.post('/replaceProductList/ReplaceProductList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 置换商品详情
+export const replaceProductDetail = params => {
+    try {
+        return axios.post('/replaceProductList/ReplaceProductDetail', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 置换商品状态更新
+export const updateStatus = params => {
+    try {
+        return axios.post('/replaceProductList/updateStatus', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 配置数量和价格
+export const replaceProductPriceNumList = params => {
+    try {
+        return axios.post('/replaceProductPriceNum/ReplaceProductPriceNumList', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -617,7 +661,14 @@ export const delMatchingInfo  = params => {
         return Promise.reject(error)
     }
 }
-
+// 会员等级下拉
+export const MembersSet  = params => {
+    try {
+        return axios.post('/integral/queryIntegralMembersSet', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + '/upload'

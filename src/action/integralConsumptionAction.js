@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { integralMatchingList, integralintegralMatching, delMatchingInfo } from "@/config/api.js"
+import { integralMatchingList, integralintegralMatching, delMatchingInfo, MembersSet, getGoodsInfo, getSupplierInfo } from "@/config/api.js"
 import IntegralConsumptionCom from '../components/componentsPages/integralConsumptionCom.vue'
 export default {
     name: 'integralConsumption',
@@ -13,7 +13,8 @@ export default {
             pageSize: 10,
             listTotal: 0,
             oneorderSn: "",
-            twoorderSn: ""
+            twoorderSn: "",
+
         }
     },
     methods: {
@@ -48,7 +49,6 @@ export default {
             // var leave3 = leave2 % (60 * 1000);     //计算分钟数后剩余的毫秒数
             // var seconds = Math.round(leave3 / 1000);
             var time = dayDiff + "天" + hours + "小时";
-            console.log("时间", time)
             return time
         },
 
@@ -60,7 +60,13 @@ export default {
         // 点击添加或编辑事件
         onChangeModule(data) {
             console.log('详情的值', data)
+            if (JSON.stringify(data) == "{}") {
+                data.titleName = "积分管理-积分消费-添加配比"
+            } else {
+                data.titleName = "积分管理-积分消费-编辑配比"
+            }
             this.aRDetailJson = Object.assign({}, data)
+            this.$refs.integralConsumption.onMembersList();
             this.onAddCon()
         },
 
@@ -105,6 +111,85 @@ export default {
         },
         // 子传父的接收值方法  保存方法
         addARConFunc(data) {
+            if (data.status == true) {
+                data.status = 1
+            } else {
+                data.status = 2
+            }
+            console.log('保存的值', data)
+            if (data.id) {
+                data.supplierId = data.supplierName
+
+            } else {
+                console.log('新增保存')
+                data.skuId = data.skuName
+                data.supplierId = data.supplierName
+            }
+
+
+            startLoading()
+            MembersSet().then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    for (let i = 0; i < res.data.length; i++) {
+                        console.log(data.membersId)
+                        console.log(res.data)
+                        if (data.membersId == res.data[i].value) {
+                            data.membersId = res.data[i].key
+                            console.log(data.membersId)
+                            startLoading()
+                            getGoodsInfo({ supplierId: data.supplierId }).then(res => {
+                                endLoading()
+                                if (res.state === 0) {
+                                    console.log('店铺name', res.data)
+                                    for (let i = 0; i < res.data.length; i++) {
+                                        if (data.skuName == res.data[i].skuId) {
+                                            data.skuId = res.data[i].skuId
+                                            data.skuName = res.data[i].name
+
+                                            startLoading()
+                                            getSupplierInfo().then(res => {
+                                                endLoading()
+                                                if (res.state === 0) {
+                                                    for (let i = 0; i < res.data.length; i++) {
+                                                        if (data.supplierId == res.data[i].id) {
+                                                            data.supplierName = res.data[i].name
+                                                            // 保存的方法
+                                                            this.integralintegralMatching(data);
+                                                        }
+
+                                                    }
+                                                }
+                                            }).catch(() => {
+                                                endLoading()
+                                                this.$message({
+                                                    type: 'error',
+                                                    message: '请求失败，请刷新重试！'
+                                                })
+                                            })
+                                        }
+
+                                    }
+                                }
+                            }).catch(() => {
+                                endLoading()
+                                this.$message({
+                                    type: 'error',
+                                    message: '请求失败，请刷新重试！'
+                                })
+                            })
+                        }
+                    }
+                }
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
+
+            })
+
             console.log(data)
             console.log('保存的方法')
             if (!data.createTime) {
@@ -121,14 +206,14 @@ export default {
                 })
                 return
             }
-            if (!data.supplierId) {
+            if (!data.supplierName) {
                 this.$message({
                     type: 'warning',
                     message: '请输入活动店铺！'
                 })
                 return
             }
-            if (!data.skuId) {
+            if (!data.skuName) {
                 this.$message({
                     type: 'warning',
                     message: '请输入活动产品！'
@@ -156,12 +241,11 @@ export default {
                 })
                 return
             }
-            // 保存的方法
-            this.integralintegralMatching(data);
+
         },
         integralintegralMatching(data) {
             startLoading()
-            console.log('保存的参数',data)
+            console.log('保存的参数', data)
             integralintegralMatching(data).then(res => {
                 endLoading()
                 if (res.state === 0) {
@@ -169,7 +253,7 @@ export default {
                     this.onAddCon()
                     this.$message({
                         type: 'success',
-                        message: '添加配比成功！'
+                        message: '操作成功！'
                     })
                 } else {
                     this.$message({

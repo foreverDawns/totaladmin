@@ -2,33 +2,39 @@
 import { startLoading, endLoading } from '../../common/util'
 
 
-import { getSupplierInfo, getGoodsInfo } from "@/config/api.js"
+import { getSupplierInfo, getGoodsInfo, MembersSet } from "@/config/api.js"
 
 export default {
-    name: 'parameterManageCom',
+    name: 'integralConsumptionCom',
     data() {
         return {
             ruleForm: {
                 createTime: "",
                 endTime: '',
-                supplierId: '',
-                skuId: '',
+                supplierName: '',
+                skuName: '',
                 membersId: '',
                 integralMatching: '',
                 returnsIntegral: ''
             },
+            title: "",
 
             rules: {
                 createTime: [{ required: true, message: '请输入内容', trigger: 'blur' },],
                 endTime: [{ required: true, message: '请输入内容', trigger: 'blur' }],
-                supplierId: [{ required: true, message: '请输入内容', trigger: 'blur' }],
-                skuId: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+                supplierName: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+                skuName: [{ required: true, message: '请输入内容', trigger: 'blur' }],
                 membersId: [{ required: true, message: '请输入内容', trigger: 'blur' }],
                 integralMatching: [{ required: true, message: '请输入内容', trigger: 'blur' }],
                 returnsIntegral: [{ required: true, message: '请输入内容', trigger: 'blur' }],
             },
-            shop:[],   //店铺
-            product:[],  //产品
+            shop: [],   //店铺
+            product: [],  //产品
+            MembersList: [],  //会员等级
+            startTimeOptions:{}, 
+            endTimeOptions:{},
+
+
         }
     },
     // 接收父页面的值
@@ -49,53 +55,124 @@ export default {
     },
 
     methods: {
+        // 限制开始时间
+        clickStartTime() {
+            this.startTimeOptions.disabledDate = time => {
+              if (this.ruleForm.endTime) {
+                if (time.getTime() > new Date(this.ruleForm.endTime).getTime()) {
+                  return true
+                }
+                if (time.getTime() < Date.now() - 8.64e7) {
+                  return true
+                }
+              } else {
+                if (time.getTime() < Date.now() - 8.64e7) {
+                  return true
+                }
+              }
+            }
+          },
+          // 限制结束时间
+          clickEndTime(){
+            this.endTimeOptions.disabledDate = time => {
+              if (this.ruleForm.createTime) {
+                return (
+                  time.getTime() > Date.now || time.getTime() < new Date(this.ruleForm.createTime).getTime()
+                )
+              } else {
+                return time.getTime() < Date.now()
+              }
+            }
+          },
+    
+
+        skuNamehange($event){
+          console.log($event)
+        this.$forceUpdate()
+      },
+
         // 取消提示
         handleClose() {
             this.$emit('onAddCon');
         },
         // 根据商家id获取商品
-        onShop($event){
-            this.ruleForm.skuName=''
-            console.log('店铺id',$event)
-            let id=$event
+        onShop($event) {
+           
+            this.ruleForm.skuName = ''
+            console.log('店铺id', $event)
+            let id = $event
             startLoading()
-            getGoodsInfo({supplierId:id}).then(res => {
+            getGoodsInfo({ supplierId: id }).then(res => {
                 endLoading()
                 if (res.state === 0) {
-                    console.log('店铺name',res.data)
-                    this.product=[];
-                    this.product=res.data
-                } 
+                    console.log('店铺name', res.data)
+                    this.product = [];
+                    this.product = res.data
+                }
             }).catch(() => {
+              endLoading()
+              this.$message({
+                  type: 'error',
+                  message: '请求失败，请刷新重试！'
+              })
             })
 
         },
-          
-       
-         // 获取店铺信息id和name
-         getSupplierInfo(){
-             console.log('店铺')
-             startLoading()
-             getSupplierInfo().then(res => {
-                 endLoading()
-                 if (res.state === 0) {
-                     console.log('店铺name',res.data)
-                     this.shop=res.data
-                 } 
-             }).catch(() => {
-             })
-         },
+
+
+        // 获取店铺信息id和name
+        getSupplierInfo() {
+            console.log('店铺')
+            startLoading()
+            getSupplierInfo().then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    console.log('店铺name', res.data)
+                    this.shop = res.data
+                }
+            }).catch(() => {
+              endLoading()
+              this.$message({
+                  type: 'error',
+                  message: '请求失败，请刷新重试！'
+              })
+            })
+        },
+        //  会员等级下拉
+        onMembersList() {
+            console.log('会员')
+            startLoading()
+            MembersSet().then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    this.MembersList = res.data
+                    for (let i = 0; i < res.data.length; i++) {
+                        if (this.ruleForm.membersId == res.data[i].key) {
+                            this.ruleForm.membersId = res.data[i].value
+                        }
+                    }
+                }
+            }).catch(() => {
+              endLoading()
+              this.$message({
+                  type: 'error',
+                  message: '请求失败，请刷新重试！'
+              })
+            })
+
+        }
     },
     created() {
         this.getSupplierInfo()
+        this.onMembersList()
     },
     mounted() {
     },
     watch: {
         aRDetailJson(res) {
-            console.log('编辑')
             console.log(res, "aRDetailJson")
             this.ruleForm = Object.assign({}, res)
+            this.title = res.titleName
             console.log(this.ruleForm)
         },
 

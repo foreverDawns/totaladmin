@@ -91,7 +91,7 @@
       </el-pagination>
     </div>
     <IntegralConsumptionCom ref="integralConsumption" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"
-      :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson" ></IntegralConsumptionCom>
+    :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson" ></IntegralConsumptionCom>
   </div>
 </template>
 
