@@ -142,13 +142,6 @@ export default {
                         }
                     })
                 }
-                // paramValue
-                // this.fileListTwo = []
-                // if (res.companyAptitude) {
-                //     res.companyAptitude.split(',').map(item => {
-                //         item && this.fileListTwo.push({ 'url': item })
-                //     })
-                // }
             }
 
         }
