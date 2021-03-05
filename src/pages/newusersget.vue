@@ -8,14 +8,14 @@
         <el-input
           type="text"
           placeholder="1000"
-          v-model="orderSn"
+          v-model="levelIntegral"
           show-word-limit
           clearable
         >
         </el-input>
       </div>
       <div class="my-flex flex-l-center">
-        <el-button type="primary" @click="save">保存</el-button>
+        <el-button type="primary" @click="userSave()">保存</el-button>
       </div>
     </div>
 
@@ -51,22 +51,14 @@
         :current-page="pageIndex"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="listTotal"
+        :total="totalNum"
       >
       </el-pagination>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "newusersget",
-  data() {
-    return {
-      orderSn: '1000000'
-    };
-  },
-};
-</script> 
+<script src="../action/newusersget.js"></script>
+
 <style lang='scss' scoped>
 </style>

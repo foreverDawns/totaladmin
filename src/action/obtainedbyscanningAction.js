@@ -18,6 +18,13 @@ export default {
 
     methods: {
         scanSave() {
+            if (!this.levelIntegral) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入扫描积分获得数！',
+                })
+                return
+            }
             startLoading();
             integralnewUserManagement({
                 getAwy: 4,
@@ -37,6 +44,12 @@ export default {
                     })
                 }
 
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试'
+                })
             })
         }
 

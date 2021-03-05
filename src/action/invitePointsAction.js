@@ -32,31 +32,7 @@ export default {
             this.specList();
         },
 
-        // 是否启用
-        whetherToEnable($event, id) {
-            // let uiData = this.boxList.filter(item => item.id === id)[0]
-            // console.log($event, id)
-            if ($event === 1) { //0 启用 1 禁用
-                // 提示
-                this.$confirm('此操作将停止启用当前商品参数, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.onWhetherToEnable(id, $event)
-                }).catch(() => {
-                    this.specList()
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
-                });
-            } else {
-                // 不需要提示
-                this.onWhetherToEnable(id, $event)
-            }
-
-        },
+      
 
         // 时间格式化
         dateFormat(val) {
@@ -65,8 +41,7 @@ export default {
 
         // 添加Ar内容弹框切换
         onAddCon() {
-            // this.aRModuleDialogVisible = !this.aRModuleDialogVisible
-            // this.$refs.InvitePointsCom.aRModuleDialogVisible = true;
+  
             this.$refs.InvitePointsCom.aRModuleDialogVisible = !this.$refs.InvitePointsCom.aRModuleDialogVisible;
             console.log(this.aRModuleDialogVisible)
            

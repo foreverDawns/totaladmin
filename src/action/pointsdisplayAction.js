@@ -6,7 +6,8 @@ export default {
     data() {
         return {
             ruleForm: {
-                overdueNumber: ''
+                isoverdueNumber: ' 永久',     // 充值积分
+                overdueNumber:""   //非充值积分
             },
             type: 1
         }
@@ -17,15 +18,23 @@ export default {
             this.type = val
         },
         onSubmit() {
+            if (!this.ruleForm.overdueNumber) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入非充值积分失效天数',
+                })
+                return
+            }
             startLoading();
             integralsetOverdueNumber({
                 overdueNumber: this.ruleForm.overdueNumber
             }).then(res => {
                 endLoading();
                 if (res.state === 0) {
+                    this.ruleForm.overdueNumber=''
                     this.$message({
                         type: 'success',
-                        message: '添加成功'
+                        message: '非充值积分失效天数保存成功'
                     })
 
                 } else {
@@ -35,6 +44,12 @@ export default {
                     })
                 }
 
+            }).catch(()=>{
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                }) 
             })
         }
 

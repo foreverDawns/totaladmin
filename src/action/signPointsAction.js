@@ -11,10 +11,6 @@ export default {
             listDataArr: [],
             listDataArr2: [],
             addYRConDialogVisible: false,
-            detailsData: '', //详情
-            ordersData: '', // 订单
-            evaluationData: '',// 评价
-            representationData: '',// 申述
             totalNum: '0',
             pageIndex: 1,
             pageSize: 10,
@@ -31,10 +27,7 @@ export default {
     },
     // props: ['changeValue'],
     methods: {
-        // 积分管理  签到明细切换
-        addPoints() {
-            this.$refs.SignPointsCom.aRModuleDialogVisible = true
-        },
+    
         onAddCon() {
             this.aRModuleDialogVisible = !this.aRModuleDialogVisible;
             console.log(this.aRModuleDialogVisible)
@@ -43,11 +36,8 @@ export default {
         dateFormat(val, format) {
             return this.$moment(val).format(format || 'YYYY-MM-DD HH:mm:ss')
         },
-        //获取时间间隔
-        onSelectTime(e) {
-            this.timeValueOne = e
-        },
-        //  当前页  
+        
+        //  积分管里 当前页  
         pageChange(pageIndex) {
             console.log('当前页',pageIndex)
             this.pageIndex = pageIndex;
@@ -60,13 +50,13 @@ export default {
             this.pageSize = pageSize;
             this.getPointsManagementList();
         },
-        // 分页
+        // 签到明细 分页
         pageChangeTwo(pageIndex) {
             this.pageIndexTwo = pageIndex;
 
 
         },
-        // 分页
+        // 签到明细   每页多少条
         pageSizeChangeTwo(pageSize) {
             this.pageIndexTwo = 1;
             this.pageSizeTwo = pageSize;
@@ -143,10 +133,12 @@ export default {
             this.aRDetailJson = Object.assign({}, data)
             this.onAddCon()
         },
-
+        // 获取签到明细详情
         getPointsDetailsList() {
             integralGainintegralSubsidiary().then(res => {
                 this.listDataArr2 = res.data;
+                console.log('签到明细详情',this.listDataArr2)
+
             })
         },
         // 获取积分管理详情
@@ -189,7 +181,6 @@ export default {
             });
 
         },
-        // 删除商品参数内容详情
         delIntegralSetting(reqJson) {
             delIntegralSetting(reqJson).then(res => {
                 endLoading()
