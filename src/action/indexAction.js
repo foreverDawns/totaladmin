@@ -45,6 +45,12 @@ export default {
             { id: '15-3', icon: 'homeIcon', authName: '置换参数管理', path: '/parameterManagement', },
           ]
         },
+        {
+          id: '16', icon: 'homeIcon', authName: '系统设置', hsaChildren: true, children: [
+            { id: '16-1', icon: 'homeIcon', authName: '用户管理', path: '/systemManage', },
+            { id: '16-2', icon: 'homeIcon', authName: '角色管理', path: '/parameterManagement', },
+          ]
+        },
       ],
       currentTime: new Date().toLocaleString()
     }
