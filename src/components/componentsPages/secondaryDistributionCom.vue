@@ -15,7 +15,7 @@
         label-width="100px"
       >
         <el-form-item label="活动店铺" prop="name">
-          <el-input class="width-500" v-model="ruleForm.name"></el-input>
+          <el-input class="width-500" v-model="ruleForm.supplierId"></el-input>
         </el-form-item>
         <el-form-item label="活动产品" prop="name">
           <el-input class="width-500" v-model="ruleForm.name"></el-input>

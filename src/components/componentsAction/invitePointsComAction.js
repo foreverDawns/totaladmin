@@ -5,7 +5,7 @@ import VDistpicker from 'v-distpicker'
 import { fileUpdate } from "@/config/api.js"
 
 export default {
-    name: 'parameterManageCom',
+    name: 'InvitePointsCom',
     data() {
         return {
             ruleForm: {
@@ -237,12 +237,13 @@ export default {
         addARConFunc: {
             type: Function
         },
+       
     },
 
     methods: {
         // 取消提示
         handleClose() {
-            this.aRModuleDialogVisible = false;
+            this.$emit('onAddCon');
         },
 
         handleCloseTwo(tag) {
@@ -364,6 +365,7 @@ export default {
 
     watch: {
         aRDetailJson(res) {
+            console.log('子元素')
             console.log(res, "aRDetailJson")
             this.fileList = []
             this.fileListTwo = []

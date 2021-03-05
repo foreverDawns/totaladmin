@@ -537,6 +537,26 @@ export const membersSetmembersSet = params => {
         return Promise.reject(error)
     }
 }
+// 会员设置列表
+
+
+export const memberList = params => {
+    try {
+        return axios.post('/membersSet/membersSetList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 会员设置修改
+
+
+export const memberUpdate = params => {
+    try {
+        return axios.post('/membersSet/updateMembersSet', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 // 置换商品列表
 export const replaceProductList = params => {
     try {
@@ -589,10 +609,30 @@ export const reliaceSelleraddSeller = params => {
 
 
 
+
 // 置换参数列表
 export const replaceParamTitleList = params => {
     try {
         return axios.post('/replaceParamTitle/replaceParamTitleList', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 签到积分
+// 积分管理删除
+export const delIntegralSetting = params => {
+    try {
+        return axios.post('/integral/delIntegralSetting', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 积分保存
+export const newUserManagement = params => {
+    try {
+        return axios.post('/integral/newUserManagement', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -607,10 +647,37 @@ export const addGoodsTitle = params => {
     }
 }
 
+// 根据商家id获取商品
+export const getGoodsInfo  = params => {
+        try {
+            return axios.post('/integral/getGoodsInfo', params).then(res => res.data)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    
+// 获取店铺信息id和name
+export const getSupplierInfo  = params => {
+    try {
+        return axios.post('/integral/getSupplierInfo', params).then(res => res.data)
+
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 // 修改置换参数列表
 export const updateParamTitle = params => {
     try {
         return axios.post('/replaceParamTitle/updateParamTitle', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 删除积分消费配比
+export const delMatchingInfo  = params => {
+    try {
+        return axios.post('/integral/delMatchingInfo', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -624,6 +691,15 @@ export const disableTitle = params => {
         return Promise.reject(error)
     }
 }
+// 会员等级下拉
+export const MembersSet  = params => {
+    try {
+        return axios.post('/integral/queryIntegralMembersSet', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 // 删除参数标题
 export const deleteTitle = params => {
     try {
@@ -632,7 +708,6 @@ export const deleteTitle = params => {
         return Promise.reject(error)
     }
 }
-
 
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + '/upload'

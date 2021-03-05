@@ -60,14 +60,13 @@
 
 <script>
 export default {
-  name: "",
+  name: "newusersget",
   data() {
     return {
       orderSn: '1000000'
     };
   },
 };
-</script>
-<script src="../action/invitePointsAction.js"></script>
+</script> 
 <style lang='scss' scoped>
 </style>

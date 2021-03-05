@@ -12,13 +12,15 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             listTotal: 0,
+            orderSnSter:'',
+            orderSnEnd:''
         }
     },
 
     methods: {
-        addPoints() {
-            this.$refs.InvitePointsCom.aRModuleDialogVisible = true;
-        },
+        // addPoints() {
+        //     this.$refs.InvitePointsCom.aRModuleDialogVisible = true;
+        // },
         pageChange(pageIndex) {
             this.pageIndex = pageIndex;
             this.specList();
@@ -63,7 +65,11 @@ export default {
 
         // 添加Ar内容弹框切换
         onAddCon() {
-            this.aRModuleDialogVisible = !this.aRModuleDialogVisible
+            // this.aRModuleDialogVisible = !this.aRModuleDialogVisible
+            // this.$refs.InvitePointsCom.aRModuleDialogVisible = true;
+            this.$refs.InvitePointsCom.aRModuleDialogVisible = !this.$refs.InvitePointsCom.aRModuleDialogVisible;
+            console.log(this.aRModuleDialogVisible)
+           
         },
         // 添加Ar内容
         editARCon(id) {
@@ -71,6 +77,7 @@ export default {
                 // 获取详情
                 this.specDetail({ 'id': id })
             } else {
+                console.log('添加')
                 this.aRDetailJson = Object.assign({}, {})
                 this.onAddCon()
             }
@@ -78,11 +85,14 @@ export default {
 
         // 获取商品规格详情
         specDetail(reqJson) {
+            console.log('进入详情')
             reqJson.supplierId = this.supplierId
             specDetail(reqJson).then(res => {
+                console.log('失败了')
                 endLoading()
                 if (res.state === 0) {
                     this.aRDetailJson = Object.assign({}, res.data)
+                    console.log('获取到的数据',this.aRDetailJson)
                     this.onAddCon()
                 } else {
                     this.$message({
@@ -91,10 +101,11 @@ export default {
                     });
                 }
             }).catch(() => {
+                // 关闭页面
                 endLoading()
                 this.$message({
                     type: 'error',
-                    message: '获取商品规格详情失败!'
+                    message: '邀请积分详情失败!'
                 });
             })
         },
@@ -106,6 +117,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
+                // 加载提示
                 startLoading()
                 this.deleteSpec({ id: id })
             }).catch(() => {

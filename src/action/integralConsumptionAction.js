@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { integralMatchingList, addSpecAndValue, specDetail, updateSpec, deleteSpec, deleteSpecValue } from "@/config/api.js"
+import { integralMatchingList, integralintegralMatching, delMatchingInfo, MembersSet, getGoodsInfo, getSupplierInfo } from "@/config/api.js"
 import IntegralConsumptionCom from '../components/componentsPages/integralConsumptionCom.vue'
 export default {
     name: 'integralConsumption',
@@ -12,12 +12,15 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             listTotal: 0,
+            oneorderSn: "",
+            twoorderSn: "",
+
         }
     },
     methods: {
-        addPoints() {
-            this.$refs.integralConsumption.aRModuleDialogVisible = true;
-        },
+        // addPoints() {
+        //     this.$refs.integralConsumption.aRModuleDialogVisible = true;
+        // },
         pageChange(pageIndex) {
             this.pageIndex = pageIndex;
             this.specList();
@@ -29,158 +32,45 @@ export default {
             this.specList();
         },
 
-        // 是否启用
-        whetherToEnable($event, id) {
-            // let uiData = this.boxList.filter(item => item.id === id)[0]
-            // console.log($event, id)
-            if ($event === 1) { //0 启用 1 禁用
-                // 提示
-                this.$confirm('此操作将停止启用当前商品参数, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.onWhetherToEnable(id, $event)
-                }).catch(() => {
-                    this.specList()
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
-                });
-            } else {
-                // 不需要提示
-                this.onWhetherToEnable(id, $event)
-            }
 
-        },
 
         // 时间格式化
-        dateFormat(val) {
-            return this.$moment(val).format('YYYY-MM-DD HH:mm:ss')
+        dateFormat(beginTime, endTime) {
+            var dateBegin = new Date(beginTime);
+            var dateEnd = new Date(endTime);
+            var dateDiff = dateEnd.getTime() - dateBegin.getTime();//时间差的毫秒数
+            var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
+            var leave1 = dateDiff % (24 * 3600 * 1000);    //计算天数后剩余的毫秒数
+            var hours = Math.floor(leave1 / (3600 * 1000));//计算出小时数
+            //计算相差分钟数
+            // var leave2 = leave1 % (3600 * 1000);   //计算小时数后剩余的毫秒数
+            // var minutes = Math.floor(leave2 / (60 * 1000)); //计算相差分钟数
+            //计算相差秒数
+            // var leave3 = leave2 % (60 * 1000);     //计算分钟数后剩余的毫秒数
+            // var seconds = Math.round(leave3 / 1000);
+            var time = dayDiff + "天" + hours + "小时";
+            return time
         },
 
-        // 添加Ar内容弹框切换
+        // 弹框切换
         onAddCon() {
             this.aRModuleDialogVisible = !this.aRModuleDialogVisible
         },
-        // 添加Ar内容
-        editARCon(id) {
-            if (id) {
-                // 获取详情
-                this.specDetail({ 'id': id })
+
+        // 点击添加或编辑事件
+        onChangeModule(data) {
+            console.log('详情的值', data)
+            if (JSON.stringify(data) == "{}") {
+                data.titleName = "积分管理-积分消费-添加配比"
             } else {
-                this.aRDetailJson = Object.assign({}, {})
-                this.onAddCon()
+                data.titleName = "积分管理-积分消费-编辑配比"
             }
+            this.aRDetailJson = Object.assign({}, data)
+            this.$refs.integralConsumption.onMembersList();
+            this.onAddCon()
         },
 
-        // 获取商品规格详情
-        specDetail(reqJson) {
-
-            specDetail(reqJson).then(res => {
-                endLoading()
-                if (res.state === 0) {
-                    this.aRDetailJson = Object.assign({}, res.data)
-                    this.onAddCon()
-                } else {
-                    this.$message({
-                        type: 'error',
-                        message: res.message
-                    });
-                }
-            }).catch(() => {
-                endLoading()
-                this.$message({
-                    type: 'error',
-                    message: '获取商品规格详情失败!'
-                });
-            })
-        },
-
-        // 删除内容
-        deleteHHCon(id) {
-            this.$confirm('此操作将删除内容, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                startLoading()
-                this.deleteSpec({ id: id })
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
-        },
-
-        // addARConFunc
-        addARConFunc(data, arr) {
-            console.log(data)
-            console.log(arr)
-
-            if (!data.specName) {
-                this.$message({
-                    type: 'warning',
-                    message: '请输入属性分类！'
-                })
-                return
-            }
-            if (!data.specValues.length) {
-                this.$message({
-                    type: 'warning',
-                    message: '参数值不能为空！'
-                })
-                return
-            }
-            // if (data.parmContent) {
-            //   // data.parmContent = data.parmContent.replace('，', ',')
-            //   data.parmContent = data.parmContent.replace(new RegExp('，', 'g'), ',')
-            // }
-            let reqData = {
-                "specId": "string",
-                "specName": "string",
-                "specValueList": []
-            }
-
-            let newArr = []
-            data.specValues.map(item => {
-                newArr.push({
-                    specValueName: item.specValue,
-                    specValueId: item.valueId
-                })
-            })
-            reqData.specId = data.id
-            reqData.specName = data.specName
-            reqData.specValueList = newArr
-            if (reqData.specId) {
-                console.log(reqData)
-                if (arr.length > 0) {
-                    this.deleteSpecValue(arr, reqData)
-                } else {
-                    this.updateSpec(reqData)
-                }
-            } else {
-                this.addSpecAndValue(reqData)
-            }
-        },
-
-        //替换数组中的 key 
-        changeKey(arr, key) {
-            let newArr = [];
-            arr.forEach(item => {
-                let newObj = {};
-                for (var i = 0; i < key.length; i++) {
-                    newObj[key[i]] = item[Object.keys(item)[i]]
-                }
-                newArr.push(newObj);
-            })
-            console.log(newArr)
-            return newArr;
-        },
-
-        // 获取商品参数内容列表
+        // 获取列表
         specList() {
             startLoading()
             const reqData = {
@@ -192,8 +82,12 @@ export default {
                 if (res.state === 0) {
                     this.listDataArr = res.data.data.map(item => {
                         item.status == 1 ? item.status = true : item.status = false;
+                        // this.getGoodsInfo(item.skuId)
+                        console.log('数据', item)
                         return item
                     })
+
+                    console.log('列表', this.listDataArr)
                     this.listTotal = res.data.count
                     if (this.listDataArr.length < 0) {
                         this.$message({
@@ -215,92 +109,188 @@ export default {
                 })
             })
         },
-
-        // 添加商品规格内容详情
-        addSpecAndValue(reqJson) {
-            console.log(reqJson)
-            const reqData = {
-                specName: reqJson.specName,
-                specValueName: []
+        // 子传父的接收值方法  保存方法
+        addARConFunc(data) {
+            if (data.status == true) {
+                data.status = 1
+            } else {
+                data.status = 2
             }
-            reqJson.specValueList.map(item => {
-                reqData.specValueName.push(item.specValueName)
-            })
+            console.log('保存的值', data)
+            if (data.id) {
+                data.supplierId = data.supplierName
+
+            } else {
+                console.log('新增保存')
+                data.skuId = data.skuName
+                data.supplierId = data.supplierName
+            }
+
+
             startLoading()
-            addSpecAndValue(reqData).then(res => {
+            MembersSet().then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    for (let i = 0; i < res.data.length; i++) {
+                        console.log(data.membersId)
+                        console.log(res.data)
+                        if (data.membersId == res.data[i].value) {
+                            data.membersId = res.data[i].key
+                            console.log(data.membersId)
+                            startLoading()
+                            getGoodsInfo({ supplierId: data.supplierId }).then(res => {
+                                endLoading()
+                                if (res.state === 0) {
+                                    console.log('店铺name', res.data)
+                                    for (let i = 0; i < res.data.length; i++) {
+                                        if (data.skuName == res.data[i].skuId) {
+                                            data.skuId = res.data[i].skuId
+                                            data.skuName = res.data[i].name
+
+                                            startLoading()
+                                            getSupplierInfo().then(res => {
+                                                endLoading()
+                                                if (res.state === 0) {
+                                                    for (let i = 0; i < res.data.length; i++) {
+                                                        if (data.supplierId == res.data[i].id) {
+                                                            data.supplierName = res.data[i].name
+                                                            // 保存的方法
+                                                            this.integralintegralMatching(data);
+                                                        }
+
+                                                    }
+                                                }
+                                            }).catch(() => {
+                                                endLoading()
+                                                this.$message({
+                                                    type: 'error',
+                                                    message: '请求失败，请刷新重试！'
+                                                })
+                                            })
+                                        }
+
+                                    }
+                                }
+                            }).catch(() => {
+                                endLoading()
+                                this.$message({
+                                    type: 'error',
+                                    message: '请求失败，请刷新重试！'
+                                })
+                            })
+                        }
+                    }
+                }
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
+
+            })
+
+            console.log(data)
+            console.log('保存的方法')
+            if (!data.createTime) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入活动期限！'
+                })
+                return
+            }
+            if (!data.endTime) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入结束时间！'
+                })
+                return
+            }
+            if (!data.supplierName) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入活动店铺！'
+                })
+                return
+            }
+            if (!data.skuName) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入活动产品！'
+                })
+                return
+            }
+            if (!data.membersId) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入用户等级！'
+                })
+                return
+            }
+            if (!data.integralMatching) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入积分配比！'
+                })
+                return
+            }
+            if (!data.returnsIntegral) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入返还积分！'
+                })
+                return
+            }
+
+        },
+        integralintegralMatching(data) {
+            startLoading()
+            console.log('保存的参数', data)
+            integralintegralMatching(data).then(res => {
                 endLoading()
                 if (res.state === 0) {
                     this.specList()
                     this.onAddCon()
                     this.$message({
                         type: 'success',
-                        message: '保存成功!'
-                    });
+                        message: '操作成功！'
+                    })
                 } else {
                     this.$message({
                         type: 'error',
-                        message: res.message
-                    });
+                        message: '请求失败，请刷新重试！'
+                    })
                 }
+
             }).catch(() => {
                 endLoading()
                 this.$message({
                     type: 'error',
-                    message: '保存失败!'
-                });
+                    message: '请求失败，请刷新重试！'
+                })
+
             })
         },
-        // 删除商品参数值
-        deleteSpecValue(arr, reqData) {
-            startLoading()
-            deleteSpecValue({ id: arr }).then(res => {
-                if (res.state === 0) {
-                    this.updateSpec(reqData)
-                } else {
-                    endLoading()
-                    this.$message({
-                        type: 'error',
-                        message: '删除分类值失败!'
-                    });
-                }
+        // 删除方法
+        deleteHHCon(id) {
+            this.$confirm('此操作将删除内容, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                startLoading()
+                this.delMatchingInfo({ id: id })
             }).catch(() => {
-                endLoading()
                 this.$message({
-                    type: 'error',
-                    message: '删除分类值失败!'
+                    type: 'info',
+                    message: '已取消删除'
                 });
-            })
-        },
-        // 修改商品参数内容详情
-        updateSpec(reqJson) {
-            startLoading()
-            updateSpec(reqJson).then(res => {
-                endLoading()
-                if (res.state === 0) {
-                    this.specList()
-                    this.onAddCon()
-                    this.$message({
-                        type: 'success',
-                        message: '保存成功!'
-                    });
-                } else {
-                    this.$message({
-                        type: 'error',
-                        message: res.message
-                    });
-                }
-            }).catch(() => {
-                endLoading()
-                this.$message({
-                    type: 'error',
-                    message: '保存失败!'
-                });
-            })
+            });
+
         },
 
-        // 删除商品参数内容详情
-        deleteSpec(reqJson) {
-            deleteSpec(reqJson).then(res => {
+        delMatchingInfo(reqJson) {
+            delMatchingInfo(reqJson).then(res => {
                 endLoading()
                 if (res.state === 0) {
                     this.specList()
@@ -322,6 +312,9 @@ export default {
                 });
             })
         },
+
+
+
 
     },
 

@@ -1,6 +1,6 @@
 <template>
   <div class="pages-box bg-white border-ra-15 min-height-100 p-30 m-20">
-    <div class="title-box fs-16 fw-700 mb-20">积分管理-邀请盲盒池-积分邀请</div>
+    <div class="title-box fs-16 fw-700 mb-20">积分管理-邀请盲盒池</div>
     <div class="my-flex">
       <div class="bg-blue p-15 border-ra-6 m-r-10 width-200 mb-20">
         <div class="m-b-10 fs-13 blue">默认区间值</div>
@@ -8,7 +8,7 @@
           <el-input
             type="text"
             placeholder="1000"
-            v-model="orderSn"
+            v-model="orderSnSter"
             show-word-limit
             clearable
           >
@@ -19,7 +19,7 @@
           <el-input
             type="text"
             placeholder="1000"
-            v-model="orderSn"
+            v-model="orderSnEnd"
             show-word-limit
             clearable
           >
@@ -46,7 +46,8 @@
           <th width="15%">获得奖励</th>
           <th width="15%">获得奖励时间</th>
           <th width="15%">概览</th>
-          <th width="10%" class="blue fw-700" @click="addPoints()">+ 添加</th>
+          <!-- addPoints -->
+          <th width="10%" class="blue fw-700" @click="editARCon()">+ 添加</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
@@ -80,7 +81,8 @@
       >
       </el-pagination>
     </div>
-    <InvitePointsCom ref="InvitePointsCom"></InvitePointsCom>
+    <InvitePointsCom  ref="InvitePointsCom" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"
+      :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson"></InvitePointsCom>
   </div>
 </template>
 
