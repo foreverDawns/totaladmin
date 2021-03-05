@@ -112,6 +112,7 @@ export default {
                 "paramValue": "",
                 valueId: null
             })
+            this.$forceUpdate()
         },
     },
 
