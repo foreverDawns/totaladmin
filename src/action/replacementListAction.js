@@ -54,6 +54,11 @@ export default {
         endLoading()
       })
     },
+    // 更新视图
+    inputChange($event) {
+      console.log($event)
+      this.$forceUpdate();
+    },
     // 获取置换店铺列表及商品
     replaceProductDetail(id) {
       startLoading()

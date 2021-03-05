@@ -68,6 +68,7 @@ export default {
             })
 
         },
+        // 子组件传入父组件
         addARConFunc(data, options) {
             console.log('保存', data, options)
             if (!data.consume) {

@@ -611,7 +611,7 @@ export const reliaceSelleraddSeller = params => {
 
 
 // 置换参数列表
-export const replaceParamTitlereplaceParamTitleList = params => {
+export const replaceParamTitleList = params => {
     try {
         return axios.post('/replaceParamTitle/replaceParamTitleList', params).then(res => res.data)
     } catch (error) {
@@ -628,10 +628,20 @@ export const delIntegralSetting = params => {
         return Promise.reject(error)
     }
 }
+
 // 积分保存
 export const newUserManagement = params => {
     try {
         return axios.post('/integral/newUserManagement', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 添加置换参数列表
+export const addGoodsTitle = params => {
+    try {
+        return axios.post('/replaceParamTitle/goodsEditor', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -650,6 +660,16 @@ export const getGoodsInfo  = params => {
 export const getSupplierInfo  = params => {
     try {
         return axios.post('/integral/getSupplierInfo', params).then(res => res.data)
+
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 修改置换参数列表
+export const updateParamTitle = params => {
+    try {
+        return axios.post('/replaceParamTitle/updateParamTitle', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -662,10 +682,28 @@ export const delMatchingInfo  = params => {
         return Promise.reject(error)
     }
 }
+
+// 启用禁用参数标题
+export const disableTitle = params => {
+    try {
+        return axios.post('/replaceParamTitle/disableTitle', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 // 会员等级下拉
 export const MembersSet  = params => {
     try {
         return axios.post('/integral/queryIntegralMembersSet', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 删除参数标题
+export const deleteTitle = params => {
+    try {
+        return axios.post('/replaceParamTitle/deleteTitle', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
