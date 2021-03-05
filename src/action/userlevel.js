@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from "@/common/util";
-import { memberList, membersSetmembersSet } from "@/config/api.js"; //memberUpdate
+import { memberList, membersSetmembersSet, memberUpdate} from "@/config/api.js"; //memberUpdate
 import UnerleverlCom from '../components/componentsPages/userlevelCom.vue'
 
 export default {
@@ -99,44 +99,76 @@ export default {
                 })
                 return
             }
-               
-                    for (let i = 0; i < options.length; i++) {
-                        if (data.levelSign == options[i].value) {
-                            data.levelSign = options[i].key
-                            // this.integralintegralMatching(data)
-                        }
-                    }
-                    this.integralintegralMatching(data)
-                },
-      
-      
+            for (let i = 0; i < options.length; i++) {
+                if (data.levelSign == options[i].value) {
+                    data.levelSign = options[i].key
+                    // this.integralintegralMatching(data)
+                }
+            }
+            this.integralintegralMatching(data)
+        },
+        // 编辑/保存保存接口
         integralintegralMatching(data) {
-            startLoading();
-            membersSetmembersSet(data)
-                .then((res) => {
-                    endLoading();
-                    if (res.state === 0) {
-                        this.$message({
-                            type: "success",
-                            message: "操作成功！",
-                        });
-                        this.memberList()
-                    } else {
+            if(data.id){
+                // 编辑 memberUpdate
+                startLoading();
+                memberUpdate(data)
+                    .then((res) => {
+                        endLoading();
+                        if (res.state === 0) {
+                            this.$message({
+                                type: "success",
+                                message: "用户等级编辑成功！",
+                            });
+                            this.memberList()
+                        } else {
+                            this.$message({
+                                type: "error",
+                                message: "请求失败，请刷新重试！",
+                            });
+                        }
+                        this.aRModuleDialogVisible = false;
+                    })
+                    .catch(() => {
+                        endLoading();
                         this.$message({
                             type: "error",
                             message: "请求失败，请刷新重试！",
                         });
-                    }
-                    this.aRModuleDialogVisible = false;
-                })
-                .catch(() => {
-                    endLoading();
-                    this.$message({
-                        type: "error",
-                        message: "请求失败，请刷新重试！",
                     });
-                });
+    
 
+
+            }else{
+                startLoading();
+                membersSetmembersSet(data)
+                    .then((res) => {
+                        endLoading();
+                        if (res.state === 0) {
+                            this.$message({
+                                type: "success",
+                                message: "用户等级保存成功！",
+                            });
+                            this.memberList()
+                        } else {
+                            this.$message({
+                                type: "error",
+                                message: "请求失败，请刷新重试！",
+                            });
+                        }
+                        this.aRModuleDialogVisible = false;
+                    })
+                    .catch(() => {
+                        endLoading();
+                        this.$message({
+                            type: "error",
+                            message: "请求失败，请刷新重试！",
+                        });
+                    });
+    
+
+            }
+       
         },
 
     },
