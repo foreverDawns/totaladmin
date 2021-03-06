@@ -47,7 +47,7 @@
           <th width="15%">获得奖励时间</th>
           <th width="15%">概览</th>
           <!-- addPoints -->
-          <th width="10%" class="blue fw-700" @click="editARCon()">+ 添加</th>
+          <th width="10%" class="blue fw-700" @click="editPoint({})">+ 添加</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
@@ -59,10 +59,10 @@
           <td>{{ item.specValueName }}</td>
           <td>{{ item.specValueName }}</td>
           <td>
-            <el-button type="info" round @click="deleteHHCon(item.specId)"
+            <el-button type="info" round @click="deletePoint(item.specId)"
               >删除</el-button
             >
-            <el-button type="primary" round @click="editARCon(item.specId)"
+            <el-button type="primary" round @click="editPoint(item)"
               >编辑</el-button
             >
           </td>
