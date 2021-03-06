@@ -73,7 +73,7 @@
               <td class="p-t-10 p-b-10">
                 <el-button class="m-b-10 m-r-5" type="danger" round @click="deleteHHCon(item.userId)">删除</el-button>
                 <el-button class="m-b-10 m-r-5" type="warning" round @click="onSystemBtn(item)">修改</el-button>
-                <el-button class="m-b-10 " type="primary" round @click="handleShow">分配角色</el-button>
+                <el-button class="m-b-10 " type="primary" round @click="adminRoleList(item)">分配角色</el-button>
                 <!-- <el-button class="m-b-10" type="info" round @click="handleShow">修改密码</el-button> -->
               </td>
             </tr>
@@ -88,20 +88,22 @@
         </el-pagination>
       </div>
       <div style="height: 60px;"></div>
+      <!-- 分配角色 -->
       <el-dialog title="分配角色" center :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
-        <div class="">
-          <el-tree :data="data" show-checkbox default-expand-all node-key="id" ref="tree" highlight-current
-            :props="defaultProps">
-          </el-tree>
+        <div class="" v-if="roleData && editDetailJson">
+          <div class="m-b-10" v-for="(item, index) in roleData" :key="index">
+            <el-radio v-model="editDetailJson.roleId" @change="onRadioChange($event)" :label="item.roleId">{{item.name}}</el-radio>
+          </div>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleShow">取 消</el-button>
-          <el-button type="primary" @click="handleShow">确 定</el-button>
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="onSubmitRole(editDetailJson)">确 定</el-button>
         </span>
       </el-dialog>
     </div>
-    <SystemManageCom ref="SystemManageCom" :systemDialogVisible="systemDialogVisible" @systemHandleShow="systemHandleShow"
-    :addAndEditConFunc="addAndEditConFunc" :editDetailJson="editDetailJson" ></SystemManageCom>
+    <SystemManageCom :systemDialogVisible="systemDialogVisible"
+      @systemHandleShow="systemHandleShow" :addAndEditConFunc="addAndEditConFunc" :editDetailJson="editDetailJson">
+    </SystemManageCom>
   </div>
 
 </template>

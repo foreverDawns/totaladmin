@@ -1,10 +1,10 @@
 import { startLoading, endLoading } from '../common/util'
-import { adminSysUserList, adminSysUserDel, adminSysUserUpdate, adminSysUserAdd, adminSysUserStatus, adminRoleList, updateRole } from "@/config/api.js"
+import { adminRoleList, roleDelete, roleUpdate, roleAdd, adminSysUserStatus, updateRole } from "@/config/api.js"
 
-import SystemManageCom from "../components/componentsPages/systemManageCom.vue"
+import RoleManageCom from "../components/componentsPages/roleManageCom.vue"
 
 export default {
-  name: 'systemManage',
+  name: 'roleManage',
   data() {
     return {
       activeName: 'all',
@@ -17,18 +17,50 @@ export default {
         1: '男',
         2: '女',
       },
-      accountNum: '',
       accountName: '',
-      accountPhone: '',
-      registrationTime: '',
-      searUser: 0,
-      phoneNumber: '',
-      nameStr: '',
       dialogVisible: false,
       systemDialogVisible: false,
       editDetailJson: {},
-      roleData: [],
-      roleId: "7"
+      data: [{
+        id: 1,
+        label: '一级 1',
+        children: [{
+          id: 4,
+          label: '二级 1-1',
+          children: [{
+            id: 9,
+            label: '三级 1-1-1'
+          }, {
+            id: 10,
+            label: '三级 1-1-2'
+          }]
+        }]
+      }, {
+        id: 2,
+        label: '一级 2',
+        children: [{
+          id: 5,
+          label: '二级 2-1'
+        }, {
+          id: 6,
+          label: '二级 2-2'
+        }]
+      }, {
+        id: 3,
+        label: '一级 3',
+        children: [{
+          id: 7,
+          label: '二级 3-1'
+        }, {
+          id: 8,
+          label: '二级 3-2'
+        }]
+      }],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
+
     }
   },
   methods: {
@@ -49,13 +81,17 @@ export default {
     // 分页
     pageChange(pageIndex) {
       this.pageIndex = pageIndex;
-      this.adminSysUserList();
+      this.adminRoleList();
     },
     // 分页
     pageSizeChange(pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
-      this.adminSysUserList();
+      this.adminRoleList();
+    },
+
+    onCheckChange($event) {
+      console.log($event)
     },
 
     // 隐藏模块
@@ -64,7 +100,7 @@ export default {
     },
 
     // 获取内容列表
-    adminSysUserList() {
+    adminRoleList() {
       startLoading()
       const reqData = {
         pageSize: this.pageSize,
@@ -74,7 +110,7 @@ export default {
         accountPhone: this.accountPhone != '' ? this.accountPhone : null,
         // registrationTime: this.registrationTime,//申请开始日期
       }
-      adminSysUserList(reqData).then(res => {
+      adminRoleList(reqData).then(res => {
         endLoading()
         console.log(res)
         if (res.state === 0) {
@@ -124,7 +160,7 @@ export default {
         }).then(() => {
           this.onWhetherToEnable(id, $event)
         }).catch(() => {
-          this.adminSysUserList()
+          this.adminRoleList()
           this.$message({
             type: 'info',
             message: '已取消'
@@ -143,13 +179,13 @@ export default {
       adminSysUserStatus({ "userId": id, 'status': status }).then(res => {
         endLoading()
         if (res.state === 0) {
-          this.adminSysUserList()
+          this.adminRoleList()
           this.$message({
             type: 'success',
             message: '更新成功！'
           })
         } else {
-          this.adminSysUserList()
+          this.adminRoleList()
           this.$message({
             type: 'error',
             message: '请求失败，请刷新重试！'
@@ -157,7 +193,7 @@ export default {
         }
       }).catch(() => {
         endLoading()
-        this.adminSysUserList()
+        this.adminRoleList()
         this.$message({
           type: 'error',
           message: '请求失败，请刷新重试！'
@@ -167,13 +203,13 @@ export default {
 
     // 删除内容
     deleteHHCon(id) {
-      this.$confirm('此操作将删除账户, 是否继续?', '提示', {
+      this.$confirm('此操作将删除角色, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         startLoading()
-        this.adminSysUserDel({ id: id })
+        this.roleDelete({ roleId: id })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -182,13 +218,13 @@ export default {
       });
     },
     // 删除请求
-    adminSysUserDel(data) {
+    roleDelete(data) {
       startLoading()
-      adminSysUserDel(data).then(res => {
+      roleDelete(data).then(res => {
         endLoading()
         console.log(res)
         if (res.state === 0) {
-          this.adminSysUserList()
+          this.adminRoleList()
           this.$message({
             type: 'success',
             message: '删除成功！'
@@ -224,78 +260,43 @@ export default {
     // 添加 or 修改接收子组件传的值
     addAndEditConFunc(data) {
       console.log(data)
-      if (!data.account) {
-        this.$message({
-          type: 'warning',
-          message: '请输入账号！'
-        })
-        return
-      }
       if (!data.name) {
         this.$message({
           type: 'warning',
-          message: '请输入姓名！'
+          message: '请输入角色名称!'
         })
         return
       }
-      if (!data.birthday) {
+      if (!data.description) {
         this.$message({
           type: 'warning',
-          message: '请选择出生日期！'
+          message: '请输入别名!'
         })
         return
       }
-      if (!data.email) {
+      if (!data.sort) {
         this.$message({
           type: 'warning',
-          message: '请输入邮箱！'
-        })
-        return
-      }
-      if (!data.password && data.userId) {
-        this.$message({
-          type: 'warning',
-          message: '请输入密码！'
+          message: '请输入排序!'
         })
         return
       }
 
-      if (!data.phone) {
-        this.$message({
-          type: 'warning',
-          message: '请输入电话！'
-        })
-        return
-      }
-      if (!data.sex) {
-        this.$message({
-          type: 'warning',
-          message: '请选择性别！'
-        })
-        return
-      }
-      if (!data.status) {
-        this.$message({
-          type: 'warning',
-          message: '请选择状态！'
-        })
-        return
-      }
-      if (data.userId) {
-        this.adminSysUserUpdate(data)
+      if (data.roleId) {
+        this.roleUpdate(data)
       } else {
-        this.adminSysUserAdd(data)
+        this.roleAdd(data)
       }
     },
 
     // 保存修改请求
-    adminSysUserUpdate(data) {
+    roleUpdate(data) {
       startLoading()
-      adminSysUserUpdate(data).then(res => {
+      roleUpdate(data).then(res => {
         endLoading()
         console.log(res)
         if (res.state === 0) {
-          this.adminSysUserList()
+          this.adminRoleList()
           this.systemHandleShow()
           this.$message({
             type: 'success',
@@ -316,13 +317,13 @@ export default {
       })
     },
     // 添加请求
-    adminSysUserAdd(data) {
+    roleAdd(data) {
       startLoading()
-      adminSysUserAdd(data).then(res => {
+      roleAdd(data).then(res => {
         endLoading()
         console.log(res)
         if (res.state === 0) {
-          this.adminSysUserList()
+          this.adminRoleList()
           this.systemHandleShow()
           this.$message({
             type: 'success',
@@ -343,42 +344,57 @@ export default {
       })
     },
 
+    
+
+
     // 显示隐藏设置角色模块
     handleShow() {
       this.dialogVisible = !this.dialogVisible
+      setTimeout(() => {
+        this.$refs.tree.setCheckedNodes([{
+          id: 5,
+          label: '二级 2-1'
+        }, {
+          id: 9,
+          label: '三级 1-1-1'
+        }]);
+      }, 100)
       this.$forceUpdate()
     },
 
     // 获取角色列表 //点击设置角色按钮
-    adminRoleList(data) {
-      startLoading()
-      adminRoleList().then(res => {
-        endLoading()
-        console.log(res)
-        if (res.state === 0) {
-          this.roleData = res.data.data
-          this.editDetailJson = {}
-          this.editDetailJson = Object.assign({}, data)
-          if (this.roleData.length > 0) {
-            this.roleData.map(item => {
-              item.roleId = item.roleId.toString()
-            })
-          }
-          console.log(this.editDetailJson,'1111')
-          this.handleShow()
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message
-          })
-        }
-      }).catch(() => {
-        endLoading()
-        this.$message({
-          type: 'error',
-          message: '请求失败，请点击重试！'
-        })
-      })
+    adminRoleList123456789() {
+      console.log(this.$refs.tree.getCheckedNodes());
+      console.log(this.$refs.tree.getCheckedKeys());
+      // startLoading()
+
+      // adminRoleList123456789().then(res => {
+      //   endLoading()
+      //   console.log(res)
+      //   if (res.state === 0) {
+      //     this.roleData = res.data.data
+      //     this.editDetailJson = {}
+      //     this.editDetailJson = Object.assign({}, data)
+      //     if (this.roleData.length > 0) {
+      //       this.roleData.map(item => {
+      //         item.roleId = item.roleId.toString()
+      //       })
+      //     }
+      //     console.log(this.editDetailJson,'1111')
+      //     this.handleShow()
+      //   } else {
+      //     this.$message({
+      //       type: 'error',
+      //       message: res.message
+      //     })
+      //   }
+      // }).catch(() => {
+      //   endLoading()
+      //   this.$message({
+      //     type: 'error',
+      //     message: '请求失败，请点击重试！'
+      //   })
+      // })
     },
 
     //监听 radio 变化 
@@ -421,23 +437,20 @@ export default {
 
   },
   created() {
-    this.adminSysUserList()
+    this.adminRoleList()
+
   },
 
   components: {
-    SystemManageCom,
+    RoleManageCom,
   },
   mounted() {
     console.log('systemManage')
-    // this.$notify({
-    //   title: '账户/密码',
-    //   message: `您的新账户密码：123456`,
-    //   duration: 0,
-    //   type: 'success'
-    // });
   },
 
-  // comments: {
-  //   GoodsManage,
-  // }
+  watch: {
+    value1(res) {
+      console.log(res)
+    }
+  }
 }

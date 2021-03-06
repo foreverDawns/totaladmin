@@ -14,6 +14,7 @@ import 'quill/dist/quill.bubble.css'
 // 引入css
 import './assets/css/reset.scss'
 import './assets/css/common.scss'
+// import './assets/css/mouseFollow.scss'
 
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 Vue.config.productionTip = false
