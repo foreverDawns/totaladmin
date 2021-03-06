@@ -48,6 +48,13 @@ import newusersget from '../pages/newusersget.vue'
 import replacementList from '../pages/replacementList.vue'
 import parameterManagement from '../pages/parameterManagement.vue'
 import companyManagement from '../pages/companyManagement.vue' 
+
+// 系统设置
+// 用户管理   
+import SystemManage from '../pages/systemManage.vue' 
+
+
+
 //申明使用插件
 Vue.use(VueRouter)
 
@@ -203,6 +210,7 @@ export default new VueRouter({
         { name: 'merchant', path: '/merchant', component: Merchant, meta: { title: "商家管理" } },
         { name: 'merchantDetails', path: '/merchant/:id/:type', component: MerchantDetails, meta: { title: "商家详情" } },
         { name: 'company', path: '/company', component: Company, meta: { title: "置换公司管理" } },
+        { name: 'systemManage', path: '/systemManage', component: SystemManage, meta: { title: "用户管理" } },
       ],
     },
     { name: 'Login', path: '/login', component: () => import('@/pages/login'), meta: { title: "登录" } },

@@ -268,7 +268,7 @@ export const qiDaysIncome = params => {
 // 获取公司、店铺列表
 export const sellerCompanyList = params => {
     try {
-        return axios.post('/seller/sellerCompanyList', params).then(res => res.data)
+        return axios.post('/replaceSeller/sellerCompanyList', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -277,7 +277,7 @@ export const sellerCompanyList = params => {
 // 获取入驻公司下面所有的商家信息
 export const sellerListByCompanyId = params => {
     try {
-        return axios.post('/seller/sellerListByCompanyId', params).then(res => res.data)
+        return axios.post('/seller/commonSuppliers', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
@@ -704,6 +704,52 @@ export const MembersSet  = params => {
 export const deleteTitle = params => {
     try {
         return axios.post('/replaceParamTitle/deleteTitle', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 系统设置 API
+// 获取用户列表
+export const adminSysUserList = params => {
+    try {
+        return axios.post('/adminSysUser/list', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 修改用户列表
+export const adminSysUserUpdate = params => {
+    try {
+        return axios.post('/adminSysUser/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 添加用户
+export const adminSysUserAdd = params => {
+    try {
+        return axios.post('/adminSysUser/add', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 删除添加用户
+export const adminSysUserDel = params => {
+    try {
+        return axios.post('/adminSysUser/del', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 删除添加用户
+export const adminSysUserStatus = params => {
+    try {
+        return axios.post('/adminSysUser/updateStatus', params).then(res => res.data)
     } catch (error) {
         return Promise.reject(error)
     }
