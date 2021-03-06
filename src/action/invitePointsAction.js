@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { specList } from "@/config/api.js"
+import { sysBlindBoxList } from "@/config/api.js"
 import InvitePointsCom from '../components/componentsPages/invitePointsCom.vue'
 export default {
     name: 'invitePoints',
@@ -29,7 +29,7 @@ export default {
             this.specList();
         },
 
-        // 时间格式化
+        // 时间格式化  
         dateFormat(val) {
             return this.$moment(val).format('YYYY-MM-DD HH:mm:ss')
         },
@@ -41,9 +41,9 @@ export default {
         // 添加 / 编辑内容
         editPoint(data) {
             if (JSON.stringify(data) == '{}') {
-                data.titleName = '积分管理-邀请盲盒池-编辑'
-            } else {
                 data.titleName = '积分管理-邀请盲盒池-添加'
+            } else {
+                data.titleName = '积分管理-邀请盲盒池-编辑'
             }
             this.aRDetailJson = Object.assign({}, data)
             this.onAddCon()
@@ -89,10 +89,7 @@ export default {
                 })
                 return
             }
-            // if (data.parmContent) {
-            //   // data.parmContent = data.parmContent.replace('，', ',')
-            //   data.parmContent = data.parmContent.replace(new RegExp('，', 'g'), ',')
-            // }
+     
             let reqData = {
                 "specId": "string",
                 "specName": "string",
@@ -129,17 +126,17 @@ export default {
             const reqData = {
                 pageSize: this.pageSize,
                 pageNum: this.pageIndex,
-                'supplierId': this.supplierId,
             }
-            specList(reqData).then(res => {
+            sysBlindBoxList(reqData).then(res => {
                 endLoading()
                 if (res.state === 0) {
                     this.listDataArr = res.data.data
                     this.listTotal = res.data.count
+                    console.log('详情',this.listDataArr)
                     if (this.listDataArr.length < 0) {
                         this.$message({
                             type: 'warning',
-                            message: '您还没有积分管理列表参数！'
+                            message: '您还没有盲盒池列表参数！'
                         })
                     }
                 } else {

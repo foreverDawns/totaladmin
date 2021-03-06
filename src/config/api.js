@@ -637,6 +637,55 @@ export const newUserManagement = params => {
         return Promise.reject(error)
     }
 }
+//  积分  新用户获得 详情列表
+export const queryRegisterList = params => {
+    try {
+        return axios.post('/integral/queryRegisterList ', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+//  邀请积分 获取奖励列表
+export const sysBlindBoxgetPrize = params => {
+    try {
+        return axios.post('/sysBlindBox/getPrize', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 列表详情
+export const sysBlindBoxList = params => {
+    try {
+        return axios.post('/sysBlindBox/list', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 修改
+export const sysBlindBoxUpdate = params => {
+    try {
+        return axios.post('/sysBlindBox/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 添加
+export const sysBlindBoxAdd = params => {
+    try {
+        return axios.post('/sysBlindBox/add', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 删除
+export const sysBlindBoxDel = params => {
+    try {
+        return axios.post('/sysBlindBox/del', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 
 // 添加置换参数列表
 export const addGoodsTitle = params => {
@@ -754,6 +803,7 @@ export const adminSysUserStatus = params => {
         return Promise.reject(error)
     }
 }
+
 
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + '/upload'
