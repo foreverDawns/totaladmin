@@ -33,6 +33,15 @@ export const checkUser = params => {
     }
 }
 
+// 退出登录验证
+export const onLoginOut = params => {
+    try {
+        return axios.post('logout/logout', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 // 产品列表
 // 获取产品列表
 export const goodsQueryAll = params => {
@@ -804,6 +813,50 @@ export const adminSysUserStatus = params => {
     }
 }
 
+// 获取角色列表
+export const adminRoleList = params => {
+    try {
+        return axios.post('/adminSysRole/list', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 更新角色
+export const updateRole = params => {
+    try {
+        return axios.post('/adminSysUser/updateRole', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 添加角色
+export const roleAdd = params => {
+    try {
+        return axios.post('/adminSysRole/add', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 更新角色
+export const roleUpdate = params => {
+    try {
+        return axios.post('/adminSysRole/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 删除角色
+export const roleDelete = params => {
+    try {
+        return axios.post('/adminSysRole/del', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + '/upload'

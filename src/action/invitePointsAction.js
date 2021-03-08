@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { sysBlindBoxList } from "@/config/api.js"
+import { sysBlindBoxList, sysBlindBoxUpdate, sysBlindBoxAdd, sysBlindBoxDel} from "@/config/api.js"
 import InvitePointsCom from '../components/componentsPages/invitePointsCom.vue'
 export default {
     name: 'invitePoints',
@@ -13,7 +13,7 @@ export default {
             pageSize: 10,
             listTotal: 0,
             orderSnSter: '',  //默认区间值
-            orderSnEnd: ''  //默认区间值
+            orderSnEnd: '',  //默认区间值
         }
     },
 
@@ -50,7 +50,7 @@ export default {
         },
 
         // 删除内容
-        deleteHHCon(id) {
+        deletePoint(id) {
             this.$confirm('此操作将删除内容, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -66,57 +66,171 @@ export default {
                 });
             });
         },
-        deleteSpec(){
+          // 删除
+          deleteSpec(data) {
+            startLoading();
+            sysBlindBoxDel(data).then(res => {
+                endLoading();
+                if (res.state === 0) {
+                    this.$message({
+                        type: 'success',
+                        message: '邀请盲池盒删除成功！'
+                    })
+                    this.specList()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败,请刷新重试！'
+                    })
+                }
 
+            }).catch(()=>{
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败,请刷新重试！'
+                }) 
+            })
         },
+
 
         // addARConFunc
-        addARConFunc(data, arr) {
+        addARConFunc(data) {
             console.log(data)
-            console.log(arr)
-
-            if (!data.specName) {
+            if (!data.inviteNum) {
                 this.$message({
                     type: 'warning',
-                    message: '请输入属性分类！'
+                    message: '请输入邀请人数！'
                 })
                 return
             }
-            if (!data.specValues.length) {
+            if (!data.integralNum) {
                 this.$message({
                     type: 'warning',
-                    message: '参数值不能为空！'
+                    message: '请输入获得积分！'
                 })
                 return
             }
-     
-            let reqData = {
-                "specId": "string",
-                "specName": "string",
-                "specValueList": []
+            if (!data.probability) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入概率！'
+                })
+                return
+            }
+            if (!data.validHour) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入有效时间！'
+                })
+                return
             }
 
-            let newArr = []
-            data.specValues.map(item => {
-                newArr.push({
-                    specValueName: item.specValue,
-                    specValueId: item.valueId
-                })
-            })
-            reqData.specId = data.id
-            reqData.specName = data.specName
-            reqData.specValueList = newArr
-            if (reqData.specId) {
-                console.log(reqData)
-                if (arr.length > 0) {
-                    this.deleteSpecValue(arr, reqData)
-                } else {
-                    this.updateSpec(reqData)
+            if(data.zhoubianIds){
+                if(JSON.stringify(data.zhoubianIds) == "{}" ){
+                    data.zhoubianIds=''
+                }else{
+                    data.zhoubianIds= data.zhoubianIds.toString()
                 }
+            }
+            if(data.quanbaoIds){
+                if(JSON.stringify(data.quanbaoIds) == "{}" ){
+                    data.quanbaoIds=''
+                }else{
+                    data.quanbaoIds= data.quanbaoIds.toString()
+                }
+            }
+            if(data.quanbaoMenpiaoIds){
+                if(JSON.stringify(data.quanbaoMenpiaoIds) == "{}" ){
+                    data.quanbaoMenpiaoIds=''
+                }else{
+                    data.quanbaoMenpiaoIds= data.quanbaoMenpiaoIds.toString()
+                }
+            }
+            if(data.shibaoIds){
+                if(JSON.stringify(data.shibaoIds) == "{}" ){
+                    data.shibaoIds=''
+                }else{
+                    data.shibaoIds= data.shibaoIds.toString()
+                }
+            }
+            if(data.giftIds){
+                if(JSON.stringify(data.giftIds) == "{}" ){
+                    data.giftIds=''
+                }else{
+                    data.giftIds= data.giftIds.toString()
+                }
+            }
+            if(data.jingquMenpiaoIds){
+                if(JSON.stringify(data.jingquMenpiaoIds) == "{}" ){
+                    data.jingquMenpiaoIds=''
+                }else{
+                    data.jingquMenpiaoIds= data.jingquMenpiaoIds.toString()
+                }
+            }
+
+            if (data.id) {
+                //  修改
+                this.sysBlindBoxUpdate(data)
             } else {
-                this.addSpecAndValue(reqData)
+                // 添加
+                this.sysBlindBoxAdd(data)
             }
         },
+        sysBlindBoxUpdate(data) {
+            startLoading()
+            sysBlindBoxUpdate(data).then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    this.$message({
+                        type: 'success',
+                        message: '邀请盲池盒编辑成功！'
+                    })
+                    this.specList()
+                    this.onAddCon()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败,请刷新重试!'
+                    })
+                }
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败,请刷新重试！'
+                })
+            })
+
+        },
+        sysBlindBoxAdd(data) {
+            startLoading();
+            sysBlindBoxAdd(data).then(res => {
+                endLoading();
+                if (res.state === 0) {
+                    this.$message({
+                        type: 'success',
+                        message: '邀请盲池盒保存成功！'
+                    })
+                    this.specList()
+                    this.onAddCon()
+
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败,请刷新重试！'
+                    })
+                }
+
+            }).catch(()=>{
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败,请刷新重试！'
+                }) 
+            })
+        },
+      
 
 
 
@@ -132,7 +246,7 @@ export default {
                 if (res.state === 0) {
                     this.listDataArr = res.data.data
                     this.listTotal = res.data.count
-                    console.log('详情',this.listDataArr)
+                    console.log('详情', this.listDataArr)
                     if (this.listDataArr.length < 0) {
                         this.$message({
                             type: 'warning',

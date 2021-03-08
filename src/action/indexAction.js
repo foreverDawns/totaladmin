@@ -1,4 +1,6 @@
-import { checkUser } from "@/config/api.js"
+import { checkUser, loginOut } from "@/config/api.js"
+import { startLoading, endLoading } from '../common/util'
+// import '../assets/js/mouseFollow'
 
 export default {
   name: 'index',
@@ -48,7 +50,7 @@ export default {
         {
           id: '16', icon: 'homeIcon', authName: '系统设置', hsaChildren: true, children: [
             { id: '16-1', icon: 'homeIcon', authName: '用户管理', path: '/systemManage', },
-            { id: '16-2', icon: 'homeIcon', authName: '角色管理', path: '/parameterManagement', },
+            { id: '16-2', icon: 'homeIcon', authName: '角色管理', path: '/roleManage', },
           ]
         },
       ],
@@ -82,7 +84,79 @@ export default {
     // 获取当前的时间
     getCurrentTime() {
       this.currentTime = new Date().toLocaleString()
-    }
+    },
+
+    // 退出登录
+    onLoginOut() {
+      this.$confirm('此操作将退出登录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      }).then(() => {
+        startLoading()
+        const that = this
+        setTimeout(function () {
+          endLoading()
+          that.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+          that.$router.push({
+            path: '/login',
+            replace: true
+          });
+          localStorage.removeItem('totaladmintoken')
+
+        }, 2000)
+        // this.loginOut()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        });
+      });
+    },
+    // 退出登录方法  
+    loginOut() {
+      loginOut().then(res => {
+        endLoading()
+        if (res.state === 0) {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+          this.$router.push({
+            path: '/login',
+            replace: true
+          });
+          // localStorage.removeItem('mytoken')
+        } else {
+          this.$message({
+            type: 'error',
+            message: '退出失败!'
+          });
+        }
+      }).catch(res => {
+        console.log(res)
+        endLoading()
+        if (res.message === "登录失效，请重新登录") {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+          this.$router.push({
+            path: '/login',
+            replace: true
+          });
+        } else {
+          this.$message({
+            type: 'error',
+            message: '退出失败123!'
+          });
+        }
+      })
+    },
     
 
   },

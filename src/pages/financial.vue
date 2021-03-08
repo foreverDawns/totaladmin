@@ -422,6 +422,6 @@
     <div class="clear"></div>
   </div>
 </template>
-<script src="../action/pointsdisplayAction.js"></script>
+<script src="../action/financial.js"></script>
 <style lang='scss' scoped>
 </style>

@@ -157,7 +157,7 @@
                   src="../assets/images/menuImg/logo.png"
                   alt=""
                 />
-                <div class="task-item-con">安全退出</div>
+                <div class="task-item-con" @click="onLoginOut">安全退出</div>
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>

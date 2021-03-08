@@ -41,7 +41,7 @@ import secondaryDistribution from '../pages/secondaryDistribution.vue'
 import integralConsumption from '../pages/integralConsumption.vue'
 import obtainedbyscanning from '../pages/obtainedbyscanning.vue'
 import userlevel from '../pages/userlevel.vue'
-import pointsdisplay from '../pages/pointsdisplay.vue'
+import pointsdisplay from '../pages/pointsdisplay.vue'  
 import newusersget from '../pages/newusersget.vue'
 // 财务管理
 import Financial  from '../pages/financial.vue'
@@ -55,6 +55,8 @@ import companyManagement from '../pages/companyManagement.vue'
 // 系统设置
 // 用户管理   
 import SystemManage from '../pages/systemManage.vue' 
+// 角色管理
+import RoleManage from '../pages/roleManage.vue' 
 
 
 
@@ -221,6 +223,7 @@ export default new VueRouter({
         { name: 'merchantDetails', path: '/merchant/:id/:type', component: MerchantDetails, meta: { title: "商家详情" } },
         { name: 'company', path: '/company', component: Company, meta: { title: "置换公司管理" } },
         { name: 'systemManage', path: '/systemManage', component: SystemManage, meta: { title: "用户管理" } },
+        { name: 'roleManage', path: '/roleManage', component: RoleManage, meta: { title: "角色管理" } },
       ],
     },
     { name: 'Login', path: '/login', component: () => import('@/pages/login'), meta: { title: "登录" } },

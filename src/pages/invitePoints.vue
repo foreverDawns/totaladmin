@@ -55,11 +55,11 @@
           <td>{{ index + 1 }}</td>
           <td class="p-t-10 p-b-10">{{ item.inviteNum }}</td>
           <td>{{ item.integralNum }}</td>
-          <td>{{ item.giftIds }}</td>
+          <td>{{ item.prizeStr }}</td>
           <td>{{ item.validHour }}</td>
           <td>{{ item.probability }}%</td> 
           <td>
-            <el-button type="info" round @click="deletePoint(item.specId)"
+            <el-button type="info" round @click="deletePoint(item.id)"
               >删除</el-button
             >
             <el-button type="primary" round @click="editPoint(item)"

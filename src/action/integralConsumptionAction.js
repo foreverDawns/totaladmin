@@ -241,7 +241,7 @@ export default {
                 })
                 return
             }
-
+            integralintegralMatching()
         },
         integralintegralMatching(data) {
             startLoading()

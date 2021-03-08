@@ -125,6 +125,7 @@ export default {
             console.log('店铺')
             startLoading()
             getSupplierInfo().then(res => {
+              console.log('错了')
                 endLoading()
                 if (res.state === 0) {
                     console.log('店铺name', res.data)

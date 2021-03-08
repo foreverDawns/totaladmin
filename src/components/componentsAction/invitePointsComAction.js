@@ -1,7 +1,7 @@
 // import VDistpicker from 'v-distpicker'
 
 import { startLoading, endLoading } from '../../common/util'
-import {sysBlindBoxgetPrize } from "@/config/api.js"
+import { sysBlindBoxgetPrize } from "@/config/api.js"
 
 export default {
     name: 'InvitePointsCom',
@@ -9,209 +9,30 @@ export default {
         return {
             ruleForm: {
                 inviteNum: "",
-                integralNum:'',
-                probability:'',
-                giftIds:"",
-                validHour:""
+                integralNum: '',
+                probability: '',
+                validHour: "",
+                zhoubianIds: '',
+                quanbaoIds: '',
+                quanbaoMenpiaoIds: '',
+                shibaoIds: '',
+                giftIds: '',
+                jingquMenpiaoIds: "",
             },
-            options: [{
-                value: 'zhinan',
-                label: '指南',
-                children: [{
-                    value: 'shejiyuanze',
-                    label: '设计原则',
-                    children: [{
-                        value: 'yizhi',
-                        label: '一致'
-                    }, {
-                        value: 'fankui',
-                        label: '反馈'
-                    }, {
-                        value: 'xiaolv',
-                        label: '效率'
-                    }, {
-                        value: 'kekong',
-                        label: '可控'
-                    }]
-                }, {
-                    value: 'daohang',
-                    label: '导航',
-                    children: [{
-                        value: 'cexiangdaohang',
-                        label: '侧向导航'
-                    }, {
-                        value: 'dingbudaohang',
-                        label: '顶部导航'
-                    }]
-                }]
-            }, {
-                value: 'zujian',
-                label: '组件',
-                children: [{
-                    value: 'basic',
-                    label: 'Basic',
-                    children: [{
-                        value: 'layout',
-                        label: 'Layout 布局'
-                    }, {
-                        value: 'color',
-                        label: 'Color 色彩'
-                    }, {
-                        value: 'typography',
-                        label: 'Typography 字体'
-                    }, {
-                        value: 'icon',
-                        label: 'Icon 图标'
-                    }, {
-                        value: 'button',
-                        label: 'Button 按钮'
-                    }]
-                }, {
-                    value: 'form',
-                    label: 'Form',
-                    children: [{
-                        value: 'radio',
-                        label: 'Radio 单选框'
-                    }, {
-                        value: 'checkbox',
-                        label: 'Checkbox 多选框'
-                    }, {
-                        value: 'input',
-                        label: 'Input 输入框'
-                    }, {
-                        value: 'input-number',
-                        label: 'InputNumber 计数器'
-                    }, {
-                        value: 'select',
-                        label: 'Select 选择器'
-                    }, {
-                        value: 'cascader',
-                        label: 'Cascader 级联选择器'
-                    }, {
-                        value: 'switch',
-                        label: 'Switch 开关'
-                    }, {
-                        value: 'slider',
-                        label: 'Slider 滑块'
-                    }, {
-                        value: 'time-picker',
-                        label: 'TimePicker 时间选择器'
-                    }, {
-                        value: 'date-picker',
-                        label: 'DatePicker 日期选择器'
-                    }, {
-                        value: 'datetime-picker',
-                        label: 'DateTimePicker 日期时间选择器'
-                    }, {
-                        value: 'upload',
-                        label: 'Upload 上传'
-                    }, {
-                        value: 'rate',
-                        label: 'Rate 评分'
-                    }, {
-                        value: 'form',
-                        label: 'Form 表单'
-                    }]
-                }, {
-                    value: 'data',
-                    label: 'Data',
-                    children: [{
-                        value: 'table',
-                        label: 'Table 表格'
-                    }, {
-                        value: 'tag',
-                        label: 'Tag 标签'
-                    }, {
-                        value: 'progress',
-                        label: 'Progress 进度条'
-                    }, {
-                        value: 'tree',
-                        label: 'Tree 树形控件'
-                    }, {
-                        value: 'pagination',
-                        label: 'Pagination 分页'
-                    }, {
-                        value: 'badge',
-                        label: 'Badge 标记'
-                    }]
-                }, {
-                    value: 'notice',
-                    label: 'Notice',
-                    children: [{
-                        value: 'alert',
-                        label: 'Alert 警告'
-                    }, {
-                        value: 'loading',
-                        label: 'Loading 加载'
-                    }, {
-                        value: 'message',
-                        label: 'Message 消息提示'
-                    }, {
-                        value: 'message-box',
-                        label: 'MessageBox 弹框'
-                    }, {
-                        value: 'notification',
-                        label: 'Notification 通知'
-                    }]
-                }, {
-                    value: 'navigation',
-                    label: 'Navigation',
-                    children: [{
-                        value: 'menu',
-                        label: 'NavMenu 导航菜单'
-                    }, {
-                        value: 'tabs',
-                        label: 'Tabs 标签页'
-                    }, {
-                        value: 'breadcrumb',
-                        label: 'Breadcrumb 面包屑'
-                    }, {
-                        value: 'dropdown',
-                        label: 'Dropdown 下拉菜单'
-                    }, {
-                        value: 'steps',
-                        label: 'Steps 步骤条'
-                    }]
-                }, {
-                    value: 'others',
-                    label: 'Others',
-                    children: [{
-                        value: 'dialog',
-                        label: 'Dialog 对话框'
-                    }, {
-                        value: 'tooltip',
-                        label: 'Tooltip 文字提示'
-                    }, {
-                        value: 'popover',
-                        label: 'Popover 弹出框'
-                    }, {
-                        value: 'card',
-                        label: 'Card 卡片'
-                    }, {
-                        value: 'carousel',
-                        label: 'Carousel 走马灯'
-                    }, {
-                        value: 'collapse',
-                        label: 'Collapse 折叠面板'
-                    }]
-                }]
-            }, {
-                value: 'ziyuan',
-                label: '资源',
-                children: [{
-                    value: 'axure',
-                    label: 'Axure Components'
-                }, {
-                    value: 'sketch',
-                    label: 'Sketch Templates'
-                }, {
-                    value: 'jiaohu',
-                    label: '组件交互文档'
-                }]
-            }],
-            rules: {},
-            title:'',
-            value1: [],
+            options: [],
+            jinianpin: [],
+            juanbao:[],
+            menjuanbao:[],
+            shibai:[],
+            lipin:[],
+            mianmenpiao:[],
+            rules: {
+                inviteNum: [{ required: true, message: '请输入内容', trigger: 'blur' },],
+                integralNum: [{ required: true, message: '请输入内容', trigger: 'blur' },],
+                probability: [{ required: true, message: '请输入内容', trigger: 'blur' },],
+                validHour: [{ required: true, message: '请输入内容', trigger: 'blur' },]
+            },
+            title: '',
         }
     },
     // 接收父页面的值
@@ -227,34 +48,55 @@ export default {
         addARConFunc: {
             type: Function
         },
-       
+
     },
 
     methods: {
+        onTest($event) {
+            console.log($event)
+        },
         // 取消提示
         handleClose() {
             this.$emit('onAddCon');
         },
         // 获取奖励列表
-        sysBlindBoxgetPrize(){
+        sysBlindBoxgetPrize() {
             startLoading()
-            sysBlindBoxgetPrize().then( res => {
+            sysBlindBoxgetPrize().then(res => {
                 endLoading()
                 if (res.state === 0) {
-
-                    this.options= res.data
-                //   res.data.forEach((res,index) => {
-
-                    // if(res.type==1){
-                    //     this.options[index]={
-                    //         key:res.id,
-                    //         label:res.name
-                    //     // }
-                    // }
-                
-                        
-                    // });
-                    console.log('详情6666',this.options)
+                    this.jinianpin=[],
+                    this.juanbao=[],
+                    this.menjuanbao=[],
+                    this.shibai=[],
+                    this.lipin=[],
+                    this.mianmenpiao=[],
+                    this.options = res.data
+                    this.options.map(item => {
+                        item.label = item.name + ""
+                        item.value = item.id + ''
+                        if (item.type == 2) {
+                            this.jinianpin.push(item)
+                        }
+                        if (item.type == 3) {
+                            this.juanbao.push(item)
+                        }
+                        if (item.type == 4) {
+                            this.menjuanbao.push(item)
+                        }
+                        if (item.type == 1) {
+                            this.shibai.push(item)
+                        }
+                        if (item.type == 6) {
+                            this.lipin.push(item)
+                        }
+                        if (item.type == 5) {
+                            this.mianmenpiao.push(item)
+                        }
+                       
+                    })
+               
+                    console.log('shibao1', this.juanbao)
                     if (this.options.length < 0) {
                         this.$message({
                             type: 'warning',
@@ -275,28 +117,36 @@ export default {
                 })
             })
         }
-        
+
 
     },
     created() {
         this.sysBlindBoxgetPrize()
-     
+
     },
     mounted() {
-     
+
     },
     watch: {
         aRDetailJson(res) {
-            console.log('子组件',res)
+            console.log('子组件', res)
+            console.log('列表值', this.jinianpin)
             this.ruleForm = Object.assign({}, res)
+            if (this.ruleForm.zhoubianIds) { this.ruleForm.zhoubianIds = this.ruleForm.zhoubianIds.split(',') }
+            if (this.ruleForm.quanbaoIds) { this.ruleForm.quanbaoIds = this.ruleForm.quanbaoIds.split(',') }
+            if (this.ruleForm.quanbaoMenpiaoIds) { this.ruleForm.quanbaoMenpiaoIds = this.ruleForm.quanbaoMenpiaoIds.split(',') }
+            if (this.ruleForm.shibaoIds) { this.ruleForm.shibaoIds = this.ruleForm.shibaoIds.split(',') }
+            if (this.ruleForm.giftIds) { this.ruleForm.giftIds = this.ruleForm.giftIds.split(',') }
+            if (this.ruleForm.jingquMenpiaoIds) { this.ruleForm.jingquMenpiaoIds = this.ruleForm.jingquMenpiaoIds.split(',') }
+
             this.title = res.titleName
-            console.log(this.title )
+            console.log(this.title)
         },
 
     },
 
     components: {
-        
+
     }
 
 
