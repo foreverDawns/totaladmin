@@ -858,5 +858,23 @@ export const roleDelete = params => {
     }
 }
 
+// 获取菜单列表以及角色配置信息
+export const queryAllByView = params => {
+    try {
+        return axios.post('/adminSysMenuRole/queryAllByView', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+// 角色菜单关系添加
+export const menuRoleBind = params => {
+    try {
+        return axios.post('/adminSysMenuRole/menuRole', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + '/upload'

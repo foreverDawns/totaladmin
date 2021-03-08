@@ -37,7 +37,7 @@
               <td class="m-b-10 m-t-10">
                 <el-button class="m-r-5" type="danger" round @click="deleteHHCon(item.roleId)">删除</el-button>
                 <el-button class="m-r-5" type="warning" round @click="onSystemBtn(item)">修改</el-button>
-                <el-button class="" type="primary" round @click="handleShow">权限配置</el-button>
+                <el-button class="" type="primary" round @click="queryAllByView(item.roleId)">权限配置</el-button>
               </td>
             </tr>
           </tbody>
@@ -53,21 +53,19 @@
       <div style="height: 60px;"></div>
       <el-dialog title="配置权限" center :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
         <div class="block">
-          <span class="demonstration">默认显示所有Tag</span>
           <el-tree
-            :data="data"
+            :data="menuData"
             show-checkbox
             default-expand-all
-            node-key="id"
+            node-key="value"
             ref="tree"
-            @check-change= 'onCheckChange'
             highlight-current
             :props="defaultProps">
           </el-tree>
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="handleShow">取 消</el-button>
-          <el-button type="primary" @click="adminRoleList123456789">确 定</el-button>
+          <el-button type="primary" @click="menuRoleBind">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -83,5 +81,14 @@
 
 
 <style lang="scss" scoped>
+  /deep/ .el-dialog--center .el-dialog__body {
+    height: 61vh;
+    overflow-y: auto;
+    background: #f5f7f8;
+  }
+
+  /deep/ .el-tree {
+    background: #f5f7f8;
+  }
 
 </style>

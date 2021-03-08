@@ -271,6 +271,12 @@ export default {
                         type: 'success',
                         message: '添加成功'
                     })
+                    this.$notify({
+                        title: '这是您的账号/密码，请牢记。',
+                        message: `账号：${res.data.userName}, 密码： ${res.data.password}`,
+                        duration: 0,
+                        type: 'success'
+                      });
                 } else {
                     this.$message({
                         type: 'error',

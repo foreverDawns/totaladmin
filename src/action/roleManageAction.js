@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { adminRoleList, roleDelete, roleUpdate, roleAdd, adminSysUserStatus, updateRole } from "@/config/api.js"
+import { adminRoleList, roleDelete, roleUpdate, roleAdd, adminSysUserStatus, updateRole, queryAllByView, menuRoleBind } from "@/config/api.js"
 
 import RoleManageCom from "../components/componentsPages/roleManageCom.vue"
 
@@ -21,41 +21,8 @@ export default {
       dialogVisible: false,
       systemDialogVisible: false,
       editDetailJson: {},
-      data: [{
-        id: 1,
-        label: '一级 1',
-        children: [{
-          id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: '一级 2',
-        children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
-        }]
-      }],
+      menuData: [],
+      editRoleId: '',
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -90,10 +57,6 @@ export default {
       this.adminRoleList();
     },
 
-    onCheckChange($event) {
-      console.log($event)
-    },
-
     // 隐藏模块
     handleClose(done) {
       done();
@@ -105,10 +68,7 @@ export default {
       const reqData = {
         pageSize: this.pageSize,
         pageNum: this.pageIndex,
-        accountNum: this.accountNum != '' ? this.accountNum : null,
-        accountName: this.accountName != '' ? this.accountName : null,
-        accountPhone: this.accountPhone != '' ? this.accountPhone : null,
-        // registrationTime: this.registrationTime,//申请开始日期
+        name: this.accountName != '' ? this.accountName : null,
       }
       adminRoleList(reqData).then(res => {
         endLoading()
@@ -146,6 +106,7 @@ export default {
       this.accountName = ''//商品名称
       this.accountPhone = ''//发货状态
       this.registrationTime = ''
+      this.adminRoleList()
     },
 
     // 是否启用
@@ -350,51 +311,81 @@ export default {
     // 显示隐藏设置角色模块
     handleShow() {
       this.dialogVisible = !this.dialogVisible
-      setTimeout(() => {
-        this.$refs.tree.setCheckedNodes([{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 9,
-          label: '三级 1-1-1'
-        }]);
-      }, 100)
+      // setTimeout(() => {
+      //   this.$refs.tree.setCheckedKeys([2, 5, 6, 9]);
+      // }, 100)
       this.$forceUpdate()
     },
 
+    //  获取菜单列表以及角色配置信息
+    queryAllByView(id) {
+      this.editRoleId = id
+      startLoading()
+      queryAllByView({roleId: id}).then(res => {
+        endLoading()
+        console.log(res)
+        if (res.state === 0) {
+          console.log(res)
+          if (res.data.menuList.length > 0) {
+            this.menuData = res.data.menuList[0].children
+            setTimeout(() => {this.$refs.tree.setCheckedKeys(res.data.haveMenuList);}, 30)
+          }
+          this.handleShow()
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.message
+          })
+        }
+      }).catch(() => {
+        endLoading()
+        this.$message({
+          type: 'error',
+          message: '请求失败，请点击重试！'
+        })
+      })
+    },
     // 获取角色列表 //点击设置角色按钮
-    adminRoleList123456789() {
-      console.log(this.$refs.tree.getCheckedNodes());
-      console.log(this.$refs.tree.getCheckedKeys());
-      // startLoading()
-
-      // adminRoleList123456789().then(res => {
-      //   endLoading()
-      //   console.log(res)
-      //   if (res.state === 0) {
-      //     this.roleData = res.data.data
-      //     this.editDetailJson = {}
-      //     this.editDetailJson = Object.assign({}, data)
-      //     if (this.roleData.length > 0) {
-      //       this.roleData.map(item => {
-      //         item.roleId = item.roleId.toString()
-      //       })
-      //     }
-      //     console.log(this.editDetailJson,'1111')
-      //     this.handleShow()
-      //   } else {
-      //     this.$message({
-      //       type: 'error',
-      //       message: res.message
-      //     })
-      //   }
-      // }).catch(() => {
-      //   endLoading()
-      //   this.$message({
-      //     type: 'error',
-      //     message: '请求失败，请点击重试！'
-      //   })
-      // })
+    menuRoleBind() {
+      const reqData = []
+      const sleckRoleIdArr = this.$refs.tree.getCheckedKeys()
+      if (sleckRoleIdArr.length > 0) {
+        sleckRoleIdArr.map(item => {
+          reqData.push({
+            roleId: this.editRoleId,
+            menuId: item
+          })
+        })
+      } else {
+        this.$message({
+          type: 'warning',
+          message: '请选择权限配置项！'
+        })
+        return
+      }
+      startLoading()
+      menuRoleBind(reqData).then(res => {
+        endLoading()
+        console.log(res)
+        if (res.state === 0) {
+          this.$message({
+            type: 'success',
+            message: "修改成功！"
+          })
+          this.handleShow()
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.message
+          })
+        }
+      }).catch(() => {
+        endLoading()
+        this.$message({
+          type: 'error',
+          message: '修改失败，请点击重试！'
+        })
+      })
     },
 
     //监听 radio 变化 
