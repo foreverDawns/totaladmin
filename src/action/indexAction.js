@@ -152,7 +152,7 @@ export default {
         } else {
           this.$message({
             type: 'error',
-            message: '退出失败123!'
+            message: '退出失败!'
           });
         }
       })
