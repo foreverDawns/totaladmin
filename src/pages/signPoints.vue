@@ -107,7 +107,7 @@
                 <td>{{ index + 1 }}</td>
                 <td class="p-t-10 p-b-10">{{ item.arNumber }}</td>
                 <td>{{ item.createTime ? dateFormat(item.createTime) : '--' }}</td>
-                <td>{{ item.specValueName }}</td> 
+                <td>{{ item.continuousDays }}</td> 
                 <td>{{ item.num }}</td>
               </tr>
             </tbody>

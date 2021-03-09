@@ -48,22 +48,26 @@
           <th width="15%">一级分销百分比</th>
           <th width="15%">二级分销百分比</th>
           <th width="15%">状态</th>
-          <th width="10%" class="blue fw-700" @click="onChangeModule()">+ 新增配比</th>
+          <th width="10%" class="blue fw-700" @click="onChangeModule({})">+ 新增配比</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
         <tr class="fs-12" v-for="(item, index) in listDataArr" :key="index">
           <td>{{ index + 1 }}</td>
-          <td class="p-t-10 p-b-10">{{ item.specName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
+          <td class="p-t-10 p-b-10">{{ item.supplierName }}</td>
+          <td>{{ item.productName }}</td>
+          <td>{{ item.distributionOne }}</td>
+          <td>{{ item.distributionTwo }}</td>
+             <td>
+                <el-switch v-model="item.status" :active-value="0" :inactive-value="1"
+                  @change="whetherToEnable($event, item.id)" active-color="#13ce66" inactive-color="red">
+                </el-switch>
+              </td>
           <td>
-            <el-button type="info" round @click="deleteHHCon(item.specId)"
+            <el-button type="info" round @click="deleteHHCon(item.id)"
               >删除</el-button
             >
-            <el-button type="primary" round @click="onChangeModule(item.specId)"
+            <el-button type="primary" round @click="onChangeModule(item)"
               >编辑</el-button
             >
           </td>
@@ -82,7 +86,7 @@
       >
       </el-pagination>
     </div>
-    <SecondaryDistributionCom ref="secondaryDistribution" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon" ></SecondaryDistributionCom>
+    <SecondaryDistributionCom ref="secondaryDistribution" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"  :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson"></SecondaryDistributionCom>
   </div>
 </template>
 

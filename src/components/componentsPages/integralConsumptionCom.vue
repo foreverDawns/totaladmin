@@ -49,7 +49,6 @@
           <!-- <el-input class="width-500" v-model="ruleForm.skuName"></el-input> -->
             <el-select style="width: 500px" v-model="ruleForm.skuName" @change="skuNamehange()"  >
             <el-option  
-                   
             v-for="(item, index) in product"
               :key="index"
               :label="item.name"

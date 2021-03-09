@@ -48,7 +48,7 @@
                       type="text"
                       placeholder="请输入"
                       class="width-135"
-                      v-model="accountNum"
+                      v-model="ruleForm.accountNum"
                       show-word-limit
                       clearable
                     >
@@ -62,7 +62,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountName"
+                    v-model="ruleForm.accountName"
                     show-word-limit
                     clearable
                   >
@@ -76,7 +76,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountPhone"
+                    v-model="ruleForm.accountPhone"
                     show-word-limit
                     clearable
                   >
@@ -90,7 +90,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountPhone"
+                    v-model="ruleForm.accountPhone"
                     show-word-limit
                     clearable
                   >
@@ -103,7 +103,7 @@
               <el-button class="" type="info" @click="clearConfigData"
                 >重置</el-button
               >
-              <el-button type="primary" @click="adminSysUserList"
+              <el-button type="primary" @click="queryList(ruleForm)"
                 >查询</el-button
               >
             </div>
@@ -132,7 +132,7 @@
               </thead>
               <tbody class="table-tbody">
                 <tr
-                  v-for="(item, index) in listDataArr"
+                  v-for="(item, index) in consumptionArr "
                   :key="index"
                   class="fs-12"
                 >
@@ -163,7 +163,7 @@
                       class="m-b-10 m-r-5"
                       type="danger"
                       round
-                      @click="deleteHHCon(item.userId)"
+                      @click="exportExcel(item)"
                       >导出</el-button
                     >
                   </td>
@@ -185,7 +185,7 @@
                       type="text"
                       placeholder="请输入"
                       class="width-135"
-                      v-model="accountNum"
+                      v-model="ruleForm.accountNum"
                       show-word-limit
                       clearable
                     >
@@ -199,7 +199,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountName"
+                    v-model="ruleForm.accountName"
                     show-word-limit
                     clearable
                   >
@@ -213,7 +213,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountPhone"
+                    v-model="ruleForm.accountPhone"
                     show-word-limit
                     clearable
                   >
@@ -227,7 +227,7 @@
               <el-button class="" type="info" @click="clearConfigData"
                 >重置</el-button
               >
-              <el-button type="primary" @click="adminSysUserList"
+              <el-button type="primary" @click="queryList(ruleForm)"
                 >查询</el-button
               >
             </div>
@@ -255,7 +255,7 @@
               </thead>
               <tbody class="table-tbody">
                 <tr
-                  v-for="(item, index) in listDataArr"
+                  v-for="(item, index) in RechargeArr"
                   :key="index"
                   class="fs-12"
                 >
@@ -286,7 +286,7 @@
                       class="m-b-10 m-r-5"
                       type="danger"
                       round
-                      @click="deleteHHCon(item.userId)"
+                      @click="exportExcel(item)"
                       >导出</el-button
                     >
                   </td>
@@ -308,7 +308,7 @@
                       type="text"
                       placeholder="请输入"
                       class="width-135"
-                      v-model="accountNum"
+                      v-model="ruleForm.accountNum"
                       show-word-limit
                       clearable
                     >
@@ -322,7 +322,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountName"
+                    v-model="ruleForm.accountName"
                     show-word-limit
                     clearable
                   >
@@ -336,7 +336,7 @@
                     type="text"
                     placeholder="请输入"
                     class="width-135"
-                    v-model="accountPhone"
+                    v-model="ruleForm.accountPhone"
                     show-word-limit
                     clearable
                   >
@@ -349,7 +349,7 @@
               <el-button class="" type="info" @click="clearConfigData"
                 >重置</el-button
               >
-              <el-button type="primary" @click="adminSysUserList"
+              <el-button type="primary" @click="queryList(ruleForm)"
                 >查询</el-button
               >
             </div>
@@ -376,7 +376,7 @@
               </thead>
               <tbody class="table-tbody">
                 <tr
-                  v-for="(item, index) in listDataArr"
+                  v-for="(item, index) in getIntegralArr"
                   :key="index"
                   class="fs-12"
                 >
@@ -407,7 +407,7 @@
                       class="m-b-10 m-r-5"
                       type="danger"
                       round
-                      @click="deleteHHCon(item.userId)"
+                      @click="exportExcel(item)"
                       >导出</el-button
                     >
                   </td>
