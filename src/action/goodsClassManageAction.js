@@ -95,6 +95,7 @@ export default {
       if (reqData.id) {
         this.categoryUpdate(reqData)
       } else {
+        // reqData.seq = 1
         this.categoryAdd(reqData)
       }
     },
