@@ -173,7 +173,7 @@
 
 <script src="../action/indexAction.js"></script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped>  
 .home {
   height: 100vh;
   background-color: #e5e5e5;

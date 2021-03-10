@@ -1,5 +1,5 @@
 // import { integralGainintegralSubsidiary, integralintegralManagement, delIntegralSetting,newUserManagement} from "@/config/api.js"
-import { startLoading, endLoading } from '../common/util'
+// import { startLoading, endLoading } from '../common/util'
 export default {
     name: 'financial',
     data() {
@@ -19,29 +19,9 @@ export default {
                 accountName: '',
                 accountPhone: ''
             },
-            consumptionArr: [
-                {
-                    account: 'AR 8798',
-                    name: '阿海',
-                    sex: '18635586422',
-                    roleStr: '花儿',
-                    email: '太原',
-                    createTime: '2021-12-14',
-                    phone: "2021-12-14"
-                }
-            ],  //消费
-            RechargeArr: [
-                {
-                    account: 'AR 8798',
-                    name: '阿海',
-                    sex: '18635586422',
-                    roleStr: '花儿',
-                    email: '太原',
-                    createTime: '2021-12-14',
-                    phone: "2021-12-14"
-                }
-            ],   //充值 
-            getIntegralArr: [], //获得积分
+            consumptionArr:[],  //消费
+            RechargeArr:[],   //充值 
+            getIntegralArr:[], //获得积分
 
 
         }
@@ -87,24 +67,10 @@ export default {
             this.pageIndexThree = pageSize;
             this.getIntegralList()
         },
-        // 初始化数据
-        initPage() {
-            startLoading()
-            Promise.all([this.consumptionList(), this.RechargeList(),this.RechargeList()]).then(() => {
-                endLoading()
-            }).catch(() => {
-                endLoading()
-                this.$message({
-                    type: 'error',
-                    message: '请求失败，请刷新重试！'
-                })
-            });
-        },
         // 消费列表
         consumptionList() {
             console.log('消费列表')
         },
-
         //  充值列表
         RechargeList() {
             console.log('充值列表')
@@ -122,8 +88,8 @@ export default {
             console.log(data)
         },
         // 导出功能
-        exportExcel(data) {
-            console.log('导出', data)
+        exportExcel(data){
+            console.log('导出',data)
         },
 
         changeModule(val) {
@@ -134,7 +100,7 @@ export default {
     },
 
     created() {
-        this.initPage();
+        this.consumptionList();
     },
 
     mounted() {

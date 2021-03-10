@@ -12,10 +12,8 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             listTotal: 0,
-            oneorderSn: "1",
-            twoorderSn: "100",
-            recommend:"",
-            status:"",
+            oneorderSn: "1000",
+            twoorderSn: "1",
 
         }
     },

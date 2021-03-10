@@ -1,6 +1,6 @@
 import axios from 'axios'
-// import { Loading, Message } from 'element-ui'
-// import router from '../router/index.js'
+import { Message } from 'element-ui'
+import router from '../router/index.js'
 
 
 axios.defaults.baseURL = process.env.VUE_APP_URL
@@ -21,6 +21,24 @@ axios.interceptors.request.use(function (config) {
     return config
 }, function (error) {
     // Do something with request error
+    return Promise.reject(error)
+})
+
+/* 响应拦截器 */
+axios.interceptors.response.use(function (response) { 
+    return response
+}, function (error) {
+    const { status } = error.response
+    console.log(status)
+    if (status == 500) {
+        Message.error('登录无效，请重新登录')
+        // 清除token
+        localStorage.removeItem('totaladmintoken')
+        // 页面跳转
+        router.replace({
+            path: '/login' // 到登录页重新获取token
+        })
+    } 
     return Promise.reject(error)
 })
 
