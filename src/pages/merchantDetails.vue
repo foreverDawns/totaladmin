@@ -52,7 +52,7 @@
                 <td class=""><div class="order-img m-t-10 m-b-10"><img :src="item.images.split(',')[0]" /></div></td>
                 <td class="">{{ item.name }}</td>
                 <td class="">{{ item.price }}</td>
-                <td class="">{{ item.categoryName }}</td>
+                <td class="">{{ item.category3Name }}</td>
                 <td class="">{{ item.num }}</td>
                 <td class="">{{ item.saleNum }}</td>
                 <!-- <td class="p-t-10 p-b-10">
