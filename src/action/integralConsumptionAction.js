@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { integralMatchingList, integralintegralMatching, delMatchingInfo, MembersSet, getGoodsInfo, getSupplierInfo } from "@/config/api.js"
+import { integralMatchingList, integralMatchingAdd, delMatchingInfo, inupdateStatus, inupdateRecommend } from "@/config/api.js"
 import IntegralConsumptionCom from '../components/componentsPages/integralConsumptionCom.vue'
 export default {
     name: 'integralConsumption',
@@ -18,9 +18,7 @@ export default {
         }
     },
     methods: {
-        // addPoints() {
-        //     this.$refs.integralConsumption.aRModuleDialogVisible = true;
-        // },
+  
         pageChange(pageIndex) {
             this.pageIndex = pageIndex;
             this.specList();
@@ -81,9 +79,9 @@ export default {
                 endLoading()
                 if (res.state === 0) {
                     this.listDataArr = res.data.data.map(item => {
-                        item.status == 1 ? item.status = true : item.status = false;
+                        // item.status == 1 ? item.status = true : item.status = false;
                         // this.getGoodsInfo(item.skuId)
-                        console.log('数据', item)
+                        // console.log('数据', item)
                         return item
                     })
 
@@ -110,89 +108,27 @@ export default {
             })
         },
         // 子传父的接收值方法  保存方法
-        addARConFunc(data) {
-            if (data.status == true) {
-                data.status = 1
-            } else {
-                data.status = 2
-            }
-            console.log('保存的值', data)
-            if (data.id) {
-                data.supplierId = data.supplierName
-
-            } else {
-                console.log('新增保存')
-                data.skuId = data.skuName
-                data.supplierId = data.supplierName
-            }
-
-
-            startLoading()
-            MembersSet().then(res => {
-                endLoading()
-                if (res.state === 0) {
-                    for (let i = 0; i < res.data.length; i++) {
-                        console.log(data.membersId)
-                        console.log(res.data)
-                        if (data.membersId == res.data[i].value) {
-                            data.membersId = res.data[i].key
-                            console.log(data.membersId)
-                            startLoading()
-                            getGoodsInfo({ supplierId: data.supplierId }).then(res => {
-                                endLoading()
-                                if (res.state === 0) {
-                                    console.log('店铺name', res.data)
-                                    for (let i = 0; i < res.data.length; i++) {
-                                        if (data.skuName == res.data[i].skuId) {
-                                            data.skuId = res.data[i].skuId
-                                            data.skuName = res.data[i].name
-
-                                            startLoading()
-                                            getSupplierInfo().then(res => {
-                                                endLoading()
-                                                if (res.state === 0) {
-                                                    for (let i = 0; i < res.data.length; i++) {
-                                                        if (data.supplierId == res.data[i].id) {
-                                                            data.supplierName = res.data[i].name
-                                                            // 保存的方法
-                                                            this.integralintegralMatching(data);
-                                                        }
-
-                                                    }
-                                                }
-                                            }).catch(() => {
-                                                endLoading()
-                                                this.$message({
-                                                    type: 'error',
-                                                    message: '请求失败，请刷新重试！'
-                                                })
-                                            })
-                                        }
-
-                                    }
-                                }
-                            }).catch(() => {
-                                endLoading()
-                                this.$message({
-                                    type: 'error',
-                                    message: '请求失败，请刷新重试！'
-                                })
-                            })
-                        }
-                    }
+        addARConFunc(data,shop,product,MembersList) {
+            console.log('传进来的值', data,shop,product,MembersList)
+            for( let i=0; i<shop.length; i++){
+                if( data.supplierId ==shop[i].id){
+                    data.supplierName=shop[i].name
                 }
-            }).catch(() => {
-                endLoading()
-                this.$message({
-                    type: 'error',
-                    message: '请求失败，请刷新重试！'
-                })
 
-            })
+            }
+            for( let i=0; i<product.length; i++){
+                if( data.skuId ==product[i].skuId){
+                    data.skuName=product[i].name
+                }
 
-            console.log(data)
-            console.log('保存的方法')
-            if (!data.createTime) {
+            }
+            for( let i=0; i<MembersList.length; i++){
+                if( data.membersId ==MembersList[i].value){
+                    data.membersId=MembersList[i].key
+                }
+
+            }
+            if (!data.startTime) {
                 this.$message({
                     type: 'warning',
                     message: '请输入活动期限！'
@@ -241,12 +177,20 @@ export default {
                 })
                 return
             }
-            integralintegralMatching()
+            if(data.id){
+                console.log('编辑')
+                this.integralMatchingAdd(data)
+
+            }else{
+                data.id = null
+                this.integralMatchingAdd(data)
+            }
+         
         },
-        integralintegralMatching(data) {
+        integralMatchingAdd(data) {
             startLoading()
             console.log('保存的参数', data)
-            integralintegralMatching(data).then(res => {
+            integralMatchingAdd(data).then(res => {
                 endLoading()
                 if (res.state === 0) {
                     this.specList()
@@ -269,6 +213,108 @@ export default {
                     message: '请求失败，请刷新重试！'
                 })
 
+            })
+        },
+        // 推荐 、 不推荐
+        recommendChange($event, id){
+            console.log($event, id)
+            if ($event === 2) { //1 推荐 2 不推荐
+                // 提示
+                this.$confirm('此操作设置为不推荐, 是否继续?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.inupdateRecommend( $event,id)
+                }).catch(() => {
+                  this.specList()
+                  this.$message({
+                    type: 'info',
+                    message: '已取消'
+                  });
+                });
+              } else {
+                // 不需要提示
+                this.inupdateRecommend( $event,id)
+              }
+        },
+        // 推荐 不推荐 是否请求
+        inupdateRecommend( status,id){
+            startLoading()
+            inupdateRecommend({ "id": id, 'status': status }).then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    this.specList()
+                    this.$message({
+                        type: 'success',
+                        message: '更新成功！'
+                    })
+                } else {
+                    this.specList()
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败，请刷新重试！'
+                    })
+                }
+            }).catch(() => {
+                endLoading()
+                this.specList()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
+            })
+        },
+
+           // 禁用启用请求
+           whetherToEnable( status,id) {
+               console.log(status,id)
+            if (status === 2) { //1 启用 2 禁用
+                // 提示
+                this.$confirm('此操作将禁用当前状态, 是否继续?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.inupdateStatus( status,id)
+                }).catch(() => {
+                  this.specList()
+                  this.$message({
+                    type: 'info',
+                    message: '已取消'
+                  });
+                });
+              } else {
+                // 不需要提示
+                this.inupdateStatus( status,id)
+              }
+            
+        },
+        // 是否启用
+        inupdateStatus( status,id){
+            startLoading()
+            inupdateStatus({ "id": id, 'status': status }).then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    this.specList()
+                    this.$message({
+                        type: 'success',
+                        message: '更新成功！'
+                    })
+                } else {
+                    this.specList()
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败，请刷新重试！'
+                    })
+                }
+            }).catch(() => {
+                endLoading()
+                this.specList()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
             })
         },
         // 删除方法

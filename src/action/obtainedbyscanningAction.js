@@ -40,7 +40,7 @@ export default {
                 } else {
                     this.$message({
                         type: 'error',
-                        message: '请求失败，请刷新重试！'
+                        message: res.message
                     })
                 }
 

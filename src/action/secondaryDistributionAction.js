@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { distrList, distrState, distrAdd, distrUpdate, distrDel } from "@/config/api.js"
+import { distrList, distrState, distrAdd, distrUpdate, distrDel, integralQuery, integralSave } from "@/config/api.js"
 import SecondaryDistributionCom from '../components/componentsPages/secondaryDistributionCom.vue'
 export default {
     name: 'secondaryDistribution',
@@ -48,6 +48,134 @@ export default {
             this.aRDetailJson = Object.assign({}, data)
             this.onAddCon()
         },
+            //一级默认区间值 查询
+            oneIntegralQuery(){
+                startLoading()
+                const reqData = {
+                    type : '0',
+                }
+                integralQuery(reqData).then(res => {
+                    endLoading()
+                    console.log(res)
+                    if (res.state === 0) {
+                        this.oneorderSn = res.data
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: '请求失败，请刷新重试！'
+                        })
+                    }
+                }).catch(() => {
+                    endLoading()
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败，请刷新重试！'
+                    })
+                })
+    
+            },
+                      //二级默认区间值 查询
+                      twoIntegralQuery(){
+                        startLoading()
+                        const reqData = {
+                            type : '1',
+                        }
+                        integralQuery(reqData).then(res => {
+                            endLoading()
+                            console.log(res)
+                            if (res.state === 0) {
+                                this.twoorderSn = res.data
+                            } else {
+                                this.$message({
+                                    type: 'error',
+                                    message: '请求失败，请刷新重试！'
+                                })
+                            }
+                        }).catch(() => {
+                            endLoading()
+                            this.$message({
+                                type: 'error',
+                                message: '请求失败，请刷新重试！'
+                            })
+                        })
+            
+                    },
+            // 一级保存区间值
+            oneDistribution(){
+                if (!this.oneorderSn ) {
+                    this.$message({
+                        type: 'warning',
+                        message: '请输入一级默认区间值！'
+                    })
+                    return
+                }
+         
+                const data = {
+                    type : '0',
+                    length:this.oneorderSn
+                }
+                startLoading()
+                integralSave(data).then(res => {
+                    endLoading()
+                    if (res.state === 0) {
+                        this.$message({
+                            type: 'success',
+                            message: '一级默认区间值保存成功！'
+                        })
+                        this.specList()
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: '请求失败,请刷新重试!'
+                        })
+                    }
+                }).catch(() => {
+                    endLoading()
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败,请刷新重试！'
+                    })
+                })
+    
+            },
+                // 二级保存区间值
+                twoDistribution(){
+                    if (!this.twoorderSn ) {
+                        this.$message({
+                            type: 'warning',
+                            message: '请输入二级默认区间值！'
+                        })
+                        return
+                    }
+             
+                    const data = {
+                        type : '1',
+                        length:this.twoorderSn
+                    }
+                    startLoading()
+                    integralSave(data).then(res => {
+                        endLoading()
+                        if (res.state === 0) {
+                            this.$message({
+                                type: 'success',
+                                message: '二级默认区间值保存成功！'
+                            })
+                            this.specList()
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: '请求失败,请刷新重试!'
+                            })
+                        }
+                    }).catch(() => {
+                        endLoading()
+                        this.$message({
+                            type: 'error',
+                            message: '请求失败,请刷新重试！'
+                        })
+                    })
+        
+                },
 
         // 获取列表
         specList() {
@@ -75,7 +203,8 @@ export default {
         },
         // 禁用启用请求
         whetherToEnable( status,id) {
-            if (status === 1) { //0 启用 1 禁用
+    
+            if (status === 1) { //1 启用 2 禁用
                 // 提示
                 this.$confirm('此操作将禁用当前商品, 是否继续?', '提示', {
                   confirmButtonText: '确定',
@@ -123,17 +252,7 @@ export default {
                 })
             })
         },
-        // console.log(id, status)
-     
-        // 一级分销配比保存
-        oneDistribution() {
-
-        },
-
-        // 一级分销配比保存
-        twoDistribution() {
-
-        },
+      
 
         // 子传父
         addARConFunc(data) {
@@ -281,6 +400,8 @@ export default {
 
     created() {
         this.specList()
+        this.oneIntegralQuery()
+        this.twoIntegralQuery()
     },
     mounted() {
 

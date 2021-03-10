@@ -505,9 +505,25 @@ export const integralMatchingList = params => {
         return Promise.reject(error)
     }
 }
+// 积分消费  状态
+export const inupdateStatus = params => {
+    try {
+        return axios.post('/integral/updateStatus', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 推荐  /  不推荐
+export const inupdateRecommend = params => {
+    try {
+        return axios.post('/integral/updateRecommend', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 // 积分消费添加配比
 
-export const integralintegralMatching = params => {
+export const integralMatchingAdd = params => {
     try {
         return axios.post('/integral/integralMatching', params).then(res => res.data)
     } catch (error) {
@@ -898,10 +914,27 @@ export const menuRoleBind = params => {
     try {
         return axios.post('/adminSysMenuRole/menuRole', params).then(res => res.data)
     } catch (error) {
+        return Promise.reject(error) 
+
+    }
+}
+//查询默认值   盲盒  一级 二级
+export const integralQuery = params => {
+    try {
+        return axios.post('/integralAdminDefaultLength/query', params).then(res => res.data)
+    } catch (error) {
         return Promise.reject(error)
     }
 }
-// 二级分销
+
+// 保存默认值  盲盒  一级 二级 
+export const integralSave = params => {
+    try {
+        return axios.post('/integralAdminDefaultLength/save', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 // 列表
 export const distrList = params => {
     try {

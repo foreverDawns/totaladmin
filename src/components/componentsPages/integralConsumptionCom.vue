@@ -14,13 +14,13 @@
         ref="ruleForm"
         label-width="100px"
       >
-        <el-form-item label="活动期限" prop="createTime">
+        <el-form-item label="活动期限" prop="startTime">
           <el-date-picker
           @focus="clickStartTime"
             :picker-options="startTimeOptions"
             style="width: 500px"
             type="date"
-            v-model="ruleForm.createTime"
+            v-model="ruleForm.startTime"
        
           ></el-date-picker>
         </el-form-item>
@@ -47,7 +47,7 @@
         </el-form-item>
         <el-form-item label="活动产品" prop="skuName">
           <!-- <el-input class="width-500" v-model="ruleForm.skuName"></el-input> -->
-            <el-select style="width: 500px" v-model="ruleForm.skuName" @change="skuNamehange()"  >
+            <el-select style="width: 500px" v-model="ruleForm.skuName" @change="skuNamehange($event)"  >
             <el-option  
             v-for="(item, index) in product"
               :key="index"
@@ -83,7 +83,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: right">
         <el-button @click="handleClose()">取 消</el-button>
-        <el-button type="primary" @click="addARConFunc(ruleForm)"
+        <el-button type="primary" @click="addARConFunc(ruleForm,shop,product,MembersList)"
           >确 定</el-button
         >
       </div>

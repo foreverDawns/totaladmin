@@ -6,7 +6,7 @@
         <div class="m-b-10 fs-13 blue">默认一级分销配比</div>
         <el-input
           type="text"
-          placeholder="1000"
+          placeholder="100"
           v-model="oneorderSn"
           show-word-limit
           clearable
@@ -21,7 +21,7 @@
         <div class="m-b-10 fs-13 blue">默认二级分销配比</div>
         <el-input
           type="text"
-          placeholder="1000"
+          placeholder="100"
           v-model="twoorderSn"
           show-word-limit
           clearable

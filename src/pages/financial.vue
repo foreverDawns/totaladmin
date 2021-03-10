@@ -139,25 +139,13 @@
                   <td class="fw-700">{{ index + 1 }}</td>
                   <td class="p-t-10 p-b-10">{{ item.account }}</td>
                   <td>{{ item.name }}</td>
-                  <td>{{ sexArr[item.sex] ? sexArr[item.sex] : "未知" }}</td>
+                  <td>{{item.sex  }}</td>
                   <td>{{ item.roleStr }}</td>
                   <td>{{ item.email }}</td>
                   <td>{{ item.phone }}</td>
                   <td>
                     {{ item.createTime ? dateFormat(item.createTime) : "--" }}
                   </td>
-                  <td>
-                    <el-switch
-                      v-model="item.status"
-                      active-value="1"
-                      inactive-value="2"
-                      @change="whetherToEnable($event, item.userId)"
-                      active-color="#13ce66"
-                      inactive-color="red"
-                    >
-                    </el-switch>
-                  </td>
-
                   <td class="p-t-10 p-b-10">
                     <el-button
                       class="m-b-10 m-r-5"
@@ -262,25 +250,13 @@
                   <td class="fw-700">{{ index + 1 }}</td>
                   <td class="p-t-10 p-b-10">{{ item.account }}</td>
                   <td>{{ item.name }}</td>
-                  <td>{{ sexArr[item.sex] ? sexArr[item.sex] : "未知" }}</td>
+                  <td>{{ item.sex}}</td>
                   <td>{{ item.roleStr }}</td>
                   <td>{{ item.email }}</td>
                   <td>{{ item.phone }}</td>
                   <td>
                     {{ item.createTime ? dateFormat(item.createTime) : "--" }}
                   </td>
-                  <td>
-                    <el-switch
-                      v-model="item.status"
-                      active-value="1"
-                      inactive-value="2"
-                      @change="whetherToEnable($event, item.userId)"
-                      active-color="#13ce66"
-                      inactive-color="red"
-                    >
-                    </el-switch>
-                  </td>
-
                   <td class="p-t-10 p-b-10">
                     <el-button
                       class="m-b-10 m-r-5"
@@ -383,31 +359,19 @@
                   <td class="fw-700">{{ index + 1 }}</td>
                   <td class="p-t-10 p-b-10">{{ item.account }}</td>
                   <td>{{ item.name }}</td>
-                  <td>{{ sexArr[item.sex] ? sexArr[item.sex] : "未知" }}</td>
+                  <td>{{ item.sex }}</td>
                   <td>{{ item.roleStr }}</td>
                   <td>{{ item.email }}</td>
                   <td>{{ item.phone }}</td>
                   <td>
                     {{ item.createTime ? dateFormat(item.createTime) : "--" }}
                   </td>
-                  <td>
-                    <el-switch
-                      v-model="item.status"
-                      active-value="1"
-                      inactive-value="2"
-                      @change="whetherToEnable($event, item.userId)"
-                      active-color="#13ce66"
-                      inactive-color="red"
-                    >
-                    </el-switch>
-                  </td>
-
                   <td class="p-t-10 p-b-10">
                     <el-button
                       class="m-b-10 m-r-5"
                       type="danger"
                       round
-                      @click="exportExcel(item)"
+                      @click=" (item)"
                       >导出</el-button
                     >
                   </td>

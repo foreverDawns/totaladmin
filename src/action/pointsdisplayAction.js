@@ -31,7 +31,7 @@ export default {
             }).then(res => {
                 endLoading();
                 if (res.state === 0) {
-                    this.ruleForm.overdueNumber=''
+                    // this.ruleForm.overdueNumber=''
                     this.$message({
                         type: 'success',
                         message: '非充值积分失效天数保存成功'
@@ -52,18 +52,6 @@ export default {
                 }) 
             })
         }
-
-
-
-
-
-
-
-
-
-
-
-
     },
 
     created() {
