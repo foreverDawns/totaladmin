@@ -646,6 +646,63 @@ export const newUserManagement = params => {
         return Promise.reject(error)
     }
 }
+//  修改积分
+export const updateIntegralSetting = params => {
+    try {
+        return axios.post('/integral/updateIntegralSetting', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+//  积分  新用户获得 详情列表
+export const queryRegisterList = params => {
+    try {
+        return axios.post('/integral/queryRegisterList ', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+//  邀请积分 获取奖励列表
+export const sysBlindBoxgetPrize = params => {
+    try {
+        return axios.post('/sysBlindBox/getPrize', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 列表详情
+export const sysBlindBoxList = params => {
+    try {
+        return axios.post('/sysBlindBox/list', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 修改
+export const sysBlindBoxUpdate = params => {
+    try {
+        return axios.post('/sysBlindBox/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 添加
+export const sysBlindBoxAdd = params => {
+    try {
+        return axios.post('/sysBlindBox/add', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 邀请积分 删除
+export const sysBlindBoxDel = params => {
+    try {
+        return axios.post('/sysBlindBox/del', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 
 // 添加置换参数列表
 export const addGoodsTitle = params => {
@@ -826,6 +883,65 @@ export const menuRoleBind = params => {
         return Promise.reject(error)
     }
 }
+// 二级分销
+// 列表
+export const distrList = params => {
+    try {
+        return axios.post('/distributionSetup/list', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 添加
+export const distrAdd = params => {
+    try {
+        return axios.post('/distributionSetup/add', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 编辑
+export const distrUpdate = params => {
+    try {
+        return axios.post('/distributionSetup/update', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 删除
+export const distrDel = params => {
+    try {
+        return axios.post('/distributionSetup/del', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 更改启动状态
+export const distrState = params => {
+    try {
+        return axios.post('/distributionSetup/updateStatus', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 商家
+export const Supplier = params => {
+    try {
+        return axios.post('/supplierIfo/querySupplierIdAndName', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+//  店铺
+export const SkuName = params => {
+    try {
+        return axios.post('/tbSku/querySkuIdAndNameBySupplierId', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
 
 // 文件上传
 export const fileUpdate = axios.defaults.baseURL + '/upload'

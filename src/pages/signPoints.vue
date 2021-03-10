@@ -106,9 +106,9 @@
               >
                 <td>{{ index + 1 }}</td>
                 <td class="p-t-10 p-b-10">{{ item.arNumber }}</td>
-                <td>{{ item.createTime }}</td>
+                <td>{{ item.createTime ? dateFormat(item.createTime) : '--' }}</td>
+                <td>{{ item.continuousDays }}</td> 
                 <td>{{ item.num }}</td>
-                <td>{{ item.specValueName }}</td>
               </tr>
             </tbody>
           </table>
@@ -120,36 +120,8 @@
 
     <!-- 分页 -->
     <div v-if="type == 1">
-      <div
-        class="fenye"
-        v-if="ordersData && ordersData.orderList.data.length > 0"
-      >
-        <el-pagination
-          @size-change="pageSizeChange"
-          @current-change="pageChange"
-          :current-page="pageIndex"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="ordersData.orderList.count"
-        >
-        </el-pagination>
-      </div>
     </div>
     <div v-if="type == 2">
-      <div
-        class="fenye"
-        v-if="evaluationData && evaluationData.commentList.data.length > 0"
-      >
-        <el-pagination
-          @size-change="pageSizeChangeTwo"
-          @current-change="pageChangeTwo"
-          :current-page="pageIndexTwo"
-          :page-size="pageSizeTwo"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="evaluationData.commentList.count"
-        >
-        </el-pagination>
-      </div>
     </div>
     <SignPointsCom ref="SignPointsCom" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"
       :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson" ></SignPointsCom>

@@ -1,4 +1,4 @@
-import { integralGainintegralSubsidiary, integralintegralManagement, delIntegralSetting,newUserManagement} from "@/config/api.js"
+import { integralGainintegralSubsidiary, integralintegralManagement, delIntegralSetting, newUserManagement,     updateIntegralSetting} from "@/config/api.js"
 import { startLoading, endLoading } from '../common/util'
 import SignPointsCom from '../components/componentsPages/signPointsCom.vue'
 export default {
@@ -10,11 +10,7 @@ export default {
         return {
             listDataArr: [],
             listDataArr2: [],
-            addYRConDialogVisible: false,
-            detailsData: '', //详情
-            ordersData: '', // 订单
-            evaluationData: '',// 评价
-            representationData: '',// 申述
+            // addYRConDialogVisible: false,
             totalNum: '0',
             pageIndex: 1,
             pageSize: 10,
@@ -22,7 +18,7 @@ export default {
             pageSizeTwo: 10,
 
             listTotal: 1,
-            type: 1,//1：详情 2.订单 3：评价
+            type: 1,
             aRDetailJson: {},//储存当前点击item的数据
             titleCon: '',
             aRModuleDialogVisible: false,
@@ -31,10 +27,7 @@ export default {
     },
     // props: ['changeValue'],
     methods: {
-        // 积分管理  签到明细切换
-        addPoints() {
-            this.$refs.SignPointsCom.aRModuleDialogVisible = true
-        },
+    
         onAddCon() {
             this.aRModuleDialogVisible = !this.aRModuleDialogVisible;
             console.log(this.aRModuleDialogVisible)
@@ -43,11 +36,8 @@ export default {
         dateFormat(val, format) {
             return this.$moment(val).format(format || 'YYYY-MM-DD HH:mm:ss')
         },
-        //获取时间间隔
-        onSelectTime(e) {
-            this.timeValueOne = e
-        },
-        //  当前页  
+        
+        //  积分管里 当前页  
         pageChange(pageIndex) {
             console.log('当前页',pageIndex)
             this.pageIndex = pageIndex;
@@ -60,13 +50,13 @@ export default {
             this.pageSize = pageSize;
             this.getPointsManagementList();
         },
-        // 分页
+        // 签到明细 分页
         pageChangeTwo(pageIndex) {
             this.pageIndexTwo = pageIndex;
 
 
         },
-        // 分页
+        // 签到明细   每页多少条
         pageSizeChangeTwo(pageSize) {
             this.pageIndexTwo = 1;
             this.pageSizeTwo = pageSize;
@@ -104,8 +94,39 @@ export default {
                 })
                 return
             }
-            // 保存的方法
+            if(data.id){
+                this.SignPointUpdate(data)
+            }else{
+                 // 保存的方法
             this.newUserManagement(data)
+            }
+           
+
+        },
+        SignPointUpdate(data){
+            console.log('编辑',data)
+            updateIntegralSetting(data).then(res => {
+                endLoading()
+                if (res.state === 0) {
+                  this.getPointsManagementList()
+                  this.onAddCon()
+                  this.$message({
+                    type: 'success',
+                    message: '签到积分管理编辑成功!'
+                  });
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                  });
+                }
+              }).catch(() => {
+                endLoading()
+                this.$message({
+                  type: 'error',
+                  message: '请求失败，请刷新重试！!'
+                });
+              })
 
         },
         newUserManagement(data){
@@ -119,34 +140,40 @@ export default {
                   this.onAddCon()
                   this.$message({
                     type: 'success',
-                    message: '保存成功!'
+                    message: '签到积分管理保存成功!'
                   });
                 } else {
                   this.$message({
                     type: 'error',
-                    message: res.message
+                    message: '请求失败，请刷新重试！'
                   });
                 }
               }).catch(() => {
                 endLoading()
                 this.$message({
                   type: 'error',
-                  message: '保存失败!'
+                  message: '请求失败，请刷新重试！!'
                 });
               })
 
         },
 
         // 点击添加或编辑事件
-        onChangeModule(data) {
-            console.log('详情的值', data)
+        onChangeModule( data ) {
+            if( JSON.stringify(data)=='{}' ){
+                data.titleName='积分管理-签到积分-添加'
+            }else{
+                data.titleName='积分管理-签到积分-编辑'
+            }
             this.aRDetailJson = Object.assign({}, data)
             this.onAddCon()
         },
-
+        // 获取签到明细详情
         getPointsDetailsList() {
             integralGainintegralSubsidiary().then(res => {
                 this.listDataArr2 = res.data;
+                console.log('签到明细详情',this.listDataArr2)
+
             })
         },
         // 获取积分管理详情
@@ -189,7 +216,6 @@ export default {
             });
 
         },
-        // 删除商品参数内容详情
         delIntegralSetting(reqJson) {
             delIntegralSetting(reqJson).then(res => {
                 endLoading()

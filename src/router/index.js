@@ -41,8 +41,11 @@ import secondaryDistribution from '../pages/secondaryDistribution.vue'
 import integralConsumption from '../pages/integralConsumption.vue'
 import obtainedbyscanning from '../pages/obtainedbyscanning.vue'
 import userlevel from '../pages/userlevel.vue'
-import pointsdisplay from '../pages/pointsdisplay.vue'
+import pointsdisplay from '../pages/pointsdisplay.vue'  
 import newusersget from '../pages/newusersget.vue'
+// 财务管理
+import Financial  from '../pages/financial.vue'
+
 
 // 置换
 import replacementList from '../pages/replacementList.vue'
@@ -135,6 +138,13 @@ export default new VueRouter({
           component: CouponManage,
           meta: { title: "优惠券" }
         },
+        {
+          name: 'financial',
+          path: '/financial',
+          component: Financial,
+          meta: { title: "财务管理" }
+        },
+        
         {
           name: 'signPoints',
           path: '/signPoints',

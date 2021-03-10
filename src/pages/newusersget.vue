@@ -8,14 +8,14 @@
         <el-input
           type="text"
           placeholder="1000"
-          v-model="orderSn"
+          v-model="levelIntegral"
           show-word-limit
           clearable
         >
         </el-input>
       </div>
       <div class="my-flex flex-l-center">
-        <el-button type="primary" @click="save">保存</el-button>
+        <el-button type="primary" @click="userSave()">保存</el-button>
       </div>
     </div>
 
@@ -28,45 +28,37 @@
     >
       <thead class="orderC-th">
         <tr style="height: 60px" class="fs-14 fw-700">
-          <th width="5%">序号</th>
+          <th width="10%">序号</th>
           <th width="30%">联系人电话</th>
           <th width="30%">AR号</th>
-          <th width="35%">日期</th>
+          <th width="30%">日期</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
-        <tr class="fs-12" v-for="(item, index) in listDataArr" :key="index">
+        <tr class="fs-12 height-40" v-for="(item, index) in listDataArr" :key="index">
           <td>{{ index + 1 }}</td>
-          <td class="p-t-10 p-b-10">{{ item.specName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
+          <td class="p-t-10 p-b-10">{{ item.phone }}</td>
+          <td>{{ item.arNumber }}</td>
+          <td>{{ item.createTime ? dateFormat(item.createTime) : '--'  }}</td>
         </tr>
       </tbody>
     </table>
-    <div class="clear"></div>
-    <div class="fenye" v-if="listDataArr.length > 0">
+    <div class="clear"></div> 
+   <div class="fenye" v-if="listDataArr.length > 0">
       <el-pagination
         @size-change="pageSizeChange"
         @current-change="pageChange"
         :current-page="pageIndex"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="listTotal"
+        :total="totalNum"
       >
       </el-pagination>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "newusersget",
-  data() {
-    return {
-      orderSn: '1000000'
-    };
-  },
-};
-</script> 
+<script src="../action/newusersget.js"></script>
+
 <style lang='scss' scoped>
 </style>

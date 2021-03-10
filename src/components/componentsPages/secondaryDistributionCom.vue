@@ -3,7 +3,7 @@
     <el-dialog
       :close-on-click-modal="false"
       center
-      title="积分管理-二级分销-新增配比"
+      :title="title"
       :visible.sync="aRModuleDialogVisible"
       width="60%"
       :before-close="handleClose"
@@ -14,24 +14,38 @@
         ref="ruleForm"
         label-width="100px"
       >
-        <el-form-item label="活动店铺" prop="name">
-          <el-input class="width-500" v-model="ruleForm.supplierId"></el-input>
+        <el-form-item label="活动店铺" prop="supplierName">
+             <el-select style="width: 500px" v-model="ruleForm.supplierName" @change="onShop($event)">
+            <el-option
+              v-for="(item, index) in shop"
+              :key="index"
+              :label="item.value"
+              :value="item.key"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="活动产品" prop="name">
-          <el-input class="width-500" v-model="ruleForm.name"></el-input>
+        <el-form-item label="活动产品" prop="productName">
+             <el-select style="width: 500px" v-model="ruleForm.productName"  @change="productName($event)" >
+            <el-option  
+            v-for="(item, index) in product"
+              :key="index"
+              :label="item.value"
+              :value="item.key"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="一级分销" prop="name">
-          <el-input class="width-500" v-model="ruleForm.name"></el-input>
+        <el-form-item label="一级分销" prop="distributionOne">
+          <el-input class="width-500" v-model="ruleForm.distributionOne"></el-input>
         </el-form-item>
-        <el-form-item label="二级分销" prop="name">
-          <el-input class="width-500" v-model="ruleForm.name"></el-input>
+        <el-form-item label="二级分销" prop="distributionTwo">
+          <el-input class="width-500" v-model="ruleForm.distributionTwo"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: right">
-        <el-button @click="aRModuleDialogVisible = false">取 消</el-button>
+        <el-button @click="handleClose">取 消</el-button>
         <el-button
           type="primary"
-          @click="addARConFunc(detailData, deleteValueArr)"
+          @click="addARConFunc(ruleForm)"
           >确 定</el-button
         >
       </div>

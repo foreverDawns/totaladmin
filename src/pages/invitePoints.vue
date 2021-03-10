@@ -44,25 +44,25 @@
           <th width="10%">邀请人数</th>
           <th width="15%">获得积分</th>
           <th width="15%">获得奖励</th>
-          <th width="15%">获得奖励时间</th>
-          <th width="15%">概览</th>
+          <th width="15%">有效时间</th>
+          <th width="15%">概率</th>
           <!-- addPoints -->
-          <th width="10%" class="blue fw-700" @click="editARCon()">+ 添加</th>
+          <th width="10%" class="blue fw-700" @click="editPoint({})">+ 添加</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
         <tr class="fs-12" v-for="(item, index) in listDataArr" :key="index">
           <td>{{ index + 1 }}</td>
-          <td class="p-t-10 p-b-10">{{ item.specName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
-          <td>{{ item.specValueName }}</td>
+          <td class="p-t-10 p-b-10">{{ item.inviteNum }}</td>
+          <td>{{ item.integralNum }}</td>
+          <td>{{ item.prizeStr }}</td>
+          <td>{{ item.validHour }}</td>
+          <td>{{ item.probability }}%</td> 
           <td>
-            <el-button type="info" round @click="deleteHHCon(item.specId)"
+            <el-button type="info" round @click="deletePoint(item.id)"
               >删除</el-button
             >
-            <el-button type="primary" round @click="editARCon(item.specId)"
+            <el-button type="primary" round @click="editPoint(item)"
               >编辑</el-button
             >
           </td>
