@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { sysBlindBoxList, sysBlindBoxUpdate, sysBlindBoxAdd, sysBlindBoxDel} from "@/config/api.js"
+import { sysBlindBoxList, sysBlindBoxUpdate, sysBlindBoxAdd, sysBlindBoxDel, integralQuery, integralSave} from "@/config/api.js"
 import InvitePointsCom from '../components/componentsPages/invitePointsCom.vue'
 export default {
     name: 'invitePoints',
@@ -14,6 +14,7 @@ export default {
             listTotal: 0,
             orderSnSter: '',  //默认区间值
             orderSnEnd: '',  //默认区间值
+            defaultLength:""  //返回的区间值
         }
     },
 
@@ -37,6 +38,81 @@ export default {
         // 弹框切换
         onAddCon() {
             this.aRModuleDialogVisible = !this.aRModuleDialogVisible;
+        },
+        // 默认区间值 查询
+        integralQuery(){
+            startLoading()
+            const reqData = {
+                type : '2',
+            }
+            integralQuery(reqData).then(res => {
+                endLoading()
+                console.log(res)
+                if (res.state === 0) {
+                    this.defaultLength = res.data
+                    // this.defaultLength = '80-90'
+                    if( this.defaultLength){
+                        this.orderSnSter=this.defaultLength.split('-')[0]
+                        this.orderSnEnd=this.defaultLength.split('-')[1]
+                    }
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败，请刷新重试！'
+                    })
+                }
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
+            })
+
+        },
+        // 保存区间值
+        integralSave(){
+            if (!this.orderSnSter ) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入默认区间值！'
+                })
+                return
+            }
+            if (!this.orderSnEnd ) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入默认区间值！'
+                })
+                return
+            }
+            const data = {
+                type : '2',
+                length:this.orderSnSter +'-'+ this.orderSnEnd
+            }
+            startLoading()
+            integralSave(data).then(res => {
+                endLoading()
+                if (res.state === 0) {
+                    this.$message({
+                        type: 'success',
+                        message: '默认区间值保存成功！'
+                    })
+                    this.specList()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败,请刷新重试!'
+                    })
+                }
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败,请刷新重试！'
+                })
+            })
+
         },
         // 添加 / 编辑内容
         editPoint(data) {
@@ -271,6 +347,7 @@ export default {
 
     created() {
         this.specList()
+        this.integralQuery()
     },
     mounted() {
 

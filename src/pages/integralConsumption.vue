@@ -4,9 +4,8 @@
     <div class="my-flex">
       <div class="bg-blue p-15 border-ra-6 m-r-10 width-300 mb-20">
         <div class="m-b-10 fs-13 blue">默认积分配比</div>
-         <span style="margin-right:10px" class=" m-b-10 fs-13 blue ">RMB</span>
+        <span style="margin-right: 10px" class="m-b-10 fs-13 blue">RMB</span>
         <span style="width: 82px; display: inline-block">
-        
           <el-input
             type="text"
             placeholder="1000"
@@ -16,7 +15,7 @@
           >
           </el-input>
         </span>
-        <span style="color: #8199ff; margin:0px 20px" >:</span>
+        <span style="color: #8199ff; margin: 0px 20px">:</span>
         <span style="width: 82px; display: inline-block">
           <el-input
             type="text"
@@ -27,7 +26,7 @@
           >
           </el-input>
         </span>
-       <span style="margin-left:10px" class=" m-b-10 fs-13 blue">积分</span>
+        <span style="margin-left: 10px" class="m-b-10 fs-13 blue">积分</span>
       </div>
 
       <div class="my-flex flex-l-center">
@@ -59,13 +58,26 @@
       <tbody class="table-tbody">
         <tr class="fs-12" v-for="(item, index) in listDataArr" :key="index">
           <td>{{ index + 1 }}</td>
-          <td class="p-t-10 p-b-10">  {{ dateFormat(item.startTime,item.endTime) }} </td>
+          <td class="p-t-10 p-b-10">
+            {{ dateFormat(item.startTime, item.endTime) }}
+          </td>
           <td>{{ item.supplierName }}</td>
           <td>{{ item.skuName }}</td>
           <td>{{ item.membersId }}/{{ item.integralMatching }}</td>
-          <td>{{ item.recommend === "1" ? "推荐" : "不推荐" }}</td>
+          <el-radio-group v-model="item.recommend" @change=" recommendChange($event,  item.id)">
+            <el-radio :label=1>是</el-radio>
+            <el-radio :label=2>否</el-radio>
+          </el-radio-group>
           <td>
-            <el-switch v-model="item.status" disabled> </el-switch>
+            <el-switch 
+              v-model="item.status"
+              :active-value="1"
+              :inactive-value="2"
+              @change="whetherToEnable($event, item.id)"
+              active-color="#13ce66"
+              inactive-color="red"
+            >
+            </el-switch>
           </td>
           <td>
             <el-button type="info" round @click="deleteHHCon(item.id)"
@@ -90,12 +102,21 @@
       >
       </el-pagination>
     </div>
-    <IntegralConsumptionCom ref="integralConsumption" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"
-    :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson" ></IntegralConsumptionCom>
+    <IntegralConsumptionCom
+      ref="integralConsumption"
+      :aRModuleDialogVisible="aRModuleDialogVisible"
+      @onAddCon="onAddCon"
+      :addARConFunc="addARConFunc"
+      :aRDetailJson="aRDetailJson"
+    ></IntegralConsumptionCom>
   </div>
 </template>
 
 
 
 <script src="../action/integralConsumptionAction.js"></script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+  .el-radio {
+      margin-top: 15px;
+  }
+</style>

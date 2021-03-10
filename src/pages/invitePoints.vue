@@ -7,7 +7,7 @@
         <span style="width: 82px; display: inline-block">
           <el-input
             type="text"
-            placeholder="1000"
+            placeholder="1"
             v-model="orderSnSter"
             show-word-limit
             clearable
@@ -18,7 +18,7 @@
         <span style="width: 82px; display: inline-block">
           <el-input
             type="text"
-            placeholder="1000"
+            placeholder="100"
             v-model="orderSnEnd"
             show-word-limit
             clearable
@@ -27,7 +27,8 @@
         </span>
       </div>
       <div class="my-flex flex-l-center">
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary"   @click="integralSave()">保存</el-button>
+        
       </div>
     </div>
 

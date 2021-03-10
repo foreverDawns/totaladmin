@@ -9,9 +9,11 @@ export default {
     data() {
         return {
             ruleForm: {
-                createTime: "",
+              startTime: "",
                 endTime: '',
                 supplierName: '',
+                supplierId:"",
+                skuId:"",
                 skuName: '',
                 membersId: '',
                 integralMatching: '',
@@ -20,7 +22,7 @@ export default {
             title: "",
 
             rules: {
-                createTime: [{ required: true, message: '请输入内容', trigger: 'blur' },],
+              startTime: [{ required: true, message: '请输入内容', trigger: 'blur' },],
                 endTime: [{ required: true, message: '请输入内容', trigger: 'blur' }],
                 supplierName: [{ required: true, message: '请输入内容', trigger: 'blur' }],
                 skuName: [{ required: true, message: '请输入内容', trigger: 'blur' }],
@@ -75,9 +77,9 @@ export default {
           // 限制结束时间
           clickEndTime(){
             this.endTimeOptions.disabledDate = time => {
-              if (this.ruleForm.createTime) {
+              if (this.ruleForm.startTime) {
                 return (
-                  time.getTime() > Date.now || time.getTime() < new Date(this.ruleForm.createTime).getTime()
+                  time.getTime() > Date.now || time.getTime() < new Date(this.ruleForm.startTime).getTime()
                 )
               } else {
                 return time.getTime() < Date.now()
@@ -87,7 +89,10 @@ export default {
     
 
         skuNamehange($event){
-          console.log($event)
+          console.log('产品id',$event)
+          console.log('产品name',this.ruleForm.skuName)
+
+          this.ruleForm.skuId=$event
         this.$forceUpdate()
       },
 
@@ -97,15 +102,15 @@ export default {
         },
         // 根据商家id获取商品
         onShop($event) {
-           
+          console.log('店铺id', $event)
+          console.log('店铺name',this.ruleForm.supplierName)
+           this.ruleForm.supplierId=$event
             this.ruleForm.skuName = ''
-            console.log('店铺id', $event)
             let id = $event
             startLoading()
             getGoodsInfo({ supplierId: id }).then(res => {
                 endLoading()
                 if (res.state === 0) {
-                    console.log('店铺name', res.data)
                     this.product = [];
                     this.product = res.data
                 }
@@ -125,7 +130,6 @@ export default {
             console.log('店铺')
             startLoading()
             getSupplierInfo().then(res => {
-              console.log('错了')
                 endLoading()
                 if (res.state === 0) {
                     console.log('店铺name', res.data)
@@ -174,12 +178,9 @@ export default {
             console.log(res, "aRDetailJson")
             this.ruleForm = Object.assign({}, res)
             this.title = res.titleName
-            console.log(this.ruleForm)
+            // console.log(this.ruleForm)
         },
 
-        detailData(res) {
-            console.log(res, "detailData")
-        },
     },
 
     components: {
