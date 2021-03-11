@@ -19,6 +19,7 @@ export default {
                 giftIds: '',
                 jingquMenpiaoIds: "",
             },
+            gailv:'',
             options: [],
             jinianpin: [],
             juanbao:[],
@@ -26,10 +27,11 @@ export default {
             shibai:[],
             lipin:[],
             mianmenpiao:[],
+            probabilityList:[],
             rules: {
                 inviteNum: [{ required: true, message: '请输入内容', trigger: 'blur' },],
                 integralNum: [{ required: true, message: '请输入内容', trigger: 'blur' },],
-                probability: [{ required: true, message: '请输入内容', trigger: 'blur' },],
+                // probability: [{ required: true, message: '请输入内容', trigger: 'blur' },],
                 validHour: [{ required: true, message: '请输入内容', trigger: 'blur' },]
             },
             title: '',
@@ -48,6 +50,10 @@ export default {
         addARConFunc: {
             type: Function
         },
+        listData: {
+            type:   Array,
+            default: []
+        },
 
     },
 
@@ -58,6 +64,38 @@ export default {
         // 取消提示
         handleClose() {
             this.$emit('onAddCon');
+        },
+        // 限制概率
+        probabilityChange($event){
+            console.log($event)
+            let probabilityList= this.probabilityList
+            let N=0;
+             for( var i=0; i<probabilityList.length; i++){
+               N += probabilityList[i].probability
+            }
+            if( this.ruleForm.id){
+                console.log('编辑')
+                N=N-Number(this.gailv)
+            }
+            if(N>=100){
+                this.$message({
+                    type: 'warning',
+                    message: '已添加概率已超过100%'
+                })
+                this.ruleForm.probability=''
+                return
+            }
+            let M=100-N
+            if(this.ruleForm.probability>M){
+                this.$message({
+                    type: 'warning',
+                    message: '概率不能超过'+M+'%'
+                })
+                this.ruleForm.probability=''
+                return
+            }
+            
+          
         },
         // 获取奖励列表
         sysBlindBoxgetPrize() {
@@ -132,6 +170,7 @@ export default {
             console.log('子组件', res)
             console.log('列表值', this.jinianpin)
             this.ruleForm = Object.assign({}, res)
+            this.gailv=this.ruleForm.probability 
             if (this.ruleForm.zhoubianIds) { this.ruleForm.zhoubianIds = this.ruleForm.zhoubianIds.split(',') }
             if (this.ruleForm.quanbaoIds) { this.ruleForm.quanbaoIds = this.ruleForm.quanbaoIds.split(',') }
             if (this.ruleForm.quanbaoMenpiaoIds) { this.ruleForm.quanbaoMenpiaoIds = this.ruleForm.quanbaoMenpiaoIds.split(',') }
@@ -142,6 +181,10 @@ export default {
             this.title = res.titleName
             console.log(this.title)
         },
+        listData(res){
+            console.log('列表',res)
+            this.probabilityList = Object.assign([], res)
+        }
 
     },
 

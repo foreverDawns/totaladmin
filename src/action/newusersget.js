@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { integralnewUserManagement, queryRegisterList } from "../config/api";
+import { queryRegisterList, integralQuery, integralSave} from "../config/api";
 
 export default {
     name: "newusersget",
@@ -29,44 +29,68 @@ export default {
             this.pageSize = pageSize;
             this.userList();
         },
-        // 新用户获得数保存
-        userSave() {
-            console.log('保存')
-            if (!this.levelIntegral) {
-                this.$message({
-                    type: 'warning',
-                    message: '请输入新用户积分获得数！',
-                })
-                return
-            }
+          // 查询积分默认值
+          IntegralQuery(){
             startLoading()
             const reqData = {
-                "getAwy": 2,
-                "levelIntegral": this.levelIntegral,
+                type : '3',
             }
-            integralnewUserManagement(reqData).then(res => {
-                console.log(res)
+            integralQuery(reqData).then(res => {
                 endLoading()
+                console.log(res)
                 if (res.state === 0) {
-                    this.levelIntegral = ''
-                    this.$message({
-                        type: 'success',
-                        message: '新用户积分获得数保存成功！'
-                    })
+                    this.levelIntegral = res.data
                 } else {
                     this.$message({
                         type: 'error',
-                        message: res.message
+                        message: '请求失败，请刷新重试！'
                     })
                 }
             }).catch(() => {
                 endLoading()
                 this.$message({
                     type: 'error',
-                    message: '请求失败,请刷新重试！'
+                    message: '请求失败，请刷新重试！'
+                })
+            })
+
+        },
+        scanSave() {
+            if (!this.levelIntegral) {
+                this.$message({
+                    type: 'warning',
+                    message: '请输入扫描积分获得数！',
+                })
+                return
+            }
+            startLoading();
+            integralSave({
+                type: '3',
+                length: this.levelIntegral
+            }).then(res => {
+                endLoading();
+                if (res.state === 0) {
+                    this.$message({
+                        type: 'success',
+                        message: '新用户获得积分数量添加成功'
+                    })
+                    this.IntegralQuery()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: res.message
+                    })
+                }
+
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试'
                 })
             })
         },
+
         // 新用户列表详情
         userList() {
             console.log('新用户列表详情')
@@ -94,6 +118,7 @@ export default {
     },
     created() {
         this.userList()
+        this.IntegralQuery()
     },
 
 };

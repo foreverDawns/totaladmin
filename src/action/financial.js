@@ -1,5 +1,5 @@
 // import { integralGainintegralSubsidiary, integralintegralManagement, delIntegralSetting,newUserManagement} from "@/config/api.js"
-// import { startLoading, endLoading } from '../common/util'
+import { startLoading, endLoading } from '../common/util'
 export default {
     name: 'financial',
     data() {
@@ -67,6 +67,20 @@ export default {
             this.pageIndexThree = pageSize;
             this.getIntegralList()
         },
+        
+        // 初始化数据
+        initPage() {
+            startLoading()
+            Promise.all([this.consumptionList(), this.RechargeList(), this.getIntegralList()]).then(() => {
+                endLoading()
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
+            });
+        },
         // 消费列表
         consumptionList() {
             console.log('消费列表')
@@ -100,7 +114,7 @@ export default {
     },
 
     created() {
-        this.consumptionList();
+        this.initPage();
     },
 
     mounted() {

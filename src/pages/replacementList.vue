@@ -49,7 +49,7 @@
         </div>
       </el-collapse-transition>
     </el-card>
-    <!-- 详情 module -->
+    <!-- 详情    -->
     <div>
       <el-dialog :close-on-click-modal="false" center title="置换-置换商品管理-详情" :visible.sync="aRModuleDialogVisible"
         width="60%" :before-close="handleClose">
