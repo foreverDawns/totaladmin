@@ -6,12 +6,12 @@
         <div @click="changeModule(1)"
           :class="[type == '1' ? 'bg-blue1' : '' , 'width-135 my-flex flex-j-center flex-l-center fs-13 border-ra-8 height-55 bg-blue']">
           <div class=""></div>
-          <div class="color-fff">商品信息 ({{goodsTotalNum}})</div>
+          <div class="color-fff">商品信息 ({{goodsTotalNum || 0}})</div>
         </div>
         <div @click="changeModule(2)"
           :class="[type == '2' ? 'bg-blue1' : '' , 'width-135 my-flex flex-j-center flex-l-center fs-13 border-ra-8 height-55 bg-blue']">
           <div class=""></div>
-          <div class="color-fff">订单信息 ({{detailsData.orderNum}}})</div>
+          <div class="color-fff">订单信息 ({{detailsData.orderNum}})</div>
         </div>
         <div @click="changeModule(3)"
           :class="[type == '3' ? 'bg-blue1' : '' , 'width-135 my-flex flex-j-center flex-l-center fs-13 border-ra-8 height-55 bg-blue']">
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="" v-if="type == 1 && goodsList">
-            <table cellspacing="0" cellpadding="0" border="0" width="100%" class="orderC-tb">
+          <table cellspacing="0" cellpadding="0" border="0" width="100%" class="orderC-tb">
             <thead class="orderC-th">
               <tr style="height: 40px;" class="fs-13">
                 <th width="5%">序号</th>
@@ -46,10 +46,11 @@
               </tr>
             </thead>
             <tbody class="table-tbody">
-              <tr v-for="(item, index) in goodsList" :key="index" class="fs-12"
-              >
+              <tr v-for="(item, index) in goodsList" :key="index" class="fs-12">
                 <td>{{ index + 1 }}</td>
-                <td class=""><div class="order-img m-t-10 m-b-10"><img :src="item.images.split(',')[0]" /></div></td>
+                <td class="">
+                  <div class="order-img m-t-10 m-b-10"><img :src="item.images.split(',')[0]" /></div>
+                </td>
                 <td class="">{{ item.name }}</td>
                 <td class="">{{ item.price }}</td>
                 <td class="">{{ item.category3Name }}</td>
@@ -108,19 +109,22 @@
               </div>
             </el-tab-pane>
             <el-tab-pane name="1" selected="true">
-              <span slot="label" class="fs-14 fw-700">待处理 <span class="blue fs-16">{{ordersData.pendingNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">待处理 <span
+                  class="blue fs-16">{{ordersData.pendingNum}}</span></span>
               <div class="" v-if="ordersData">
                 <OrderDetailsItem :orderItem="ordersData.orderList.data" :checkoutFlg='false'></OrderDetailsItem>
               </div>
             </el-tab-pane>
             <el-tab-pane name="2">
-              <span slot="label" class="fs-14 fw-700">已发货 <span class="blue fs-16">{{ordersData.deliveryNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">已发货 <span
+                  class="blue fs-16">{{ordersData.deliveryNum}}</span></span>
               <div class="" v-if="ordersData">
                 <OrderDetailsItem :orderItem="ordersData.orderList.data" :checkoutFlg='false'></OrderDetailsItem>
               </div>
             </el-tab-pane>
             <el-tab-pane name="3">
-              <span slot="label" class="fs-14 fw-700">已完成 <span class="blue fs-16">{{ordersData.completeNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">已完成 <span
+                  class="blue fs-16">{{ordersData.completeNum}}</span></span>
               <div class="" v-if="ordersData">
                 <OrderDetailsItem :orderItem="ordersData.orderList.data" :checkoutFlg='false'></OrderDetailsItem>
               </div>
@@ -137,31 +141,40 @@
         <div class="p-l-50" v-if="type == 3 && evaluationData">
           <el-tabs class="" v-model="evaluationActiveName" @tab-click="evaluationHandleClick">
             <el-tab-pane name="0">
-              <span slot="label" class="fs-14 fw-700">全部 <span class="blue fs-16">{{evaluationData.AllNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">全部 <span
+                  class="blue fs-16">{{evaluationData.AllNum}}</span></span>
               <div class="" v-if="evaluationData">
-                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'></EvaluationDetailsItem>
+                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'>
+                </EvaluationDetailsItem>
               </div>
             </el-tab-pane>
             <el-tab-pane name="1" selected="true">
-              <span slot="label" class="fs-14 fw-700">好评 <span class="blue fs-16">{{evaluationData.goodNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">好评 <span
+                  class="blue fs-16">{{evaluationData.goodNum}}</span></span>
               <div class="" v-if="evaluationData">
-                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'></EvaluationDetailsItem>
+                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'>
+                </EvaluationDetailsItem>
               </div>
             </el-tab-pane>
             <el-tab-pane name="2">
-              <span slot="label" class="fs-14 fw-700">中评 <span class="blue fs-16">{{evaluationData.inTheNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">中评 <span
+                  class="blue fs-16">{{evaluationData.inTheNum}}</span></span>
               <div class="" v-if="evaluationData">
-                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'></EvaluationDetailsItem>
+                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'>
+                </EvaluationDetailsItem>
               </div>
             </el-tab-pane>
             <el-tab-pane name="3">
-              <span slot="label" class="fs-14 fw-700">差评 <span class="blue fs-16">{{evaluationData.badNum}}</span></span>
+              <span slot="label" class="fs-14 fw-700">差评 <span
+                  class="blue fs-16">{{evaluationData.badNum}}</span></span>
               <div class="" v-if="evaluationData">
-                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'></EvaluationDetailsItem>
+                <EvaluationDetailsItem :orderItem="evaluationData.commentList.data" :operation='false'>
+                </EvaluationDetailsItem>
               </div>
             </el-tab-pane>
             <el-tab-pane name="4" v-if="representationData">
-              <span slot="label" class="fs-14 fw-700">申述 <span class="blue fs-16">{{representationData.count}}</span></span>
+              <span slot="label" class="fs-14 fw-700">申述 <span
+                  class="blue fs-16">{{representationData.count}}</span></span>
               <div class="" v-if="evaluationData">
                 <EvaluationDetailsItem :orderItem="representationData.data" :operation='true'></EvaluationDetailsItem>
               </div>
@@ -172,12 +185,13 @@
     </div>
 
     <div class="clear"></div>
-    
+
     <!-- 分页 -->
     <div class="p-l-50" v-if="type == 1">
       <div class="fenye" v-if="goodsList && goodsList.length > 0">
-        <el-pagination @size-change="goodsPageSizeChange" @current-change="goodsPageChange" :current-page="goodsPageIndex"
-          :page-size="goodsPageSize" layout="total, sizes, prev, pager, next, jumper" :total="goodsTotalNum">
+        <el-pagination @size-change="goodsPageSizeChange" @current-change="goodsPageChange"
+          :current-page="goodsPageIndex" :page-size="goodsPageSize" layout="total, sizes, prev, pager, next, jumper"
+          :total="goodsTotalNum">
         </el-pagination>
       </div>
     </div>
@@ -191,7 +205,8 @@
     <div class="p-l-50" v-if="type == 3 && commentState != 4">
       <div class="fenye" v-if="evaluationData && evaluationData.commentList.data.length > 0">
         <el-pagination @size-change="pageSizeChangeTwo" @current-change="pageChangeTwo" :current-page="pageIndexTwo"
-          :page-size="pageSizeTwo" layout="total, sizes, prev, pager, next, jumper" :total="evaluationData.commentList.count">
+          :page-size="pageSizeTwo" layout="total, sizes, prev, pager, next, jumper"
+          :total="evaluationData.commentList.count">
         </el-pagination>
       </div>
     </div>
@@ -208,20 +223,20 @@
 <script src="../action/merchantDetailsAction.js"></script>
 
 <style lang="scss" scoped>
-    .mingRen-con>p img,
-    .mingRen-con>p video {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .order-img {
-        height: 80px;
-        width: auto;
-    }
-    
-    .order-img img {
-        /* width: 100%; */
-        height: 100%;
-    }
+  .mingRen-con>p img,
+  .mingRen-con>p video {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .order-img {
+    height: 80px;
+    width: auto;
+  }
+
+  .order-img img {
+    /* width: 100%; */
+    height: 100%;
+  }
 </style>

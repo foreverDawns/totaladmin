@@ -111,10 +111,10 @@ export default {
                 endLoading()
             }).catch(() => {
                 endLoading()
-                this.$message({
-                    type: 'error',
-                    message: '请求失败，请刷新重试！'
-                })
+                // this.$message({
+                //     type: 'error',
+                //     message: '请求失败，请刷新重试！'
+                // })
             });
         },
         // 获取商家信息
@@ -150,8 +150,15 @@ export default {
                 }
                 sellerGoodsList(reqData).then(res => {
                     if (res.state === 0) {
-                        this.goodsList = res.data.data
-                        this.goodsTotalNum = res.data.count
+                        if (res.data == null) {
+                            this.$message.warning('当前店铺没有产品内容！')
+                        } else {
+                            this.goodsList = res.data.data
+                            this.goodsTotalNum = res.data.count
+                            if (this.goodsList.length < 0) {
+                                this.$message.warning('当前店铺没有产品内容！')
+                            }
+                        }
                         resolve()
                     } else {
                         this.$message({
@@ -182,7 +189,9 @@ export default {
                 sellerOrderList(reqData).then(res => {
                     if (res.state === 0) {
                         this.ordersData = res.data
-                        console.log(this.ordersData)
+                        if (this.ordersData.orderList.data.length < 1) {
+                            this.$message.warning('当前店铺没有订单内容！')
+                        }
                         resolve()
                     } else {
                         this.$message({
@@ -213,6 +222,9 @@ export default {
                 commentsList(reqData).then(res => {
                     if (res.state === 0) {
                         this.evaluationData = res.data
+                        if (this.evaluationData.commentList.data.length < 1) {
+                            this.$message.warning('当前店铺没有评价内容！')
+                        }
                         resolve()
                     } else {
                         // endLoading()
@@ -246,7 +258,9 @@ export default {
                     endLoading()
                     if (res.state === 0) {
                         this.representationData = res.data
-                        console.log(res.data)
+                        if (this.representationData.data.length < 1) {
+                            this.$message.warning('当前店铺没有评价申诉内容！')
+                        }
                         resolve()
                     } else {
                         endLoading()
@@ -333,7 +347,7 @@ export default {
             this.pageSizeTwo = 10
             this.evaluationActiveName = tab.name
             this.commentState = tab.name
-                // this.sellerOrderList()
+            // this.sellerOrderList()
             if (tab.name == 4) {
                 this.auditCommentsList()
             } else {
@@ -375,7 +389,7 @@ export default {
         console.log('merchantDetails')
         console.log(this.$route.params.id)
         console.log(this.$route.params.type)
-            // this.sellerList()
+        // this.sellerList()
     },
     components: {
         OrderDetailsItem,
