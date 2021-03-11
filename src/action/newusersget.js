@@ -63,12 +63,15 @@ export default {
                 })
                 return
             }
-            startLoading();
+
+            startLoading()
             integralSave({
                 type: '3',
                 length: this.levelIntegral
             }).then(res => {
-                endLoading();
+                console.log(res)
+                endLoading()
+
                 if (res.state === 0) {
                     this.$message({
                         type: 'success',

@@ -229,5 +229,5 @@ export default new VueRouter({
     { name: 'Login', path: '/login', component: () => import('@/pages/login'), meta: { title: "登录" } },
     { path: '*', component: () => import('@/components/HelloWorld'), meta: { title: "404" } },
   ],
-  mode: "history"    // mode 设置为history ，去掉地址栏上的 # 号
+  mode: ""    // mode 设置为history ，去掉地址栏上的 # 号
 })

@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login-con my-flex border-ra-15 bg-white p-30">
       <div class="flex-1 login-con-left flex-h-center">
-        <div class="fs-20 fw-700 text-align-c color-999 flex-1">欢迎使用云游山西后台管理系统</div>
+        <div class="fs-20 fw-700 text-align-c color-999 flex-1">欢迎使用云游山西总后台管理系统</div>
       </div>
       <el-form ref="form" :model="form" class="container flex-1 p-20" :rules="rules">
         <el-form-item class="avatar">
