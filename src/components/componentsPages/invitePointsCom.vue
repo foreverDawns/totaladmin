@@ -21,7 +21,7 @@
           <el-input class="width-500" v-model="ruleForm.integralNum"></el-input>
         </el-form-item>
         <el-form-item label="概率" prop="probability" >
-          <el-input  @change="probabilityChange($event)" class="width-500" v-model="ruleForm.probability" ></el-input>
+          <el-input   @blur="probabilityChange($event)" @change="probabilityChange($event)" class="width-500" v-model="ruleForm.probability" ></el-input>
         </el-form-item>
         <el-form-item label="获得奖励" >
           <div class="m-b-10">
