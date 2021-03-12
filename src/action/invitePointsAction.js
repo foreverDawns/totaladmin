@@ -174,8 +174,8 @@ export default {
 
 
         // addARConFunc
-        addARConFunc(data,probability) {
-            this.$refs.InvitePointsCom.probabilityChange(probability)
+        addARConFunc(data) {
+            // this.$refs.InvitePointsCom.probabilityChange(probability)
             console.log(data)
             if (!data.inviteNum) {
                 this.$message({

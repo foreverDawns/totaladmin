@@ -65,7 +65,7 @@ export default {
         handleClose() {
             this.$emit('onAddCon');
         },
-        // 限制概率
+        // 限制概率  @blur
         probabilityChange($event){
             console.log($event)
             let probabilityList= this.probabilityList
