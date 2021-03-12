@@ -35,6 +35,7 @@ export default {
                 validHour: [{ required: true, message: '请输入内容', trigger: 'blur' },]
             },
             title: '',
+            disabled:false
         }
     },
     // 接收父页面的值
@@ -170,6 +171,11 @@ export default {
             console.log('子组件', res)
             console.log('列表值', this.jinianpin)
             this.ruleForm = Object.assign({}, res)
+            if( this.ruleForm.id){
+                this.disabled=true
+              }else{
+                this.disabled=false 
+              }
             this.gailv=this.ruleForm.probability 
             if (this.ruleForm.zhoubianIds) { this.ruleForm.zhoubianIds = this.ruleForm.zhoubianIds.split(',') }
             if (this.ruleForm.quanbaoIds) { this.ruleForm.quanbaoIds = this.ruleForm.quanbaoIds.split(',') }

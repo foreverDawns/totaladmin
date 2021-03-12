@@ -60,9 +60,9 @@
           <td>{{ item.validHour }}</td>
           <td>{{ item.probability }}%</td> 
           <td>
-            <el-button type="info" round @click="deletePoint(item.id)"
+            <!-- <el-button type="info" round @click="deletePoint(item.id)"
               >删除</el-button
-            >
+            > -->
             <el-button type="primary" round @click="editPoint(item,listDataArr)"
               >编辑</el-button
             >

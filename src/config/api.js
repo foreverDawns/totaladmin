@@ -992,8 +992,31 @@ export const SkuName = params => {
         return Promise.reject(error)
     }
 }
-// 财务管理
-
+// 财务管理 
+// 获取用户积分消费记录
+export const getIntegralConsumption = params => {
+    try {
+        return axios.post('/integralConsume/getIntegralConsumption', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+//  获取用户积分充值记录
+export const getIntegralRecharge = params => {
+    try {
+        return axios.post('/integralGain/getIntegralRecharge', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+// 用户获取积分记录
+export const getIntegralRecord = params => {
+    try {
+        return axios.post('/integralGain/getIntegralRecord', params).then(res => res.data)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 
 
 // 文件上传

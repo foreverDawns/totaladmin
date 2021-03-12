@@ -127,10 +127,8 @@ export default {
 
         // 获取店铺信息id和name
         getSupplierInfo() {
-            console.log('店铺')
             startLoading()
             getSupplierInfo().then(res => {
-              console.log('错了')
                 endLoading()
                 if (res.state === 0) {
                     console.log('店铺name', res.data)
