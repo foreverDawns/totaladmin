@@ -54,6 +54,7 @@ export default {
         this.deleteValueArr.push(tag.valueId)
       }
       this.detailData.specValues.splice(this.detailData.specValues.indexOf(tag), 1);
+      this.$forceUpdate();
     },
 
     showInput() {
