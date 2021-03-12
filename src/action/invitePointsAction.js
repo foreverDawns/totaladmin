@@ -8,6 +8,7 @@ export default {
             aRModuleDialogVisible: false,
             listDataArr: [],
             aRDetailJson: {},
+            listData:[],
             supplierId: '1',
             pageIndex: 1,
             pageSize: 10,
@@ -115,13 +116,14 @@ export default {
 
         },
         // 添加 / 编辑内容
-        editPoint(data) {
+        editPoint(data,listDataArr) {
             if (JSON.stringify(data) == '{}') {
                 data.titleName = '积分管理-邀请盲盒池-添加'
             } else {
                 data.titleName = '积分管理-邀请盲盒池-编辑'
             }
             this.aRDetailJson = Object.assign({}, data)
+            this.listData = Object.assign([], listDataArr)
             this.onAddCon()
         },
 
@@ -168,10 +170,12 @@ export default {
                 }) 
             })
         },
+        
 
 
         // addARConFunc
         addARConFunc(data) {
+            // this.$refs.InvitePointsCom.probabilityChange(probability)
             console.log(data)
             if (!data.inviteNum) {
                 this.$message({

@@ -15,18 +15,18 @@
         label-width="100px"
       >
         <el-form-item label="邀请人数" prop="inviteNum">
-          <el-input class="width-500" v-model="ruleForm.inviteNum"></el-input>
+          <el-input class="width-500" v-model="ruleForm.inviteNum"  :disabled='disabled'></el-input>
         </el-form-item>
         <el-form-item label="获得积分" prop="integralNum">
-          <el-input class="width-500" v-model="ruleForm.integralNum"></el-input>
+          <el-input class="width-500" v-model="ruleForm.integralNum"  :disabled='disabled'></el-input>
         </el-form-item>
-        <el-form-item label="概率" prop="probability">
-          <el-input class="width-500" v-model="ruleForm.probability"></el-input>
+        <el-form-item label="概率" prop="probability" >
+          <el-input   @blur="probabilityChange($event)" @change="probabilityChange($event)" class="width-500" v-model="ruleForm.probability" ></el-input>
         </el-form-item>
         <el-form-item label="获得奖励" >
           <div class="m-b-10">
             <span> 纪念品：</span>
-            <el-select v-model="ruleForm.zhoubianIds" multiple placeholder="请选择" @change="onTest" >
+            <el-select v-model="ruleForm.zhoubianIds" multiple placeholder="请选择" @change="onTest"  :disabled='disabled' >
               <el-option
                   v-for="(item, index) in jinianpin "
                 :key="index"
@@ -37,7 +37,7 @@
             </el-select>
 
             <span class="m-l-40"> 卷包：</span>
-            <el-select v-model="ruleForm.quanbaoIds" multiple placeholder="请选择">
+            <el-select v-model="ruleForm.quanbaoIds" multiple placeholder="请选择"  :disabled='disabled'>
                 <el-option
                   v-for="(item, index) in juanbao "
                 :key="index"
@@ -47,7 +47,7 @@
               </el-option>
             </el-select>
               <span class="m-l-40">门票券包：</span>
-            <el-select v-model="ruleForm.quanbaoMenpiaoIds" multiple placeholder="请选择">
+            <el-select v-model="ruleForm.quanbaoMenpiaoIds" multiple placeholder="请选择"  :disabled='disabled'>
                <el-option
                   v-for="(item, index) in menjuanbao "
                 :key="index"
@@ -59,7 +59,7 @@
           </div>
             <div class="">
                 <span > 十宝卡：</span>
-            <el-select v-model="ruleForm.shibaoIds" multiple placeholder="请选择">
+            <el-select v-model="ruleForm.shibaoIds" multiple placeholder="请选择"  :disabled='disabled'>
               <el-option
                   v-for="(item, index) in shibai "
                 :key="index"
@@ -71,7 +71,7 @@
            
 
             <span class="m-l-40"> 礼品：</span>
-            <el-select v-model="ruleForm.giftIds" multiple placeholder="请选择">
+            <el-select v-model="ruleForm.giftIds" multiple placeholder="请选择"  :disabled='disabled'>
                <el-option
                   v-for="(item, index) in lipin "
                 :key="index"
@@ -81,7 +81,7 @@
               </el-option>
             </el-select>
              <span class="m-l-40" >免费门票：</span>
-            <el-select v-model="ruleForm.jingquMenpiaoIds" multiple placeholder="请选择">
+            <el-select v-model="ruleForm.jingquMenpiaoIds" multiple placeholder="请选择"  :disabled='disabled'>
                <el-option
                   v-for="(item, index) in mianmenpiao "
                 :key="index"
@@ -94,7 +94,7 @@
           </div>
         </el-form-item>
         <el-form-item label="有效时间" prop="validHour">
-          <el-input class="width-500" v-model="ruleForm.validHour"></el-input>
+          <el-input class="width-500" v-model="ruleForm.validHour"  :disabled='disabled'></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: right">

@@ -48,11 +48,11 @@
           <th width="15%">有效时间</th>
           <th width="15%">概率</th>
           <!-- addPoints -->
-          <th width="10%" class="blue fw-700" @click="editPoint({})">+ 添加</th>
+          <th width="10%" class="blue fw-700" @click="editPoint({},listDataArr)">+ 添加</th>
         </tr>
       </thead>
       <tbody class="table-tbody">
-        <tr class="fs-12" v-for="(item, index) in listDataArr" :key="index">
+        <tr class="fs-12" v-for="(item, index) in listDataArr" :key="index"> 
           <td>{{ index + 1 }}</td>
           <td class="p-t-10 p-b-10">{{ item.inviteNum }}</td>
           <td>{{ item.integralNum }}</td>
@@ -60,10 +60,10 @@
           <td>{{ item.validHour }}</td>
           <td>{{ item.probability }}%</td> 
           <td>
-            <el-button type="info" round @click="deletePoint(item.id)"
+            <!-- <el-button type="info" round @click="deletePoint(item.id)"
               >删除</el-button
-            >
-            <el-button type="primary" round @click="editPoint(item)"
+            > -->
+            <el-button type="primary" round @click="editPoint(item,listDataArr)"
               >编辑</el-button
             >
           </td>
@@ -83,7 +83,7 @@
       </el-pagination>
     </div>
     <InvitePointsCom  ref="InvitePointsCom" :aRModuleDialogVisible="aRModuleDialogVisible" @onAddCon="onAddCon"
-      :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson"></InvitePointsCom>
+      :addARConFunc="addARConFunc" :aRDetailJson="aRDetailJson" :listData="listData"></InvitePointsCom>
   </div>
 </template>
 

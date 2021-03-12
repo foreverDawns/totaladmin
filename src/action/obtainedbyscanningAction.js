@@ -1,5 +1,5 @@
 import { startLoading, endLoading } from '../common/util'
-import { integralnewUserManagement } from "@/config/api.js"
+import { integralSave, integralQuery} from "@/config/api.js"
 
 export default {
 
@@ -17,6 +17,32 @@ export default {
     },
 
     methods: {
+        // 查询积分默认值
+        IntegralQuery(){
+            startLoading()
+            const reqData = {
+                type : '4',
+            }
+            integralQuery(reqData).then(res => {
+                endLoading()
+                console.log(res)
+                if (res.state === 0) {
+                    this.levelIntegral = res.data
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '请求失败，请刷新重试！'
+                    })
+                }
+            }).catch(() => {
+                endLoading()
+                this.$message({
+                    type: 'error',
+                    message: '请求失败，请刷新重试！'
+                })
+            })
+
+        },
         scanSave() {
             if (!this.levelIntegral) {
                 this.$message({
@@ -26,17 +52,17 @@ export default {
                 return
             }
             startLoading();
-            integralnewUserManagement({
-                getAwy: 4,
-                levelIntegral: this.levelIntegral
+            integralSave({
+                type: '4',
+                length: this.levelIntegral
             }).then(res => {
                 endLoading();
                 if (res.state === 0) {
                     this.$message({
                         type: 'success',
-                        message: '添加成功'
+                        message: '默认积分数量添加成功'
                     })
-
+                    this.IntegralQuery()
                 } else {
                     this.$message({
                         type: 'error',
@@ -53,20 +79,10 @@ export default {
             })
         }
 
-
-
-
-
-
-
-
-
-
-
-
     },
 
     created() {
+        this.IntegralQuery()
 
     },
     mounted() {
